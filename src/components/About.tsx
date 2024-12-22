@@ -20,8 +20,12 @@ const About = () => {
         <div className="h-[400px] relative">
           <Canvas
             camera={{ position: [0, 0, 5], fov: 75 }}
-            gl={{ antialias: true }}
-            dpr={window.devicePixelRatio}
+            gl={{ 
+              antialias: true,
+              alpha: true,
+              powerPreference: "high-performance"
+            }}
+            dpr={Math.min(window.devicePixelRatio, 2)}
           >
             <Suspense fallback={null}>
               <ambientLight intensity={0.5} />
