@@ -41,14 +41,12 @@ const Hero = () => {
             count={positions.length / 3}
             array={positions}
             itemSize={3}
-            usage={THREE.StaticDrawUsage}
           />
           <bufferAttribute
             attach="attributes-color"
             count={colors.length / 3}
             array={colors}
             itemSize={3}
-            usage={THREE.StaticDrawUsage}
           />
         </bufferGeometry>
         <pointsMaterial

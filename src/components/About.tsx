@@ -19,9 +19,9 @@ const About = () => {
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <div className="h-[400px] relative">
           <Canvas
-            camera={{ position: [0, 0, 5] }}
+            camera={{ position: [0, 0, 5], fov: 75 }}
             gl={{ antialias: true }}
-            dpr={[1, 2]}
+            dpr={window.devicePixelRatio}
           >
             <Suspense fallback={null}>
               <ambientLight intensity={0.5} />
