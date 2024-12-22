@@ -18,7 +18,11 @@ const About = () => {
 
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <div className="h-[400px] relative">
-          <Canvas camera={{ position: [0, 0, 5] }}>
+          <Canvas
+            camera={{ position: [0, 0, 5] }}
+            gl={{ antialias: true }}
+            dpr={[1, 2]}
+          >
             <Suspense fallback={null}>
               <ambientLight intensity={0.5} />
               <pointLight position={[10, 10, 10]} />
@@ -26,7 +30,12 @@ const About = () => {
                 <boxGeometry args={[2, 1.2, 0.1]} />
                 <meshStandardMaterial color="#FF6D59" />
               </mesh>
-              <OrbitControls enableZoom={false} />
+              <OrbitControls 
+                enableZoom={false}
+                enablePan={false}
+                minPolarAngle={Math.PI / 2}
+                maxPolarAngle={Math.PI / 2}
+              />
             </Suspense>
           </Canvas>
         </div>

@@ -1,24 +1,28 @@
 import { useFrame } from '@react-three/fiber';
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import * as THREE from 'three';
 
 const Hero = () => {
   const pointsRef = useRef<THREE.Points>(null);
-  const numPoints = 100;
   
-  // Create points for nodes
-  const positions = new Float32Array(numPoints * 3);
-  const colors = new Float32Array(numPoints * 3);
-  
-  for (let i = 0; i < numPoints; i++) {
-    positions[i * 3] = (Math.random() - 0.5) * 10;
-    positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+  // Create points for nodes using useMemo to prevent recreation on each render
+  const { positions, colors } = useMemo(() => {
+    const numPoints = 100;
+    const positions = new Float32Array(numPoints * 3);
+    const colors = new Float32Array(numPoints * 3);
     
-    colors[i * 3] = 1;     // R
-    colors[i * 3 + 1] = 0.4; // G
-    colors[i * 3 + 2] = 0.35; // B
-  }
+    for (let i = 0; i < numPoints; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 10;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+      
+      colors[i * 3] = 1;     // R
+      colors[i * 3 + 1] = 0.4; // G
+      colors[i * 3 + 2] = 0.35; // B
+    }
+    
+    return { positions, colors };
+  }, []);
 
   useFrame((state) => {
     if (pointsRef.current) {
@@ -34,15 +38,17 @@ const Hero = () => {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            count={numPoints}
+            count={positions.length / 3}
             array={positions}
             itemSize={3}
+            usage={THREE.StaticDrawUsage}
           />
           <bufferAttribute
             attach="attributes-color"
-            count={numPoints}
+            count={colors.length / 3}
             array={colors}
             itemSize={3}
+            usage={THREE.StaticDrawUsage}
           />
         </bufferGeometry>
         <pointsMaterial
