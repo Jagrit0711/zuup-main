@@ -1,7 +1,3 @@
-import { Canvas } from '@react-three/fiber';
-import { Suspense } from 'react';
-import { OrbitControls } from '@react-three/drei';
-
 const About = () => {
   console.log('Rendering About section');
 
@@ -17,34 +13,8 @@ const About = () => {
       </div>
 
       <div className="grid md:grid-cols-2 gap-12 items-center">
-        <div className="h-[400px] relative">
-          <Canvas
-            camera={{ position: [0, 0, 5], fov: 75 }}
-            gl={{ 
-              antialias: true,
-              alpha: true,
-              powerPreference: "high-performance",
-              preserveDrawingBuffer: true
-            }}
-            dpr={1}
-          >
-            <Suspense fallback={null}>
-              <ambientLight intensity={0.5} />
-              <pointLight position={[10, 10, 10]} />
-              <group>
-                <mesh>
-                  <boxGeometry args={[2, 1.2, 0.1]} />
-                  <meshStandardMaterial color="#FF6D59" />
-                </mesh>
-              </group>
-              <OrbitControls 
-                enableZoom={false}
-                enablePan={false}
-                minPolarAngle={Math.PI / 2}
-                maxPolarAngle={Math.PI / 2}
-              />
-            </Suspense>
-          </Canvas>
+        <div className="h-[400px] relative bg-gradient-to-br from-[#FF6D59]/20 to-[#FF6D59]/10 rounded-lg flex items-center justify-center">
+          <div className="w-32 h-32 bg-[#FF6D59] rounded-lg transform rotate-45" />
         </div>
 
         <div className="space-y-6 text-white">
