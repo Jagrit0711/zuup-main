@@ -1,12 +1,43 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { OrbitControls, Stars } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
+import { useRef } from 'react';
+import * as THREE from 'three';
 
 const AnimatedLogo = () => {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    if (meshRef.current && groupRef.current) {
+      meshRef.current.rotation.x += 0.01;
+      meshRef.current.rotation.y += 0.01;
+      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime) * 0.3;
+    }
+  });
+
   return (
-    <mesh rotation={[0, 0, 0]}>
-      <torusGeometry args={[1.5, 0.4, 16, 100]} />
-      <meshPhongMaterial color="#4299e1" />
-    </mesh>
+    <group ref={groupRef}>
+      {/* Main ring */}
+      <mesh ref={meshRef} position={[0, 0, 0]}>
+        <torusGeometry args={[2, 0.3, 16, 100]} />
+        <meshPhongMaterial color="#4299e1" />
+      </mesh>
+
+      {/* Floating spheres representing the dots in the logo */}
+      <mesh position={[-1.5, 0, 0]}>
+        <sphereGeometry args={[0.4]} />
+        <meshPhongMaterial color="#ea384c" />
+      </mesh>
+      <mesh position={[1, 0.5, 0]}>
+        <sphereGeometry args={[0.3]} />
+        <meshPhongMaterial color="#4299e1" />
+      </mesh>
+      <mesh position={[1.5, -0.5, 0]}>
+        <sphereGeometry args={[0.3]} />
+        <meshPhongMaterial color="#4299e1" />
+      </mesh>
+    </group>
   );
 };
 
@@ -15,13 +46,25 @@ const Hero = () => {
     <div className="relative flex items-center justify-center min-h-screen overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/20 z-10" />
       
-      {/* 3D Canvas */}
-      <div className="absolute inset-0 opacity-40">
-        <Canvas camera={{ position: [0, 0, 5] }}>
+      {/* Enhanced 3D Canvas */}
+      <div className="absolute inset-0">
+        <Canvas
+          camera={{ position: [0, 0, 8], fov: 45 }}
+          className="w-full h-full"
+        >
           <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} />
+          <pointLight position={[10, 10, 10]} intensity={1} />
+          <pointLight position={[-10, -10, -10]} intensity={0.5} />
+          <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
           <AnimatedLogo />
-          <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1} />
+          <OrbitControls 
+            enableZoom={false}
+            enablePan={false}
+            autoRotate
+            autoRotateSpeed={0.5}
+            maxPolarAngle={Math.PI / 2}
+            minPolarAngle={Math.PI / 2}
+          />
         </Canvas>
       </div>
 
