@@ -66,20 +66,6 @@ const Hero = () => {
           >
             Empowering underprivileged youth through skill development and freelance opportunities
           </motion.p>
-
-          <motion.div 
-            className="mt-12 flex flex-wrap justify-center gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
-            <button className="px-8 py-3 bg-[#ea384c] text-white rounded-full font-medium hover:bg-[#d42d3d] transition-colors duration-300">
-              Get Started
-            </button>
-            <button className="px-8 py-3 bg-transparent border-2 border-[#4299e1] text-white rounded-full font-medium hover:bg-[#4299e1]/10 transition-colors duration-300">
-              Learn More
-            </button>
-          </motion.div>
         </motion.div>
       </div>
     </div>
