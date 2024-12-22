@@ -20,7 +20,7 @@ const About = () => {
           <div>
             <h3 className="text-2xl font-bold mb-2 text-[#4299e1]">Teen-Led Innovation</h3>
             <p className="text-gray-400">
-              Founded by 15-year-old Jagrit Sachdev, we understand what teenagers need 
+              Founded by 16-year-old Jagrit Sachdev, we understand what teenagers need 
               because we're teenagers ourselves! We speak your language and know exactly 
               what it takes to succeed in today's digital world.
             </p>
@@ -49,7 +49,7 @@ const About = () => {
           <h3 className="text-2xl font-bold mb-4 text-[#4299e1]">Meet Our Teen Founder</h3>
           <div className="text-gray-300">
             <p className="mb-4">
-              At just 15, Jagrit Sachdev is redefining what teenagers can achieve. As the 
+              At just 16, Jagrit Sachdev is redefining what teenagers can achieve. As the 
               founder and CEO of Zylon Labs, he's proving that age is just a number when 
               it comes to making a difference.
             </p>
@@ -60,11 +60,11 @@ const About = () => {
             <div className="mt-6 space-y-3">
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 rounded-full bg-[#ea384c]"></div>
-                <span>House Captain at Bal Bharati Public School</span>
+                <span>CEO & Founder, Zylon Labs</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 rounded-full bg-[#4299e1]"></div>
-                <span>Tech Enthusiast & Designer</span>
+                <span>Young Genius Award 2024</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 rounded-full bg-[#4299e1]"></div>
