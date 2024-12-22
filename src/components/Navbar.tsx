@@ -11,8 +11,17 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <a href="/" className="text-[#FF6D59] text-2xl font-bold">
-              Zuup
+            <a href="/" className="flex items-center space-x-1">
+              {/* Logo dots */}
+              <div className="flex">
+                <div className="w-2 h-2 rounded-full bg-[#ea384c]" /> {/* Red dot */}
+                <div className="flex ml-1">
+                  <div className="w-2 h-2 rounded-full bg-[#4299e1] mr-0.5" /> {/* Blue dot */}
+                  <div className="w-2 h-2 rounded-full bg-[#4299e1]" /> {/* Blue dot */}
+                </div>
+              </div>
+              {/* Logo text */}
+              <span className="text-2xl font-bold text-white">zuup</span>
             </a>
           </div>
           
@@ -52,7 +61,7 @@ const Navbar = () => {
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <a
     href={href}
-    className="text-gray-300 hover:text-[#FF6D59] px-3 py-2 rounded-md text-sm font-medium transition-colors"
+    className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors"
   >
     {children}
   </a>
@@ -61,7 +70,7 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
 const MobileNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <a
     href={href}
-    className="text-gray-300 hover:text-[#FF6D59] block px-3 py-2 rounded-md text-base font-medium"
+    className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium"
   >
     {children}
   </a>
