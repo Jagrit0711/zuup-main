@@ -6,17 +6,13 @@ const About = () => {
       <div className="text-center mb-16">
         <h2 className="text-4xl font-bold text-white mb-4">About Us</h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          We're on a mission to bridge the gap between talented underprivileged youth
-          and meaningful freelance opportunities. Through Zuup, we're creating a
-          platform that empowers the next generation of digital professionals.
+          We visit orphanages and NGOs to teach underprivileged kids valuable digital skills 
+          like graphic design, video editing, and coding. We then connect them with our job 
+          partners who post freelance opportunities on our platform.
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-12 items-center">
-        <div className="h-[400px] relative bg-gradient-to-br from-[#FF6D59]/20 to-[#FF6D59]/10 rounded-lg flex items-center justify-center">
-          <div className="w-32 h-32 bg-[#FF6D59] rounded-lg transform rotate-45" />
-        </div>
-
         <div className="space-y-6 text-white">
           <div>
             <h3 className="text-2xl font-bold mb-2 text-[#FF6D59]">Our Vision</h3>
@@ -28,16 +24,37 @@ const About = () => {
           <div>
             <h3 className="text-2xl font-bold mb-2 text-[#FF6D59]">Our Mission</h3>
             <p className="text-gray-400">
-              Connecting underprivileged youth with quality freelance opportunities
-              while providing the training and support they need to succeed.
+              Empowering underprivileged youth through skill development and connecting them 
+              with meaningful freelance opportunities.
             </p>
           </div>
           
           <div>
-            <h3 className="text-2xl font-bold mb-2 text-[#FF6D59]">Our Impact</h3>
+            <h3 className="text-2xl font-bold mb-2 text-[#FF6D59]">Our Approach</h3>
             <p className="text-gray-400">
-              Every successful project on Zuup directly contributes to empowering
-              young talents and building sustainable careers.
+              We provide hands-on training in digital skills and connect our students 
+              with carefully vetted freelance opportunities from our job partners.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-br from-gray-900/50 to-gray-900/30 p-6 rounded-lg">
+          <h3 className="text-2xl font-bold mb-4 text-[#FF6D59]">About the Founder</h3>
+          <div className="text-gray-300">
+            <p className="mb-4">
+              Jagrit Sachdev is a passionate young entrepreneur, innovator, and student balancing 
+              academics and business ventures with remarkable dedication. As the founder and CEO 
+              of Zylon Labs, he leads multiple divisions focusing on edtech, quick commerce, 
+              AI-driven solutions, and creative services.
+            </p>
+            <p className="mb-4">
+              At just 15, he has successfully developed impactful projects like Zylon Edtech, 
+              an ad-free educational platform, and Dvorak, an AI-powered security system.
+            </p>
+            <p>
+              Beyond entrepreneurship, Jagrit is a tech enthusiast, designer, and student leader, 
+              serving as the House Captain at Bal Bharati Public School, Rohini. Driven by curiosity 
+              and ambition, he aims to inspire and create meaningful change through his work.
             </p>
           </div>
         </div>
