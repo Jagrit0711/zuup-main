@@ -68,15 +68,22 @@ const Hero = () => {
           </motion.p>
 
           <motion.div
-            className="mt-12 p-6 bg-gradient-to-r from-gray-900/50 to-gray-800/50 rounded-lg border border-gray-700"
+            className="mt-12 p-8 bg-gradient-to-r from-gray-900/80 to-gray-800/80 rounded-xl border border-gray-700 shadow-2xl backdrop-blur-sm"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
+            whileHover={{ scale: 1.02 }}
           >
-            <motion.p className="text-gray-400 mb-2 font-medium">We are inspired by the timeless wisdom:</motion.p>
-            <motion.p className="text-lg md:text-xl text-gray-300 italic">
-              "Give a man a fish and you feed him for a day. Teach a man to fish and you feed him for a lifetime"
-            </motion.p>
+            <motion.p className="text-gray-400 mb-4 font-medium">We are inspired by the timeless wisdom:</motion.p>
+            <motion.div 
+              className="relative"
+              whileHover={{ scale: 1.01 }}
+            >
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#ea384c]/20 to-[#4299e1]/20 rounded-lg blur" />
+              <motion.p className="relative text-xl md:text-2xl text-gray-200 italic font-serif leading-relaxed">
+                "Give a man a fish and you feed him for a day. Teach a man to fish and you feed him for a lifetime"
+              </motion.p>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
