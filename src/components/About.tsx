@@ -31,10 +31,12 @@ const About = () => {
             <Suspense fallback={null}>
               <ambientLight intensity={0.5} />
               <pointLight position={[10, 10, 10]} />
-              <mesh>
-                <boxGeometry args={[2, 1.2, 0.1]} />
-                <meshStandardMaterial color="#FF6D59" />
-              </mesh>
+              <group>
+                <mesh>
+                  <boxGeometry args={[2, 1.2, 0.1]} />
+                  <meshStandardMaterial color="#FF6D59" />
+                </mesh>
+              </group>
               <OrbitControls 
                 enableZoom={false}
                 enablePan={false}
