@@ -14,37 +14,82 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="flex flex-col items-center justify-center mb-8"
         >
-          <div className="flex items-center space-x-3 mb-4 group">
+          <motion.div 
+            className="flex items-center space-x-3 mb-4 group cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
             <motion.div 
-              className="flex"
-              whileHover={{ scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="flex space-x-2"
+              animate={{ 
+                rotate: [0, 10, -10, 0],
+              }}
+              transition={{ 
+                repeat: Infinity, 
+                duration: 4,
+                ease: "easeInOut"
+              }}
             >
-              <div className="w-4 h-4 rounded-full bg-[#ea384c] animate-pulse" />
-              <div className="flex ml-2">
-                <div className="w-4 h-4 rounded-full bg-[#4299e1] mr-1 animate-pulse delay-75" />
-                <div className="w-4 h-4 rounded-full bg-[#4299e1] animate-pulse delay-150" />
+              <motion.div 
+                className="w-5 h-5 rounded-full bg-[#ea384c]"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ 
+                  repeat: Infinity, 
+                  duration: 2,
+                  ease: "easeInOut"
+                }}
+              />
+              <div className="flex space-x-1">
+                <motion.div 
+                  className="w-5 h-5 rounded-full bg-[#4299e1]"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ 
+                    repeat: Infinity, 
+                    duration: 2,
+                    delay: 0.3,
+                    ease: "easeInOut"
+                  }}
+                />
+                <motion.div 
+                  className="w-5 h-5 rounded-full bg-[#4299e1]"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ 
+                    repeat: Infinity, 
+                    duration: 2,
+                    delay: 0.6,
+                    ease: "easeInOut"
+                  }}
+                />
               </div>
             </motion.div>
             
             <motion.h1 
-              className="text-6xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#ea384c] to-[#4299e1]"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="text-6xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#ea384c] via-[#4299e1] to-[#4ade80]"
+              animate={{ 
+                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+              }}
+              transition={{ 
+                duration: 5, 
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              style={{
+                backgroundSize: "200% auto"
+              }}
             >
               zuup
             </motion.h1>
-          </div>
+          </motion.div>
           
           <div className="flex space-x-2 mb-6">
             <motion.div 
-              className="w-12 h-2 bg-yellow-400 rounded"
-              whileHover={{ width: "5rem", backgroundColor: "#fcd34d" }}
+              className="w-12 h-2 bg-[#fcd34d] rounded"
+              whileHover={{ width: "5rem" }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             />
             <motion.div 
-              className="w-12 h-2 bg-green-400 rounded"
-              whileHover={{ width: "5rem", backgroundColor: "#4ade80" }}
+              className="w-12 h-2 bg-[#4ade80] rounded"
+              whileHover={{ width: "5rem" }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             />
           </div>
