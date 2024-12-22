@@ -66,6 +66,15 @@ const Hero = () => {
           >
             Empowering underprivileged youth through skill development and freelance opportunities
           </motion.p>
+
+          <motion.p
+            className="mt-8 text-lg md:text-xl max-w-2xl mx-auto text-gray-400 italic"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            "Give a man a fish and you feed him for a day. Teach a man to fish and you feed him for a lifetime"
+          </motion.p>
         </motion.div>
       </div>
     </div>
