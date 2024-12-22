@@ -14,12 +14,6 @@ const CallToAction = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="#post"
-              className="px-8 py-3 bg-[#FF6D59] text-white rounded-lg hover:bg-[#FF6D59]/90 transition-colors"
-            >
-              Post a Job
-            </a>
-            <a
               href="#contact"
               className="px-8 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
             >

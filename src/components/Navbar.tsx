@@ -21,8 +21,6 @@ const Navbar = () => {
             <div className="ml-10 flex items-baseline space-x-4">
               <NavLink href="#about">About Us</NavLink>
               <NavLink href="#jobs">Freelance Jobs</NavLink>
-              <NavLink href="#post">Post a Job</NavLink>
-              <NavLink href="#search">Search Jobs</NavLink>
               <NavLink href="#contact">Contact</NavLink>
             </div>
           </div>
@@ -45,8 +43,6 @@ const Navbar = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <MobileNavLink href="#about">About Us</MobileNavLink>
             <MobileNavLink href="#jobs">Freelance Jobs</MobileNavLink>
-            <MobileNavLink href="#post">Post a Job</MobileNavLink>
-            <MobileNavLink href="#search">Search Jobs</MobileNavLink>
             <MobileNavLink href="#contact">Contact</MobileNavLink>
           </div>
         </div>
