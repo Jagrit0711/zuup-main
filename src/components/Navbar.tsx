@@ -20,7 +20,6 @@ const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <NavLink href="#about">About Us</NavLink>
-              <NavLink href="#jobs">Freelance Jobs</NavLink>
               <NavLink href="#contact">Contact</NavLink>
             </div>
           </div>
@@ -42,7 +41,6 @@ const Navbar = () => {
         <div className="md:hidden bg-black/95">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <MobileNavLink href="#about">About Us</MobileNavLink>
-            <MobileNavLink href="#jobs">Freelance Jobs</MobileNavLink>
             <MobileNavLink href="#contact">Contact</MobileNavLink>
           </div>
         </div>
