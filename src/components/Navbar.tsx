@@ -4,24 +4,24 @@ import { Menu, X } from 'lucide-react';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log('Rendering Navbar');
-
   return (
     <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <a href="/" className="flex items-center space-x-1">
-              {/* Logo dots */}
-              <div className="flex">
-                <div className="w-2 h-2 rounded-full bg-[#ea384c]" /> {/* Red dot */}
+            <a href="/" className="flex items-center space-x-1 group">
+              {/* Enhanced Logo dots with animation */}
+              <div className="flex transition-transform duration-300 group-hover:scale-110">
+                <div className="w-2 h-2 rounded-full bg-[#ea384c] animate-pulse" />
                 <div className="flex ml-1">
-                  <div className="w-2 h-2 rounded-full bg-[#4299e1] mr-0.5" /> {/* Blue dot */}
-                  <div className="w-2 h-2 rounded-full bg-[#4299e1]" /> {/* Blue dot */}
+                  <div className="w-2 h-2 rounded-full bg-[#4299e1] mr-0.5 animate-pulse delay-75" />
+                  <div className="w-2 h-2 rounded-full bg-[#4299e1] animate-pulse delay-150" />
                 </div>
               </div>
-              {/* Logo text */}
-              <span className="text-2xl font-bold text-white">zuup</span>
+              {/* Logo text with gradient */}
+              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#ea384c] to-[#4299e1] transition-transform duration-300 group-hover:scale-110">
+                zuup
+              </span>
             </a>
           </div>
           
