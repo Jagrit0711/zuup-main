@@ -5,7 +5,6 @@ import * as THREE from 'three';
 const Hero = () => {
   const pointsRef = useRef<THREE.Points>(null);
   
-  // Create points for nodes using useMemo to prevent recreation on each render
   const { positions, colors } = useMemo(() => {
     const numPoints = 100;
     const positions = new Float32Array(numPoints * 3);
@@ -33,7 +32,6 @@ const Hero = () => {
 
   return (
     <>
-      <color attach="background" args={['black']} />
       <points ref={pointsRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -41,16 +39,12 @@ const Hero = () => {
             count={positions.length / 3}
             array={positions}
             itemSize={3}
-            usage={THREE.StaticDrawUsage}
-            needsUpdate={true}
           />
           <bufferAttribute
             attach="attributes-color"
             count={colors.length / 3}
             array={colors}
             itemSize={3}
-            usage={THREE.StaticDrawUsage}
-            needsUpdate={true}
           />
         </bufferGeometry>
         <pointsMaterial

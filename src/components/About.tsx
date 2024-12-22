@@ -23,9 +23,10 @@ const About = () => {
             gl={{ 
               antialias: true,
               alpha: true,
-              powerPreference: "high-performance"
+              powerPreference: "high-performance",
+              preserveDrawingBuffer: true
             }}
-            dpr={Math.min(window.devicePixelRatio, 2)}
+            dpr={1}
           >
             <Suspense fallback={null}>
               <ambientLight intensity={0.5} />
