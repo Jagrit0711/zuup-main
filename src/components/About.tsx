@@ -4,58 +4,73 @@ const About = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-white mb-4">About Us</h2>
+        <h2 className="text-4xl font-bold text-white mb-4">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#E5DEFF] to-[#D6BCFA]">
+            By Teens, For Teens
+          </span>
+        </h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          We visit orphanages and NGOs to teach underprivileged kids valuable digital skills 
-          like graphic design, video editing, and coding. We then connect them with our job 
-          partners who post freelance opportunities on our platform.
+          We're a group of passionate teenagers on a mission to make digital skills and 
+          opportunities accessible to every young person, regardless of their background.
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6 text-white">
           <div>
-            <h3 className="text-2xl font-bold mb-2 text-[#FF6D59]">Our Vision</h3>
+            <h3 className="text-2xl font-bold mb-2 text-[#E5DEFF]">Teen-Led Innovation</h3>
             <p className="text-gray-400">
-              To create a world where talent knows no boundaries and opportunity is accessible to all.
+              Founded by 15-year-old Jagrit Sachdev, we understand what teenagers need 
+              because we're teenagers ourselves! We speak your language and know exactly 
+              what it takes to succeed in today's digital world.
             </p>
           </div>
           
           <div>
-            <h3 className="text-2xl font-bold mb-2 text-[#FF6D59]">Our Mission</h3>
+            <h3 className="text-2xl font-bold mb-2 text-[#E5DEFF]">Why We're Different</h3>
             <p className="text-gray-400">
-              Empowering underprivileged youth through skill development and connecting them 
-              with meaningful freelance opportunities.
+              We're not just another educational platform - we're your peers who've been 
+              through the same journey. Our approach is fun, relatable, and designed 
+              specifically for young minds.
             </p>
           </div>
           
           <div>
-            <h3 className="text-2xl font-bold mb-2 text-[#FF6D59]">Our Approach</h3>
+            <h3 className="text-2xl font-bold mb-2 text-[#E5DEFF]">Our Promise</h3>
             <p className="text-gray-400">
-              We provide hands-on training in digital skills and connect our students 
-              with carefully vetted freelance opportunities from our job partners.
+              We're committed to making digital skills accessible to every teenager. 
+              Whether you're into graphic design, video editing, or coding, we've got 
+              your back with practical training and real job opportunities.
             </p>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-gray-900/50 to-gray-900/30 p-6 rounded-lg">
-          <h3 className="text-2xl font-bold mb-4 text-[#FF6D59]">About the Founder</h3>
+        <div className="bg-gradient-to-br from-[#E5DEFF]/10 to-[#D6BCFA]/5 p-6 rounded-lg border border-[#E5DEFF]/20">
+          <h3 className="text-2xl font-bold mb-4 text-[#E5DEFF]">Meet Our Teen Founder</h3>
           <div className="text-gray-300">
             <p className="mb-4">
-              Jagrit Sachdev is a passionate young entrepreneur, innovator, and student balancing 
-              academics and business ventures with remarkable dedication. As the founder and CEO 
-              of Zylon Labs, he leads multiple divisions focusing on edtech, quick commerce, 
-              AI-driven solutions, and creative services.
+              At just 15, Jagrit Sachdev is redefining what teenagers can achieve. As the 
+              founder and CEO of Zylon Labs, he's proving that age is just a number when 
+              it comes to making a difference.
             </p>
             <p className="mb-4">
-              At just 15, he has successfully developed impactful projects like Zylon Edtech, 
-              an ad-free educational platform, and Dvorak, an AI-powered security system.
+              "I believe every teenager deserves the chance to learn digital skills and 
+              build a better future. We're here to make that happen, one skill at a time."
             </p>
-            <p>
-              Beyond entrepreneurship, Jagrit is a tech enthusiast, designer, and student leader, 
-              serving as the House Captain at Bal Bharati Public School, Rohini. Driven by curiosity 
-              and ambition, he aims to inspire and create meaningful change through his work.
-            </p>
+            <div className="mt-6 space-y-3">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 rounded-full bg-[#E5DEFF]"></div>
+                <span>House Captain at Bal Bharati Public School</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 rounded-full bg-[#E5DEFF]"></div>
+                <span>Tech Enthusiast & Designer</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 rounded-full bg-[#E5DEFF]"></div>
+                <span>Passionate about Youth Empowerment</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
