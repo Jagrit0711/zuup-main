@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { useRef } from 'react';
+import { useRef, Suspense } from 'react';
 import * as THREE from 'three';
 
 const AnimatedLogo = () => {
@@ -18,26 +18,44 @@ const AnimatedLogo = () => {
 
   return (
     <group ref={groupRef}>
-      {/* Main ring */}
       <mesh ref={meshRef} position={[0, 0, 0]}>
         <torusGeometry args={[2, 0.3, 16, 100]} />
-        <meshPhongMaterial color="#4299e1" />
+        <meshStandardMaterial color="#4299e1" metalness={0.5} roughness={0.5} />
       </mesh>
 
-      {/* Floating spheres representing the dots in the logo */}
       <mesh position={[-1.5, 0, 0]}>
         <sphereGeometry args={[0.4]} />
-        <meshPhongMaterial color="#ea384c" />
+        <meshStandardMaterial color="#ea384c" metalness={0.5} roughness={0.5} />
       </mesh>
       <mesh position={[1, 0.5, 0]}>
         <sphereGeometry args={[0.3]} />
-        <meshPhongMaterial color="#4299e1" />
+        <meshStandardMaterial color="#4299e1" metalness={0.5} roughness={0.5} />
       </mesh>
       <mesh position={[1.5, -0.5, 0]}>
         <sphereGeometry args={[0.3]} />
-        <meshPhongMaterial color="#4299e1" />
+        <meshStandardMaterial color="#4299e1" metalness={0.5} roughness={0.5} />
       </mesh>
     </group>
+  );
+};
+
+const Scene = () => {
+  return (
+    <>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} intensity={1} />
+      <pointLight position={[-10, -10, -10]} intensity={0.5} />
+      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+      <AnimatedLogo />
+      <OrbitControls 
+        enableZoom={false}
+        enablePan={false}
+        autoRotate
+        autoRotateSpeed={0.5}
+        maxPolarAngle={Math.PI / 2}
+        minPolarAngle={Math.PI / 2}
+      />
+    </>
   );
 };
 
@@ -46,33 +64,20 @@ const Hero = () => {
     <div className="relative flex items-center justify-center min-h-screen overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/20 z-10" />
       
-      {/* Enhanced 3D Canvas */}
       <div className="absolute inset-0">
         <Canvas
           camera={{ position: [0, 0, 8], fov: 45 }}
           className="w-full h-full"
         >
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
-          <pointLight position={[-10, -10, -10]} intensity={0.5} />
-          <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-          <AnimatedLogo />
-          <OrbitControls 
-            enableZoom={false}
-            enablePan={false}
-            autoRotate
-            autoRotateSpeed={0.5}
-            maxPolarAngle={Math.PI / 2}
-            minPolarAngle={Math.PI / 2}
-          />
+          <Suspense fallback={null}>
+            <Scene />
+          </Suspense>
         </Canvas>
       </div>
 
       <div className="relative z-20 text-center px-4">
         <div className="flex flex-col items-center justify-center mb-8">
-          {/* Enhanced Logo */}
           <div className="flex items-center space-x-3 mb-4 group">
-            {/* Logo dots with animation */}
             <div className="flex transition-transform duration-300 group-hover:scale-110">
               <div className="w-4 h-4 rounded-full bg-[#ea384c] animate-pulse" />
               <div className="flex ml-2">
@@ -80,13 +85,11 @@ const Hero = () => {
                 <div className="w-4 h-4 rounded-full bg-[#4299e1] animate-pulse delay-150" />
               </div>
             </div>
-            {/* Logo text with gradient */}
             <h1 className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#ea384c] to-[#4299e1] transition-transform duration-300 group-hover:scale-110">
               zuup
             </h1>
           </div>
           
-          {/* Accent rectangles with hover effect */}
           <div className="flex space-x-2 mb-4">
             <div className="w-12 h-2 bg-yellow-400 rounded transition-all duration-300 hover:w-16 hover:bg-yellow-300" />
             <div className="w-12 h-2 bg-green-400 rounded transition-all duration-300 hover:w-16 hover:bg-green-300" />
