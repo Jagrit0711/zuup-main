@@ -34,8 +34,12 @@ const Features = () => {
       <div className="mt-16">
         <h2 className="text-4xl font-bold text-white mb-16 text-center">Our Sponsors</h2>
         <div className="grid md:grid-cols-3 gap-8">
-          <div className="p-8 rounded-lg bg-gray-900/50 hover:bg-gray-900/70 transition-colors flex items-center justify-center min-h-[200px] border-2 border-dashed border-gray-700">
-            <p className="text-gray-400 text-center">Add Your Brand Here</p>
+          <div className="p-8 rounded-lg bg-gray-900/50 hover:bg-gray-900/70 transition-colors flex items-center justify-center min-h-[200px]">
+            <img 
+              src="/lovable-uploads/dcb03761-44e9-4b86-8627-04ac72de3491.png" 
+              alt="Zylon Labs"
+              className="w-48 h-auto"
+            />
           </div>
           <div className="p-8 rounded-lg bg-gray-900/50 hover:bg-gray-900/70 transition-colors flex items-center justify-center min-h-[200px] border-2 border-dashed border-gray-700">
             <p className="text-gray-400 text-center">Add Your Brand Here</p>
