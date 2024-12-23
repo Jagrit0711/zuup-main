@@ -15,70 +15,18 @@ const Hero = () => {
           className="flex flex-col items-center justify-center mb-8"
         >
           <motion.div 
-            className="flex items-center space-x-3 mb-4 group cursor-pointer"
+            className="mb-4 group cursor-pointer"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <motion.div 
-              className="flex space-x-2"
-              animate={{ 
-                rotate: [0, 10, -10, 0],
-              }}
-              transition={{ 
-                repeat: Infinity, 
-                duration: 4,
-                ease: "easeInOut"
-              }}
-            >
-              <motion.div 
-                className="w-5 h-5 rounded-full bg-[#ea384c]"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ 
-                  repeat: Infinity, 
-                  duration: 2,
-                  ease: "easeInOut"
-                }}
-              />
-              <div className="flex space-x-1">
-                <motion.div 
-                  className="w-5 h-5 rounded-full bg-[#4299e1]"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ 
-                    repeat: Infinity, 
-                    duration: 2,
-                    delay: 0.3,
-                    ease: "easeInOut"
-                  }}
-                />
-                <motion.div 
-                  className="w-5 h-5 rounded-full bg-[#4299e1]"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ 
-                    repeat: Infinity, 
-                    duration: 2,
-                    delay: 0.6,
-                    ease: "easeInOut"
-                  }}
-                />
-              </div>
-            </motion.div>
-            
-            <motion.h1 
-              className="text-6xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#ea384c] via-[#4299e1] to-[#4ade80]"
-              animate={{ 
-                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-              }}
-              transition={{ 
-                duration: 5, 
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              style={{
-                backgroundSize: "200% auto"
-              }}
-            >
-              zuup
-            </motion.h1>
+            <motion.img 
+              src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png"
+              alt="Zuup Logo"
+              className="h-24 w-auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            />
           </motion.div>
           
           <div className="flex space-x-2 mb-6">
