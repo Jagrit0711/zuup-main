@@ -6,6 +6,7 @@ import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
 import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
+import DonationSection from '../components/DonationSection';
 import { useToast } from '../components/ui/use-toast';
 
 const Index = () => {
@@ -32,11 +33,15 @@ const Index = () => {
         <Testimonials />
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="contact">
+      <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="donate">
+        <DonationSection />
+      </section>
+
+      <section className="py-20 bg-gradient-to-b from-gray-900 to-black" id="contact">
         <Contact />
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-gray-900 to-black" id="cta">
+      <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="cta">
         <CallToAction />
       </section>
 
