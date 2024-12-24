@@ -10,18 +10,11 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <a href="/" className="flex items-center space-x-1 group">
-              {/* Enhanced Logo dots with animation */}
-              <div className="flex transition-transform duration-300 group-hover:scale-110">
-                <div className="w-2 h-2 rounded-full bg-[#ea384c] animate-pulse" />
-                <div className="flex ml-1">
-                  <div className="w-2 h-2 rounded-full bg-[#4299e1] mr-0.5 animate-pulse delay-75" />
-                  <div className="w-2 h-2 rounded-full bg-[#4299e1] animate-pulse delay-150" />
-                </div>
-              </div>
-              {/* Logo text with gradient */}
-              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#ea384c] to-[#4299e1] transition-transform duration-300 group-hover:scale-110">
-                zuup
-              </span>
+              <img 
+                src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png"
+                alt="Zuup Logo"
+                className="h-8 w-auto transition-transform duration-300 group-hover:scale-110"
+              />
             </a>
           </div>
           
