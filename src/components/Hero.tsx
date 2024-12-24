@@ -22,7 +22,7 @@ const Hero = () => {
             <motion.img 
               src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png"
               alt="Zuup Logo"
-              className="h-24 w-auto"
+              className="h-40 w-auto" // Increased from h-24 to h-40
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
