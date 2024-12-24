@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+/* Hide default cursor */
+* {
+  cursor: none !important;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
