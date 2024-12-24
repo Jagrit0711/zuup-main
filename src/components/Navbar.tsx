@@ -7,13 +7,13 @@ const Navbar = () => {
   return (
     <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
             <a href="/" className="flex items-center space-x-1 group">
               <img 
                 src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png"
                 alt="Zuup Logo"
-                className="h-8 w-auto transition-transform duration-300 group-hover:scale-110"
+                className="h-16 w-auto transition-transform duration-300 group-hover:scale-110"
               />
             </a>
           </div>
