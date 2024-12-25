@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +38,9 @@ const Navbar = () => {
             <div className="ml-10 flex items-baseline space-x-4">
               <NavLink href="#about">About Us</NavLink>
               <NavLink href="#contact">Contact</NavLink>
+              <Link to="/team" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Our Team
+              </Link>
             </div>
           </div>
           
@@ -67,6 +71,9 @@ const Navbar = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <MobileNavLink href="#about">About Us</MobileNavLink>
             <MobileNavLink href="#contact">Contact</MobileNavLink>
+            <Link to="/team" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
+              Our Team
+            </Link>
           </div>
         </motion.div>
       )}
