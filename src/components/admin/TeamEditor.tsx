@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { Trash2, Plus, Upload } from 'lucide-react';
 
 interface TeamMember {
@@ -88,6 +88,18 @@ const TeamEditor = () => {
   const { globalTeamMembers, setGlobalTeamMembers } = useTeamMembers();
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
+  // Add event listener for storage changes
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'teamMembers' && e.newValue) {
+        setGlobalTeamMembers(JSON.parse(e.newValue));
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [setGlobalTeamMembers]);
+
   const handleAddMember = () => {
     const newMember: TeamMember = {
       id: Date.now(),
@@ -95,7 +107,9 @@ const TeamEditor = () => {
       role: "",
       description: "",
     };
-    setGlobalTeamMembers([...globalTeamMembers, newMember]);
+    const updatedMembers = [...globalTeamMembers, newMember];
+    setGlobalTeamMembers(updatedMembers);
+    localStorage.setItem('teamMembers', JSON.stringify(updatedMembers));
     setHasUnsavedChanges(true);
   };
 
@@ -104,12 +118,14 @@ const TeamEditor = () => {
       member.id === id ? { ...member, [field]: value } : member
     );
     setGlobalTeamMembers(updatedMembers);
+    localStorage.setItem('teamMembers', JSON.stringify(updatedMembers));
     setHasUnsavedChanges(true);
   };
 
   const handleDeleteMember = (id: number) => {
     const updatedMembers = globalTeamMembers.filter(member => member.id !== id);
     setGlobalTeamMembers(updatedMembers);
+    localStorage.setItem('teamMembers', JSON.stringify(updatedMembers));
     setHasUnsavedChanges(true);
     toast({
       title: "Team member removed",
@@ -126,6 +142,7 @@ const TeamEditor = () => {
           member.id === id ? { ...member, image: reader.result as string } : member
         );
         setGlobalTeamMembers(updatedMembers);
+        localStorage.setItem('teamMembers', JSON.stringify(updatedMembers));
         setHasUnsavedChanges(true);
       };
       reader.readAsDataURL(file);
@@ -135,12 +152,12 @@ const TeamEditor = () => {
   const handleSaveChanges = () => {
     localStorage.setItem('teamMembers', JSON.stringify(globalTeamMembers));
     setHasUnsavedChanges(false);
+    // Dispatch a custom event to notify other components
+    window.dispatchEvent(new Event('teamDataUpdated'));
     toast({
       title: "Changes saved",
       description: "Team member information has been updated successfully.",
     });
-    // Force a reload of the Team page if it's currently open
-    window.dispatchEvent(new Event('teamDataUpdated'));
   };
 
   return (

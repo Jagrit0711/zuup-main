@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useToast } from '@/components/ui/use-toast';
+import { useState, useEffect } from 'react';
+import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const ContactEditor = () => {
@@ -11,8 +11,30 @@ const ContactEditor = () => {
     email2: "jagrit0711@gmail.com"
   });
 
+  // Load saved contact info on mount
+  useEffect(() => {
+    const savedInfo = localStorage.getItem('contactInfo');
+    if (savedInfo) {
+      setContactInfo(JSON.parse(savedInfo));
+    }
+  }, []);
+
+  // Listen for changes from other tabs/windows
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'contactInfo' && e.newValue) {
+        setContactInfo(JSON.parse(e.newValue));
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   const handleSave = () => {
-    // In a real app, this would save to a backend
+    localStorage.setItem('contactInfo', JSON.stringify(contactInfo));
+    // Dispatch event for other components
+    window.dispatchEvent(new Event('contactInfoUpdated'));
     toast({
       title: "Changes saved",
       description: "Contact information has been updated successfully.",

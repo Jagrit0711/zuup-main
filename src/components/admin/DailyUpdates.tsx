@@ -10,11 +10,26 @@ const DailyUpdates = ({ currentUser }: { currentUser: string }) => {
   const [updates, setUpdates] = useState<DailyUpdate[]>([]);
   const [newUpdate, setNewUpdate] = useState('');
 
+  // Load all updates on mount and listen for changes
   useEffect(() => {
-    const savedUpdates = localStorage.getItem('dailyUpdates');
-    if (savedUpdates) {
-      setUpdates(JSON.parse(savedUpdates));
-    }
+    const loadUpdates = () => {
+      const savedUpdates = localStorage.getItem('dailyUpdates');
+      if (savedUpdates) {
+        setUpdates(JSON.parse(savedUpdates));
+      }
+    };
+
+    loadUpdates();
+    
+    // Listen for changes from other tabs/windows
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'dailyUpdates') {
+        loadUpdates();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const handleSubmitUpdate = () => {

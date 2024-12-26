@@ -13,11 +13,26 @@ const DonationTracker = ({ currentUser }: { currentUser: string }) => {
   const [description, setDescription] = useState('');
   const [screenshot, setScreenshot] = useState<string>('');
 
+  // Load all donations on mount and listen for changes
   useEffect(() => {
-    const savedDonations = localStorage.getItem('donations');
-    if (savedDonations) {
-      setDonations(JSON.parse(savedDonations));
-    }
+    const loadDonations = () => {
+      const savedDonations = localStorage.getItem('donations');
+      if (savedDonations) {
+        setDonations(JSON.parse(savedDonations));
+      }
+    };
+
+    loadDonations();
+    
+    // Listen for changes from other tabs/windows
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'donations') {
+        loadDonations();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
