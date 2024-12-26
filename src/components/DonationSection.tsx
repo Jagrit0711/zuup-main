@@ -1,9 +1,27 @@
 import { Heart } from 'lucide-react';
+import { useEffect } from 'react';
 
 const DonationSection = () => {
-  const handleDonateClick = () => {
-    window.open('https://rzp.io/rzp/gaRST27V', '_blank');
-  };
+  useEffect(() => {
+    // Load Razorpay script dynamically
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/payment-button.js';
+    script.setAttribute('data-payment_button_id', 'pl_PbURC7JG32Etib');
+    script.async = true;
+    
+    // Find the form element and append the script
+    const form = document.getElementById('razorpay-form');
+    if (form) {
+      form.appendChild(script);
+    }
+
+    // Cleanup
+    return () => {
+      if (form && script) {
+        form.removeChild(script);
+      }
+    };
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -21,13 +39,9 @@ const DonationSection = () => {
             Your contribution helps us empower underprivileged kids through freelancing opportunities. Every donation makes a difference in shaping their future.
           </p>
           
-          <button
-            onClick={handleDonateClick}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
-          >
-            <Heart className="h-5 w-5" />
-            Donate Now
-          </button>
+          <form id="razorpay-form" className="inline-block">
+            {/* Razorpay script will inject the payment button here */}
+          </form>
         </div>
       </div>
     </div>
