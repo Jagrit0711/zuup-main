@@ -6,29 +6,9 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type Database = {
+export interface Database {
   public: {
     Tables: {
-      team_members: {
-        Row: {
-          id: number
-          name: string
-          role: string
-          description: string
-          linkedin: string | null
-          image: string | null
-          created_at: string
-        }
-        Insert: {
-          id?: number
-          name: string
-          role: string
-          description: string
-          linkedin?: string | null
-          image?: string | null
-          created_at?: string
-        }
-      }
       daily_updates: {
         Row: {
           id: string
@@ -43,6 +23,26 @@ export type Database = {
           content: string
           created_at?: string
           user_name: string
+        }
+      }
+      team_members: {
+        Row: {
+          id: string
+          name: string
+          role: string
+          description: string
+          linkedin: string | null
+          image: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          role: string
+          description: string
+          linkedin?: string | null
+          image?: string | null
+          created_at?: string
         }
       }
       donations: {
@@ -67,7 +67,7 @@ export type Database = {
       }
       contact_info: {
         Row: {
-          id: number
+          id: string
           phone1: string
           phone2: string
           email1: string
@@ -75,7 +75,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          id?: number
+          id?: string
           phone1: string
           phone2: string
           email1: string

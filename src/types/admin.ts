@@ -22,3 +22,20 @@ export interface DonationEntry {
   userName: string;
   description: string;
 }
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  description: string;
+  linkedin?: string;
+  image?: string;
+}
+
+export interface ContactInfo {
+  id: string;
+  phone1: string;
+  phone2: string;
+  email1: string;
+  email2: string;
+}
