@@ -79,21 +79,21 @@ const DailyUpdates = ({ currentUser }: { currentUser: string }) => {
 
   return (
     <div className="space-y-6">
-      <Card className="bg-gray-900 border-gray-800">
+      <Card className="bg-gray-900 border-gray-800 hover:bg-gray-900/80 transition-colors">
         <CardHeader>
-          <CardTitle className="text-white">Post Daily Update</CardTitle>
+          <CardTitle className="text-white">Post Team Update</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <textarea
               value={newUpdate}
               onChange={(e) => setNewUpdate(e.target.value)}
-              placeholder="What did you work on today?"
-              className="w-full h-32 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white resize-none"
+              placeholder="Share your progress with the team..."
+              className="w-full h-32 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white resize-none focus:ring-2 focus:ring-[#FF6D59] focus:border-transparent transition-all"
             />
             <Button 
               onClick={handleSubmitUpdate}
-              className="bg-[#FF6D59] hover:bg-[#ff8574]"
+              className="bg-[#FF6D59] hover:bg-[#ff8574] transition-colors"
               disabled={addUpdateMutation.isPending}
             >
               {addUpdateMutation.isPending ? 'Posting...' : 'Post Update'}
@@ -104,7 +104,7 @@ const DailyUpdates = ({ currentUser }: { currentUser: string }) => {
 
       <div className="space-y-4">
         {updates.map((update) => (
-          <Card key={update.id} className="bg-gray-900 border-gray-800">
+          <Card key={update.id} className="bg-gray-900 border-gray-800 hover:bg-gray-900/80 transition-colors">
             <CardContent className="pt-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
