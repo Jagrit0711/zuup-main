@@ -27,6 +27,7 @@ const DonationForm = ({ currentUser }: DonationFormProps) => {
         .insert([{
           user_id: newDonation.userId,
           amount: newDonation.amount,
+          screenshot_url: 'https://placeholder.com/donation-placeholder.png', // Default placeholder URL
           user_name: newDonation.userName,
           description: newDonation.description
         }])
