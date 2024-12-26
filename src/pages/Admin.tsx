@@ -1,14 +1,10 @@
 import { useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Lock } from 'lucide-react';
 import TeamEditor from '@/components/admin/TeamEditor';
 import ContactEditor from '@/components/admin/ContactEditor';
-import LogoEditor from '@/components/admin/LogoEditor';
-import NavLinksEditor from '@/components/admin/NavLinksEditor';
-import TextEditor from '@/components/admin/TextEditor';
-import ChatUrlEditor from '@/components/admin/ChatUrlEditor';
 import SiteStats from '@/components/admin/SiteStats';
+import { Lock } from 'lucide-react';
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -17,6 +13,7 @@ const Admin = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    // Simple password check - in a real app, this should be more secure
     if (password === 'admin123') {
       setIsAuthenticated(true);
       toast({
@@ -64,41 +61,15 @@ const Admin = () => {
     <div className="min-h-screen bg-black p-4 md:p-8">
       <h1 className="text-3xl font-bold text-white mb-8">Admin Dashboard</h1>
       
-      <Tabs defaultValue="branding" className="space-y-8">
+      <Tabs defaultValue="stats" className="space-y-8">
         <TabsList className="bg-gray-900">
-          <TabsTrigger value="branding">Branding</TabsTrigger>
-          <TabsTrigger value="navigation">Navigation</TabsTrigger>
-          <TabsTrigger value="content">Content</TabsTrigger>
-          <TabsTrigger value="team">Team</TabsTrigger>
-          <TabsTrigger value="contact">Contact</TabsTrigger>
-          <TabsTrigger value="stats">Statistics</TabsTrigger>
+          <TabsTrigger value="stats">Site Statistics</TabsTrigger>
+          <TabsTrigger value="team">Team Management</TabsTrigger>
+          <TabsTrigger value="contact">Contact Information</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="branding" className="space-y-8">
-          <LogoEditor />
-          <ChatUrlEditor />
-        </TabsContent>
-
-        <TabsContent value="navigation">
-          <NavLinksEditor />
-        </TabsContent>
-
-        <TabsContent value="content" className="space-y-8">
-          <TextEditor
-            title="Home Page Content"
-            initialContent="By Youth, For All Generations"
-            storageKey="homeContent"
-          />
-          <TextEditor
-            title="About Text"
-            initialContent="We're a group of passionate teenagers on a mission to make digital skills and opportunities accessible to everyone."
-            storageKey="aboutContent"
-          />
-          <TextEditor
-            title="Terms and Conditions"
-            initialContent="Welcome to Zuup! By using our website, services, or engaging with our initiatives..."
-            storageKey="termsContent"
-          />
+        <TabsContent value="stats">
+          <SiteStats />
         </TabsContent>
 
         <TabsContent value="team">
@@ -107,10 +78,6 @@ const Admin = () => {
 
         <TabsContent value="contact">
           <ContactEditor />
-        </TabsContent>
-
-        <TabsContent value="stats">
-          <SiteStats />
         </TabsContent>
       </Tabs>
     </div>
