@@ -19,43 +19,25 @@ const SiteStats = () => {
     }
   });
 
-  const { data: viewsData = [] } = useQuery({
-    queryKey: ['page-views'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('page_views')
-        .select('*')
-        .order('date', { ascending: true });
-      
-      if (error) throw error;
-      return data || [];
-    }
-  });
+  // Mock data for admin donations
+  const adminDonations = [
+    { name: 'Jagrit', amount: 25000 },
+    { name: 'Advitey', amount: 18000 },
+    { name: 'Rahul', amount: 15000 },
+    { name: 'Priya', amount: 12000 },
+    { name: 'Amit', amount: 10000 }
+  ];
 
-  const { data: adminDonations = [] } = useQuery({
-    queryKey: ['admin-donations'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('donations')
-        .select('user_name, amount')
-        .eq('is_admin', true)
-        .order('amount', { ascending: false });
-      
-      if (error) throw error;
-      
-      // Group donations by admin
-      const groupedDonations = data?.reduce((acc, curr) => {
-        acc[curr.user_name] = (acc[curr.user_name] || 0) + curr.amount;
-        return acc;
-      }, {});
-      
-      // Convert to array format for chart
-      return Object.entries(groupedDonations || {}).map(([name, amount]) => ({
-        name,
-        amount
-      }));
-    }
-  });
+  // Mock data for page views (25-100 range)
+  const viewsData = [
+    { date: '1 Mar', views: 45 },
+    { date: '2 Mar', views: 68 },
+    { date: '3 Mar', views: 32 },
+    { date: '4 Mar', views: 89 },
+    { date: '5 Mar', views: 57 },
+    { date: '6 Mar', views: 95 },
+    { date: '7 Mar', views: 43 }
+  ];
 
   const totalDonations = donations.reduce((acc, curr) => acc + curr.amount, 0);
   const totalViews = viewsData.reduce((acc, curr) => acc + curr.views, 0);
@@ -95,7 +77,7 @@ const SiteStats = () => {
       <div className="grid grid-cols-1 gap-6">
         <Card className="bg-gray-900 border-gray-800">
           <CardHeader>
-            <CardTitle className="text-gray-100">Admin Donation Collections</CardTitle>
+            <CardTitle className="text-gray-100">Donation Collections</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
@@ -110,6 +92,7 @@ const SiteStats = () => {
                   <YAxis 
                     stroke="#9CA3AF"
                     tick={{ fill: '#9CA3AF' }}
+                    tickFormatter={(value) => `₹${value}`}
                   />
                   <Tooltip
                     contentStyle={{
@@ -118,6 +101,7 @@ const SiteStats = () => {
                       borderRadius: '8px',
                       color: '#F3F4F6'
                     }}
+                    formatter={(value) => [`₹${value}`, 'Amount']}
                   />
                   <Bar 
                     dataKey="amount" 
@@ -160,6 +144,8 @@ const SiteStats = () => {
                   <YAxis 
                     stroke="#9CA3AF"
                     tick={{ fill: '#9CA3AF' }}
+                    domain={[0, 100]}
+                    tickCount={6}
                   />
                   <Tooltip 
                     contentStyle={{ 
@@ -168,6 +154,7 @@ const SiteStats = () => {
                       borderRadius: '8px',
                       color: '#F3F4F6'
                     }}
+                    formatter={(value) => [`${value} views`, 'Views']}
                   />
                   <Area 
                     type="monotone" 
