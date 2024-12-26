@@ -9,7 +9,7 @@ const ThreeBackground = () => {
 
     // Scene setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
     const renderer = new THREE.WebGLRenderer({ 
       alpha: true, 
       antialias: true,
@@ -20,33 +20,39 @@ const ThreeBackground = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     containerRef.current.appendChild(renderer.domElement);
 
-    // Create particles
+    // Create galaxy particles
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 5000; // Increased particle count
+    const particlesCount = 15000; // Increased for more stars
     const posArray = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
     const sizes = new Float32Array(particlesCount);
 
+    // Create galaxy shape
     for (let i = 0; i < particlesCount * 3; i += 3) {
-      // Position
-      posArray[i] = (Math.random() - 0.5) * 15; // Increased spread
-      posArray[i + 1] = (Math.random() - 0.5) * 15;
-      posArray[i + 2] = (Math.random() - 0.5) * 5;
+      // Create spiral galaxy effect
+      const radius = Math.random() * 20;
+      const spinAngle = radius * 2;
+      const branchAngle = (Math.random() * Math.PI * 2) / 3;
 
-      // Color - mix between green and blue
-      colors[i] = Math.random() * 0.3;     // R
-      colors[i + 1] = 0.5 + Math.random() * 0.5; // G
-      colors[i + 2] = 0.5 + Math.random() * 0.5; // B
+      posArray[i] = Math.cos(branchAngle + spinAngle) * radius; // x
+      posArray[i + 1] = (Math.random() - 0.5) * 3; // y
+      posArray[i + 2] = Math.sin(branchAngle + spinAngle) * radius; // z
 
-      // Size
-      sizes[i / 3] = Math.random() * 3; // Varied sizes
+      // White stars with slight color variation
+      const brightness = 0.8 + Math.random() * 0.2;
+      colors[i] = brightness;     // R
+      colors[i + 1] = brightness; // G
+      colors[i + 2] = brightness + Math.random() * 0.2; // B - slightly blue tint
+
+      // Varied star sizes
+      sizes[i / 3] = Math.random() * 2;
     }
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-    // Create material with custom shader
+    // Enhanced shader material for better star appearance
     const particlesMaterial = new THREE.ShaderMaterial({
       vertexShader: `
         attribute float size;
@@ -61,10 +67,10 @@ const ThreeBackground = () => {
       fragmentShader: `
         varying vec3 vColor;
         void main() {
-          float strength = distance(gl_PointCoord, vec2(0.5));
-          strength = 1.0 - strength;
-          strength = pow(strength, 3.0);
+          float distanceToCenter = distance(gl_PointCoord, vec2(0.5));
+          float strength = 1.0 - smoothstep(0.0, 0.5, distanceToCenter);
           vec3 color = mix(vec3(0.0), vColor, strength);
+          if (strength < 0.1) discard;
           gl_FragColor = vec4(color, strength);
         }
       `,
@@ -79,7 +85,7 @@ const ThreeBackground = () => {
     scene.add(particlesMesh);
 
     // Position camera
-    camera.position.z = 5;
+    camera.position.z = 25;
 
     // Mouse movement effect
     let mouseX = 0;
@@ -101,19 +107,20 @@ const ThreeBackground = () => {
       requestAnimationFrame(animate);
       const elapsedTime = clock.getElapsedTime();
 
-      // Smooth mouse follow
-      targetX += (mouseX - targetX) * 0.02;
-      targetY += (mouseY - targetY) * 0.02;
+      // Smooth camera movement
+      targetX += (mouseX - targetX) * 0.01;
+      targetY += (mouseY - targetY) * 0.01;
 
-      particlesMesh.rotation.y = targetX * 0.5;
+      // Rotate galaxy
+      particlesMesh.rotation.y = elapsedTime * 0.05 + targetX * 0.5;
       particlesMesh.rotation.x = targetY * 0.5;
 
-      // Wave animation
+      // Gentle wave animation
       const positions = particlesGeometry.attributes.position.array as Float32Array;
       for (let i = 0; i < positions.length; i += 3) {
         const x = positions[i];
         const z = positions[i + 2];
-        positions[i + 1] = Math.sin(elapsedTime + x + z) * 0.5;
+        positions[i + 1] += Math.sin(elapsedTime + x + z) * 0.001;
       }
       particlesGeometry.attributes.position.needsUpdate = true;
 
