@@ -6,6 +6,7 @@ import ContactEditor from '@/components/admin/ContactEditor';
 import SiteStats from '@/components/admin/SiteStats';
 import DailyUpdates from '@/components/admin/DailyUpdates';
 import DonationTracker from '@/components/admin/DonationTracker';
+import TeamChat from '@/components/admin/TeamChat';
 import { Lock, LogOut, User, Bell } from 'lucide-react';
 import { adminUsers } from '@/data/adminUsers';
 import { AdminUser } from '@/types/admin';
@@ -150,6 +151,12 @@ const Admin = () => {
               Site Statistics
             </TabsTrigger>
             <TabsTrigger 
+              value="chat"
+              className="data-[state=active]:bg-[#FF6D59] data-[state=active]:text-white"
+            >
+              Team Chat
+            </TabsTrigger>
+            <TabsTrigger 
               value="updates"
               className="data-[state=active]:bg-[#FF6D59] data-[state=active]:text-white"
             >
@@ -161,7 +168,7 @@ const Admin = () => {
             >
               Donations
             </TabsTrigger>
-            {currentUser.role === 'super_admin' && (
+            {currentUser?.role === 'super_admin' && (
               <>
                 <TabsTrigger 
                   value="team"
@@ -182,6 +189,10 @@ const Admin = () => {
           <div className="bg-gray-800/30 rounded-lg border border-gray-700 p-6">
             <TabsContent value="stats">
               <SiteStats />
+            </TabsContent>
+
+            <TabsContent value="chat">
+              <TeamChat currentUser={currentUser?.username || ''} />
             </TabsContent>
 
             <TabsContent value="updates">
