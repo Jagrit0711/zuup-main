@@ -11,7 +11,10 @@ if (!supabaseUrl || !supabaseKey) {
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 
-// Test the connection
-void supabase.from('daily_updates').select('count').single()
+// Test the connection using a simple query that will work even if the table is empty
+void supabase
+  .from('daily_updates')
+  .select('*')
+  .limit(1)
   .then(() => console.log('Successfully connected to Supabase!'))
   .catch((error) => console.error('Supabase connection error:', error));
