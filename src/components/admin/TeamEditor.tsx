@@ -30,51 +30,50 @@ export const useTeamMembers = () => {
           description: "Leading Zuup's mission to empower underprivileged kids and senior citizens through freelancing opportunities.",
           linkedin: "https://www.linkedin.com/in/jagritsachdev",
         },
-    {
-      id: 2,
-      name: "Advitya Bhardwaj",
-      role: "Social Media Manager",
-      description: "Managing Zuup's social media presence and community engagement strategies.",
-      linkedin: "https://www.linkedin.com/in/advithya-bhardwaj-05412a313/",
-    },
-    {
-      id: 3,
-      name: "Vartika Dahiya",
-      role: "Spokesperson & Donation Manager",
-      description: "Representing Zuup and managing donation initiatives to support our cause.",
-      linkedin: "https://www.linkedin.com/in/vartika-dahiya-91b91a312/",
-    },
-    {
-      id: 4,
-      name: "Vanshika Bhatt",
-      role: "Spokesperson & Task Force Member",
-      description: "Representing Zuup and contributing to our mission through task force initiatives.",
-    },
-    {
-      id: 5,
-      name: "Geetanshu Gupta",
-      role: "Secondary Director",
-      description: "Supporting Zuup's strategic direction and operational excellence.",
-    },
-    {
-      id: 6,
-      name: "Sanyam Garg",
-      role: "Spokesperson & Task Force Member",
-      description: "Contributing to Zuup's mission through communication and task force activities.",
-    },
-    {
-      id: 7,
-      name: "Shourya",
-      role: "Social Media Designer",
-      description: "Creating engaging visual content for Zuup's social media presence.",
-    },
-    {
-      id: 8,
-      name: "Kartikey Singhal",
-      role: "Donation Manager",
-      description: "Managing and optimizing Zuup's donation processes and initiatives.",
-    },
-  ]);
+        {
+          id: 2,
+          name: "Advitya Bhardwaj",
+          role: "Social Media Manager",
+          description: "Managing Zuup's social media presence and community engagement strategies.",
+          linkedin: "https://www.linkedin.com/in/advithya-bhardwaj-05412a313/",
+        },
+        {
+          id: 3,
+          name: "Vartika Dahiya",
+          role: "Spokesperson & Donation Manager",
+          description: "Representing Zuup and managing donation initiatives to support our cause.",
+          linkedin: "https://www.linkedin.com/in/vartika-dahiya-91b91a312/",
+        },
+        {
+          id: 4,
+          name: "Vanshika Bhatt",
+          role: "Spokesperson & Task Force Member",
+          description: "Representing Zuup and contributing to our mission through task force initiatives.",
+        },
+        {
+          id: 5,
+          name: "Geetanshu Gupta",
+          role: "Secondary Director",
+          description: "Supporting Zuup's strategic direction and operational excellence.",
+        },
+        {
+          id: 6,
+          name: "Sanyam Garg",
+          role: "Spokesperson & Task Force Member",
+          description: "Contributing to Zuup's mission through communication and task force activities.",
+        },
+        {
+          id: 7,
+          name: "Shourya",
+          role: "Social Media Designer",
+          description: "Creating engaging visual content for Zuup's social media presence.",
+        },
+        {
+          id: 8,
+          name: "Kartikey Singhal",
+          role: "Donation Manager",
+          description: "Managing and optimizing Zuup's donation processes and initiatives.",
+        }
       ];
       setGlobalTeamMembers(defaultMembers);
       localStorage.setItem('teamMembers', JSON.stringify(defaultMembers));
