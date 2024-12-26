@@ -3,112 +3,81 @@ import * as THREE from 'three';
 
 const ThreeBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  console.log('ThreeBackground component mounted');
 
   useEffect(() => {
     if (!containerRef.current) return;
+    console.log('Setting up Three.js scene');
 
     // Scene setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
     const renderer = new THREE.WebGLRenderer({ 
-      alpha: true, 
-      antialias: true,
-      powerPreference: "high-performance"
+      alpha: true,
+      antialias: true 
     });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     containerRef.current.appendChild(renderer.domElement);
 
-    // Create galaxy particles
+    // Create particles for galaxy
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 25000;
+    const particlesCount = 15000;
     const posArray = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
-    const sizes = new Float32Array(particlesCount);
 
-    // Create galaxy shape with multiple arms
+    // Generate galaxy shape
     for (let i = 0; i < particlesCount * 3; i += 3) {
-      // Create spiral galaxy effect with multiple arms
-      const radius = Math.random() * 30;
-      const spinAngle = radius * 2.5;
-      const branchAngle = ((Math.PI * 2) / 4) * Math.floor(Math.random() * 4); // 4 spiral arms
-      const randomOffset = (Math.random() - 0.5) * (3 - radius / 5) * 0.3;
+      // Create spiral galaxy effect
+      const radius = Math.random() * 20;
+      const spinAngle = radius * 2;
+      const branchAngle = (Math.PI * 2 / 3) * Math.floor(Math.random() * 3);
 
-      const x = Math.cos(branchAngle + spinAngle) * radius + randomOffset;
-      const y = (Math.random() - 0.5) * 2 + randomOffset;
-      const z = Math.sin(branchAngle + spinAngle) * radius + randomOffset;
+      const x = Math.cos(branchAngle + spinAngle) * radius;
+      const y = (Math.random() - 0.5) * 3;
+      const z = Math.sin(branchAngle + spinAngle) * radius;
 
       posArray[i] = x;
       posArray[i + 1] = y;
       posArray[i + 2] = z;
 
-      // Create color variation (blues, purples, and whites)
-      const mixedColor = new THREE.Color();
-      const color1 = new THREE.Color(0x4299e1); // Blue
-      const color2 = new THREE.Color(0x9f7aea); // Purple
-      const color3 = new THREE.Color(0xffffff); // White
-
-      const randomColor = Math.random();
-      if (randomColor < 0.3) {
-        mixedColor.copy(color1);
-      } else if (randomColor < 0.6) {
-        mixedColor.copy(color2);
+      // Color variation (blue, purple, white)
+      const color = new THREE.Color();
+      const colorChoice = Math.random();
+      
+      if (colorChoice < 0.3) {
+        color.setHSL(0.6, 0.8, 0.8); // Blue
+      } else if (colorChoice < 0.6) {
+        color.setHSL(0.75, 0.8, 0.8); // Purple
       } else {
-        mixedColor.copy(color3);
+        color.setHSL(0, 0, 1); // White
       }
 
-      // Add slight color variation based on distance from center
-      const distanceFromCenter = Math.sqrt(x * x + y * y + z * z);
-      const colorIntensity = 1 - (distanceFromCenter / 30) * 0.5;
-
-      colors[i] = mixedColor.r * colorIntensity;
-      colors[i + 1] = mixedColor.g * colorIntensity;
-      colors[i + 2] = mixedColor.b * colorIntensity;
-
-      // Varied star sizes based on distance from center
-      sizes[i / 3] = Math.random() * (1 - (distanceFromCenter / 30) * 0.5) * 3;
+      colors[i] = color.r;
+      colors[i + 1] = color.g;
+      colors[i + 2] = color.b;
     }
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-    // Enhanced shader material for better star appearance
-    const particlesMaterial = new THREE.ShaderMaterial({
-      vertexShader: `
-        attribute float size;
-        varying vec3 vColor;
-        void main() {
-          vColor = color;
-          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = size * (500.0 / -mvPosition.z);
-          gl_Position = projectionMatrix * mvPosition;
-        }
-      `,
-      fragmentShader: `
-        varying vec3 vColor;
-        void main() {
-          float distanceToCenter = length(gl_PointCoord - vec2(0.5));
-          float strength = 1.0 - smoothstep(0.0, 0.5, distanceToCenter);
-          vec3 color = mix(vec3(0.0), vColor, strength);
-          if (strength < 0.05) discard;
-          gl_FragColor = vec4(color, strength);
-        }
-      `,
-      transparent: true,
+    // Material for particles
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.1,
       vertexColors: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending
     });
 
-    // Create mesh
+    // Create particle system
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
     scene.add(particlesMesh);
 
     // Position camera
-    camera.position.z = 35;
-    camera.position.y = 15;
+    camera.position.z = 25;
+    camera.position.y = 5;
     camera.lookAt(0, 0, 0);
 
     // Mouse movement effect
@@ -128,15 +97,12 @@ const ThreeBackground = () => {
     const clock = new THREE.Clock();
 
     const animate = () => {
-      requestAnimationFrame(animate);
       const elapsedTime = clock.getElapsedTime();
 
       // Smooth camera movement
-      targetX += (mouseX - targetX) * 0.02;
-      targetY += (mouseY - targetY) * 0.02;
-
-      // Rotate galaxy
-      particlesMesh.rotation.y = elapsedTime * 0.05 + targetX * 0.5;
+      targetX = mouseX * 0.2;
+      targetY = mouseY * 0.2;
+      particlesMesh.rotation.y = elapsedTime * 0.05 + targetX;
       particlesMesh.rotation.x = targetY * 0.3;
 
       // Gentle wave animation
@@ -144,16 +110,17 @@ const ThreeBackground = () => {
       for (let i = 0; i < positions.length; i += 3) {
         const x = positions[i];
         const z = positions[i + 2];
-        positions[i + 1] += Math.sin(elapsedTime + x + z) * 0.002;
+        positions[i + 1] += Math.sin(elapsedTime + x + z) * 0.001;
       }
       particlesGeometry.attributes.position.needsUpdate = true;
 
       renderer.render(scene, camera);
+      requestAnimationFrame(animate);
     };
 
     animate();
 
-    // Handle resize
+    // Handle window resize
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -164,6 +131,7 @@ const ThreeBackground = () => {
 
     // Cleanup
     return () => {
+      console.log('Cleaning up Three.js scene');
       if (containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
       }
