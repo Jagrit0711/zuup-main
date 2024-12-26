@@ -27,7 +27,7 @@ export const useTeamMembers = () => {
     }
 
     if (data) {
-      setTeamMembers(data);
+      setTeamMembers(data as TeamMember[]);
     }
   };
 
@@ -67,7 +67,7 @@ export const useTeamMembers = () => {
     await loadTeamMembers();
   };
 
-  const addTeamMember = async (member: Omit<TeamMember, 'id'>) => {
+  const addTeamMember = async (member: Omit<TeamMember, 'id' | 'created_at'>) => {
     const { error } = await supabase
       .from('team_members')
       .insert([member]);

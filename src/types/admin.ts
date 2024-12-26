@@ -30,6 +30,7 @@ export interface TeamMember {
   description: string;
   linkedin?: string;
   image?: string;
+  created_at?: string;
 }
 
 export interface ContactInfo {
