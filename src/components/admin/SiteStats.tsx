@@ -3,6 +3,7 @@ import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { Eye, DollarSign } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
+import { format, eachDayOfInterval, startOfDay, endOfDay } from 'date-fns';
 
 const SiteStats = () => {
   const { data: donations = [] } = useQuery({
@@ -11,33 +12,42 @@ const SiteStats = () => {
       const { data, error } = await supabase
         .from('donations')
         .select('*')
-        .order('amount', { ascending: false })
-        .limit(10);
+        .order('created_at', { ascending: false });
       
       if (error) throw error;
       return data || [];
     }
   });
 
-  // Mock data for admin donations
-  const adminDonations = [
-    { name: 'Jagrit', amount: 25000 },
-    { name: 'Advitey', amount: 18000 },
-    { name: 'Rahul', amount: 15000 },
-    { name: 'Priya', amount: 12000 },
-    { name: 'Amit', amount: 10000 }
-  ];
+  // Generate dates from December 2nd to current date
+  const startDate = new Date('2023-12-02');
+  const endDate = new Date();
+  
+  const dateRange = eachDayOfInterval({ start: startDate, end: endDate });
+  
+  // Generate mock views data for each day (25-100 range)
+  const viewsData = dateRange.map(date => ({
+    date: format(date, 'MMM d'),
+    views: Math.floor(Math.random() * (100 - 25 + 1)) + 25
+  }));
 
-  // Mock data for page views (25-100 range)
-  const viewsData = [
-    { date: '1 Mar', views: 45 },
-    { date: '2 Mar', views: 68 },
-    { date: '3 Mar', views: 32 },
-    { date: '4 Mar', views: 89 },
-    { date: '5 Mar', views: 57 },
-    { date: '6 Mar', views: 95 },
-    { date: '7 Mar', views: 43 }
-  ];
+  // Group donations by user and calculate total amount
+  const donationsByUser = donations.reduce((acc, curr) => {
+    if (!acc[curr.user_name]) {
+      acc[curr.user_name] = 0;
+    }
+    acc[curr.user_name] += curr.amount;
+    return acc;
+  }, {});
+
+  // Convert to array format for chart
+  const donationData = Object.entries(donationsByUser)
+    .map(([name, amount]) => ({
+      name,
+      amount: amount as number
+    }))
+    .sort((a, b) => b.amount - a.amount)
+    .slice(0, 5); // Show top 5 donors
 
   const totalDonations = donations.reduce((acc, curr) => acc + curr.amount, 0);
   const totalViews = viewsData.reduce((acc, curr) => acc + curr.views, 0);
@@ -82,7 +92,7 @@ const SiteStats = () => {
           <CardContent>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={adminDonations}>
+                <BarChart data={donationData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                   <XAxis 
                     dataKey="name" 
