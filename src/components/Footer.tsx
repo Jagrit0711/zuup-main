@@ -1,4 +1,5 @@
-import { Instagram, Linkedin, Mail, Phone } from 'lucide-react';
+import { Instagram, Linkedin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   console.log('Rendering Footer');
@@ -19,6 +20,11 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><a href="#about" className="text-gray-400 hover:text-[#FF6D59]">About Us</a></li>
               <li><a href="#contact" className="text-gray-400 hover:text-[#FF6D59]">Contact</a></li>
+              <li>
+                <Link to="/terms" className="text-gray-400 hover:text-[#FF6D59]">
+                  Terms & Conditions
+                </Link>
+              </li>
             </ul>
           </div>
           

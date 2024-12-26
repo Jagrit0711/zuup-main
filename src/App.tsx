@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import Index from "./pages/Index";
 import Team from "./pages/Team";
 import Admin from "./pages/Admin";
+import TermsAndConditions from "./pages/TermsAndConditions";
 import FloatingOverlay from "./components/FloatingOverlay";
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/team" element={<Team />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/terms" element={<TermsAndConditions />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
