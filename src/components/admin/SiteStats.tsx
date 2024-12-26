@@ -3,7 +3,7 @@ import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { Eye, DollarSign } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
-import { format, eachDayOfInterval, startOfDay, endOfDay } from 'date-fns';
+import { format, eachDayOfInterval } from 'date-fns';
 
 const SiteStats = () => {
   const { data: donations = [] } = useQuery({
@@ -19,9 +19,9 @@ const SiteStats = () => {
     }
   });
 
-  // Generate dates from December 2nd to current date
+  // Generate dates from December 2nd, 2023 to current date
   const startDate = new Date('2023-12-02');
-  const endDate = new Date();
+  const endDate = new Date(); // Current date
   
   const dateRange = eachDayOfInterval({ start: startDate, end: endDate });
   
