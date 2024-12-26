@@ -14,4 +14,4 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 // Test the connection
 supabase.from('daily_updates').select('count').single()
   .then(() => console.log('Successfully connected to Supabase!'))
-  .catch(error => console.error('Supabase connection error:', error));
+  .catch((error: Error) => console.error('Supabase connection error:', error));
