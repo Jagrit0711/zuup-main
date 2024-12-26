@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Eye, DollarSign } from 'lucide-react';
@@ -64,29 +63,29 @@ const SiteStats = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="bg-gradient-to-br from-indigo-500/20 to-purple-600/20 border-indigo-500/30 hover:scale-105 transition-transform duration-300">
+        <Card className="bg-gradient-to-br from-[#E5DEFF] to-[#9b87f5] border-[#9b87f5]/30 hover:scale-105 transition-transform duration-300">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="bg-indigo-500/20 p-3 rounded-lg">
-                <Eye className="h-6 w-6 text-indigo-400" />
+              <div className="bg-[#9b87f5]/20 p-3 rounded-lg">
+                <Eye className="h-6 w-6 text-[#6E59A5]" />
               </div>
               <div>
-                <p className="text-sm font-medium text-indigo-300">Total Views</p>
-                <h3 className="text-2xl font-bold text-indigo-50">{totalViews.toLocaleString()}</h3>
+                <p className="text-sm font-medium text-[#6E59A5]">Total Views</p>
+                <h3 className="text-2xl font-bold text-[#7E69AB]">{totalViews.toLocaleString()}</h3>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-rose-500/20 to-orange-500/20 border-rose-500/30 hover:scale-105 transition-transform duration-300">
+        <Card className="bg-gradient-to-br from-[#FEC6A1] to-[#F97316] border-[#F97316]/30 hover:scale-105 transition-transform duration-300">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="bg-rose-500/20 p-3 rounded-lg">
-                <DollarSign className="h-6 w-6 text-rose-400" />
+              <div className="bg-[#F97316]/20 p-3 rounded-lg">
+                <DollarSign className="h-6 w-6 text-[#F97316]" />
               </div>
               <div>
-                <p className="text-sm font-medium text-rose-300">Total Donations</p>
-                <h3 className="text-2xl font-bold text-rose-50">₹{totalDonations.toLocaleString()}</h3>
+                <p className="text-sm font-medium text-[#F97316]">Total Donations</p>
+                <h3 className="text-2xl font-bold text-[#F97316]">₹{totalDonations.toLocaleString()}</h3>
               </div>
             </div>
           </CardContent>
@@ -94,7 +93,7 @@ const SiteStats = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6">
-        <Card className="bg-gray-800/50 border-gray-700">
+        <Card className="bg-gray-900 border-gray-800">
           <CardHeader>
             <CardTitle className="text-gray-100">Admin Donation Collections</CardTitle>
           </CardHeader>
@@ -127,8 +126,8 @@ const SiteStats = () => {
                   >
                     <defs>
                       <linearGradient id="adminBarGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#4F46E5" stopOpacity={0.8}/>
-                        <stop offset="100%" stopColor="#4F46E5" stopOpacity={0.3}/>
+                        <stop offset="0%" stopColor="#9b87f5" stopOpacity={0.8}/>
+                        <stop offset="100%" stopColor="#9b87f5" stopOpacity={0.3}/>
                       </linearGradient>
                     </defs>
                   </Bar>
@@ -138,7 +137,7 @@ const SiteStats = () => {
           </CardContent>
         </Card>
 
-        <Card className="bg-gray-800/50 border-gray-700">
+        <Card className="bg-gray-900 border-gray-800">
           <CardHeader>
             <CardTitle className="text-gray-100">Views Over Time</CardTitle>
           </CardHeader>
@@ -148,8 +147,8 @@ const SiteStats = () => {
                 <AreaChart data={viewsData}>
                   <defs>
                     <linearGradient id="colorViews" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#4F46E5" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#9b87f5" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#9b87f5" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
@@ -173,7 +172,7 @@ const SiteStats = () => {
                   <Area 
                     type="monotone" 
                     dataKey="views" 
-                    stroke="#4F46E5"
+                    stroke="#9b87f5"
                     fill="url(#colorViews)"
                     strokeWidth={2}
                   />
