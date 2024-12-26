@@ -11,9 +11,9 @@ interface TeamMember {
   image?: string;
 }
 
-const TeamEditor = () => {
-  const { toast } = useToast();
-  const [members, setMembers] = useState<TeamMember[]>([
+// Create a global state to share team members data
+export const useTeamMembers = () => {
+  const [globalTeamMembers, setGlobalTeamMembers] = useState<TeamMember[]>([
     {
       id: 1,
       name: "Jagrit Sachdev",
@@ -67,6 +67,14 @@ const TeamEditor = () => {
     },
   ]);
 
+  return { globalTeamMembers, setGlobalTeamMembers };
+};
+
+const TeamEditor = () => {
+  const { toast } = useToast();
+  const { globalTeamMembers, setGlobalTeamMembers } = useTeamMembers();
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+
   const handleAddMember = () => {
     const newMember: TeamMember = {
       id: Date.now(),
@@ -74,17 +82,20 @@ const TeamEditor = () => {
       role: "",
       description: "",
     };
-    setMembers([...members, newMember]);
+    setGlobalTeamMembers([...globalTeamMembers, newMember]);
+    setHasUnsavedChanges(true);
   };
 
   const handleUpdateMember = (id: number, field: keyof TeamMember, value: string) => {
-    setMembers(members.map(member => 
+    setGlobalTeamMembers(members => members.map(member => 
       member.id === id ? { ...member, [field]: value } : member
     ));
+    setHasUnsavedChanges(true);
   };
 
   const handleDeleteMember = (id: number) => {
-    setMembers(members.filter(member => member.id !== id));
+    setGlobalTeamMembers(members => members.filter(member => member.id !== id));
+    setHasUnsavedChanges(true);
     toast({
       title: "Team member removed",
       description: "The team member has been deleted successfully.",
@@ -102,21 +113,41 @@ const TeamEditor = () => {
     }
   };
 
+  const handleSaveChanges = () => {
+    // In a real app, this would save to a backend
+    localStorage.setItem('teamMembers', JSON.stringify(globalTeamMembers));
+    setHasUnsavedChanges(false);
+    toast({
+      title: "Changes saved",
+      description: "Team member information has been updated successfully.",
+    });
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-white">Team Members</h2>
-        <button
-          onClick={handleAddMember}
-          className="flex items-center gap-2 bg-[#FF6D59] text-white px-4 py-2 rounded-lg hover:bg-[#ff8574] transition-colors"
-        >
-          <Plus size={20} />
-          Add Member
-        </button>
+        <div className="space-x-4">
+          <button
+            onClick={handleAddMember}
+            className="flex items-center gap-2 bg-[#FF6D59] text-white px-4 py-2 rounded-lg hover:bg-[#ff8574] transition-colors"
+          >
+            <Plus size={20} />
+            Add Member
+          </button>
+          {hasUnsavedChanges && (
+            <button
+              onClick={handleSaveChanges}
+              className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+            >
+              Save Changes
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="grid gap-6">
-        {members.map(member => (
+        {globalTeamMembers.map(member => (
           <div key={member.id} className="bg-gray-900 p-6 rounded-lg border border-gray-800">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
