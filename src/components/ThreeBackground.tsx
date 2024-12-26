@@ -22,30 +22,52 @@ const ThreeBackground = () => {
 
     // Create galaxy particles
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 15000; // Increased for more stars
+    const particlesCount = 25000; // Increased for more stars
     const posArray = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
     const sizes = new Float32Array(particlesCount);
 
-    // Create galaxy shape
+    // Create galaxy shape with multiple arms
     for (let i = 0; i < particlesCount * 3; i += 3) {
-      // Create spiral galaxy effect
-      const radius = Math.random() * 20;
-      const spinAngle = radius * 2;
-      const branchAngle = (Math.random() * Math.PI * 2) / 3;
+      // Create spiral galaxy effect with multiple arms
+      const radius = Math.random() * 30;
+      const spinAngle = radius * 2.5;
+      const branchAngle = ((Math.PI * 2) / 4) * Math.floor(Math.random() * 4); // 4 spiral arms
+      const randomOffset = (Math.random() - 0.5) * (3 - radius / 5) * 0.3;
 
-      posArray[i] = Math.cos(branchAngle + spinAngle) * radius; // x
-      posArray[i + 1] = (Math.random() - 0.5) * 3; // y
-      posArray[i + 2] = Math.sin(branchAngle + spinAngle) * radius; // z
+      const x = Math.cos(branchAngle + spinAngle) * radius + randomOffset;
+      const y = (Math.random() - 0.5) * 2 + randomOffset;
+      const z = Math.sin(branchAngle + spinAngle) * radius + randomOffset;
 
-      // White stars with slight color variation
-      const brightness = 0.8 + Math.random() * 0.2;
-      colors[i] = brightness;     // R
-      colors[i + 1] = brightness; // G
-      colors[i + 2] = brightness + Math.random() * 0.2; // B - slightly blue tint
+      posArray[i] = x;
+      posArray[i + 1] = y;
+      posArray[i + 2] = z;
 
-      // Varied star sizes
-      sizes[i / 3] = Math.random() * 2;
+      // Create color variation (blues, purples, and whites)
+      const mixedColor = new THREE.Color();
+      const color1 = new THREE.Color(0x4299e1); // Blue
+      const color2 = new THREE.Color(0x9f7aea); // Purple
+      const color3 = new THREE.Color(0xffffff); // White
+
+      const randomColor = Math.random();
+      if (randomColor < 0.3) {
+        mixedColor.copy(color1);
+      } else if (randomColor < 0.6) {
+        mixedColor.copy(color2);
+      } else {
+        mixedColor.copy(color3);
+      }
+
+      // Add slight color variation based on distance from center
+      const distanceFromCenter = Math.sqrt(x * x + y * y + z * z);
+      const colorIntensity = 1 - (distanceFromCenter / 30) * 0.5;
+
+      colors[i] = mixedColor.r * colorIntensity;
+      colors[i + 1] = mixedColor.g * colorIntensity;
+      colors[i + 2] = mixedColor.b * colorIntensity;
+
+      // Varied star sizes based on distance from center
+      sizes[i / 3] = Math.random() * (1 - (distanceFromCenter / 30) * 0.5) * 3;
     }
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
@@ -60,17 +82,17 @@ const ThreeBackground = () => {
         void main() {
           vColor = color;
           vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = size * (300.0 / -mvPosition.z);
+          gl_PointSize = size * (500.0 / -mvPosition.z);
           gl_Position = projectionMatrix * mvPosition;
         }
       `,
       fragmentShader: `
         varying vec3 vColor;
         void main() {
-          float distanceToCenter = distance(gl_PointCoord, vec2(0.5));
+          float distanceToCenter = length(gl_PointCoord - vec2(0.5));
           float strength = 1.0 - smoothstep(0.0, 0.5, distanceToCenter);
           vec3 color = mix(vec3(0.0), vColor, strength);
-          if (strength < 0.1) discard;
+          if (strength < 0.05) discard;
           gl_FragColor = vec4(color, strength);
         }
       `,
@@ -85,7 +107,9 @@ const ThreeBackground = () => {
     scene.add(particlesMesh);
 
     // Position camera
-    camera.position.z = 25;
+    camera.position.z = 35;
+    camera.position.y = 15;
+    camera.lookAt(0, 0, 0);
 
     // Mouse movement effect
     let mouseX = 0;
@@ -108,19 +132,19 @@ const ThreeBackground = () => {
       const elapsedTime = clock.getElapsedTime();
 
       // Smooth camera movement
-      targetX += (mouseX - targetX) * 0.01;
-      targetY += (mouseY - targetY) * 0.01;
+      targetX += (mouseX - targetX) * 0.02;
+      targetY += (mouseY - targetY) * 0.02;
 
       // Rotate galaxy
       particlesMesh.rotation.y = elapsedTime * 0.05 + targetX * 0.5;
-      particlesMesh.rotation.x = targetY * 0.5;
+      particlesMesh.rotation.x = targetY * 0.3;
 
       // Gentle wave animation
       const positions = particlesGeometry.attributes.position.array as Float32Array;
       for (let i = 0; i < positions.length; i += 3) {
         const x = positions[i];
         const z = positions[i + 2];
-        positions[i + 1] += Math.sin(elapsedTime + x + z) * 0.001;
+        positions[i + 1] += Math.sin(elapsedTime + x + z) * 0.002;
       }
       particlesGeometry.attributes.position.needsUpdate = true;
 
