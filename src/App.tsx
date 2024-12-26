@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Team from "./pages/Team";
-import CustomCursor from "./components/CustomCursor";
 import FloatingOverlay from "./components/FloatingOverlay";
 
 const queryClient = new QueryClient();
@@ -13,7 +12,6 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <CustomCursor />
       <Toaster />
       <Sonner />
       <FloatingOverlay />

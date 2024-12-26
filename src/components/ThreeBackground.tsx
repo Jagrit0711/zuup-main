@@ -94,7 +94,7 @@ const ThreeBackground = () => {
     };
   }, []);
 
-  return <div ref={containerRef} className="absolute inset-0 z-10" />;
+  return <div ref={containerRef} className="absolute inset-0 -z-10" />;
 };
 
 export default ThreeBackground;
