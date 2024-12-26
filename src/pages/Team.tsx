@@ -3,9 +3,20 @@ import { Linkedin, User } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useTeamMembers } from '../components/admin/TeamEditor';
+import { useEffect } from 'react';
 
 const Team = () => {
   const { globalTeamMembers } = useTeamMembers();
+
+  // Listen for updates from admin panel
+  useEffect(() => {
+    const handleDataUpdate = () => {
+      window.location.reload();
+    };
+
+    window.addEventListener('teamDataUpdated', handleDataUpdate);
+    return () => window.removeEventListener('teamDataUpdated', handleDataUpdate);
+  }, []);
 
   return (
     <div className="min-h-screen bg-black">

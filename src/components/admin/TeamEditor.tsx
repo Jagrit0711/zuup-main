@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { Trash2, Plus, Upload } from 'lucide-react';
 
@@ -13,14 +13,23 @@ interface TeamMember {
 
 // Create a global state to share team members data
 export const useTeamMembers = () => {
-  const [globalTeamMembers, setGlobalTeamMembers] = useState<TeamMember[]>([
-    {
-      id: 1,
-      name: "Jagrit Sachdev",
-      role: "Founder & Executive Director",
-      description: "Leading Zuup's mission to empower underprivileged kids and senior citizens through freelancing opportunities.",
-      linkedin: "https://www.linkedin.com/in/jagritsachdev",
-    },
+  const [globalTeamMembers, setGlobalTeamMembers] = useState<TeamMember[]>([]);
+
+  useEffect(() => {
+    // Load saved team members from localStorage on mount
+    const savedMembers = localStorage.getItem('teamMembers');
+    if (savedMembers) {
+      setGlobalTeamMembers(JSON.parse(savedMembers));
+    } else {
+      // Set default members if no saved data exists
+      const defaultMembers = [
+        {
+          id: 1,
+          name: "Jagrit Sachdev",
+          role: "Founder & Executive Director",
+          description: "Leading Zuup's mission to empower underprivileged kids and senior citizens through freelancing opportunities.",
+          linkedin: "https://www.linkedin.com/in/jagritsachdev",
+        },
     {
       id: 2,
       name: "Advitya Bhardwaj",
@@ -66,6 +75,11 @@ export const useTeamMembers = () => {
       description: "Managing and optimizing Zuup's donation processes and initiatives.",
     },
   ]);
+      ];
+      setGlobalTeamMembers(defaultMembers);
+      localStorage.setItem('teamMembers', JSON.stringify(defaultMembers));
+    }
+  }, []);
 
   return { globalTeamMembers, setGlobalTeamMembers };
 };
@@ -87,14 +101,16 @@ const TeamEditor = () => {
   };
 
   const handleUpdateMember = (id: number, field: keyof TeamMember, value: string) => {
-    setGlobalTeamMembers(members => members.map(member => 
+    const updatedMembers = globalTeamMembers.map(member => 
       member.id === id ? { ...member, [field]: value } : member
-    ));
+    );
+    setGlobalTeamMembers(updatedMembers);
     setHasUnsavedChanges(true);
   };
 
   const handleDeleteMember = (id: number) => {
-    setGlobalTeamMembers(members => members.filter(member => member.id !== id));
+    const updatedMembers = globalTeamMembers.filter(member => member.id !== id);
+    setGlobalTeamMembers(updatedMembers);
     setHasUnsavedChanges(true);
     toast({
       title: "Team member removed",
@@ -107,20 +123,25 @@ const TeamEditor = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        handleUpdateMember(id, 'image', reader.result as string);
+        const updatedMembers = globalTeamMembers.map(member =>
+          member.id === id ? { ...member, image: reader.result as string } : member
+        );
+        setGlobalTeamMembers(updatedMembers);
+        setHasUnsavedChanges(true);
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleSaveChanges = () => {
-    // In a real app, this would save to a backend
     localStorage.setItem('teamMembers', JSON.stringify(globalTeamMembers));
     setHasUnsavedChanges(false);
     toast({
       title: "Changes saved",
       description: "Team member information has been updated successfully.",
     });
+    // Force a reload of the Team page if it's currently open
+    window.dispatchEvent(new Event('teamDataUpdated'));
   };
 
   return (
