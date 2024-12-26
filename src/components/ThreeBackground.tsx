@@ -22,7 +22,7 @@ const ThreeBackground = () => {
 
     // Create galaxy particles
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 25000; // Increased for more stars
+    const particlesCount = 25000;
     const posArray = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
     const sizes = new Float32Array(particlesCount);
