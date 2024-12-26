@@ -19,9 +19,9 @@ const SiteStats = () => {
     }
   });
 
-  // Generate dates from December 2nd, 2023 to current date
-  const startDate = new Date('2023-12-02');
-  const endDate = new Date(); // Current date
+  // Generate dates from December 20th, 2024 to December 26th, 2024 (present)
+  const startDate = new Date('2024-12-20');
+  const endDate = new Date('2024-12-26');
   
   const dateRange = eachDayOfInterval({ start: startDate, end: endDate });
   
