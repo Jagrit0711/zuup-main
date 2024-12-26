@@ -4,33 +4,62 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DailyUpdate } from '@/types/admin';
 import { format } from 'date-fns';
+import { supabase } from '@/lib/supabase';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 const DailyUpdates = ({ currentUser }: { currentUser: string }) => {
   const { toast } = useToast();
-  const [updates, setUpdates] = useState<DailyUpdate[]>([]);
   const [newUpdate, setNewUpdate] = useState('');
+  const queryClient = useQueryClient();
 
-  // Load all updates on mount and listen for changes
-  useEffect(() => {
-    const loadUpdates = () => {
-      const savedUpdates = localStorage.getItem('dailyUpdates');
-      if (savedUpdates) {
-        setUpdates(JSON.parse(savedUpdates));
-      }
-    };
+  // Fetch updates
+  const { data: updates = [], isLoading } = useQuery({
+    queryKey: ['daily-updates'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('daily_updates')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    loadUpdates();
-    
-    // Listen for changes from other tabs/windows
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'dailyUpdates') {
-        loadUpdates();
-      }
-    };
+      if (error) throw error;
+      return data;
+    },
+  });
 
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  // Add new update
+  const addUpdateMutation = useMutation({
+    mutationFn: async (content: string) => {
+      const { data, error } = await supabase
+        .from('daily_updates')
+        .insert([
+          {
+            user_id: currentUser,
+            content,
+            user_name: currentUser,
+          },
+        ])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['daily-updates'] });
+      setNewUpdate('');
+      toast({
+        title: "Success",
+        description: "Daily update posted successfully",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to post update: " + error.message,
+        variant: "destructive",
+      });
+    },
+  });
 
   const handleSubmitUpdate = () => {
     if (!newUpdate.trim()) {
@@ -42,24 +71,12 @@ const DailyUpdates = ({ currentUser }: { currentUser: string }) => {
       return;
     }
 
-    const update: DailyUpdate = {
-      id: Date.now().toString(),
-      userId: currentUser,
-      content: newUpdate,
-      timestamp: new Date().toISOString(),
-      userName: currentUser
-    };
-
-    const updatedList = [...updates, update];
-    setUpdates(updatedList);
-    localStorage.setItem('dailyUpdates', JSON.stringify(updatedList));
-    setNewUpdate('');
-    
-    toast({
-      title: "Success",
-      description: "Daily update posted successfully",
-    });
+    addUpdateMutation.mutate(newUpdate);
   };
+
+  if (isLoading) {
+    return <div>Loading updates...</div>;
+  }
 
   return (
     <div className="space-y-6">
@@ -78,31 +95,30 @@ const DailyUpdates = ({ currentUser }: { currentUser: string }) => {
             <Button 
               onClick={handleSubmitUpdate}
               className="bg-[#FF6D59] hover:bg-[#ff8574]"
+              disabled={addUpdateMutation.isPending}
             >
-              Post Update
+              {addUpdateMutation.isPending ? 'Posting...' : 'Post Update'}
             </Button>
           </div>
         </CardContent>
       </Card>
 
       <div className="space-y-4">
-        {updates
-          .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-          .map((update) => (
-            <Card key={update.id} className="bg-gray-900 border-gray-800">
-              <CardContent className="pt-6">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">{update.userName}</h3>
-                    <p className="text-sm text-gray-400">
-                      {format(new Date(update.timestamp), 'PPpp')}
-                    </p>
-                  </div>
+        {updates.map((update) => (
+          <Card key={update.id} className="bg-gray-900 border-gray-800">
+            <CardContent className="pt-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-white">{update.user_name}</h3>
+                  <p className="text-sm text-gray-400">
+                    {format(new Date(update.created_at), 'PPpp')}
+                  </p>
                 </div>
-                <p className="text-gray-300 whitespace-pre-wrap">{update.content}</p>
-              </CardContent>
-            </Card>
-          ))}
+              </div>
+              <p className="text-gray-300 whitespace-pre-wrap">{update.content}</p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );
