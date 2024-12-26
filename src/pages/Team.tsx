@@ -2,11 +2,11 @@ import { motion } from 'framer-motion';
 import { Linkedin, User } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { useTeamMembers } from '../components/admin/TeamEditor';
+import { useTeamMembers } from '../components/admin/team/useTeamMembers';
 import { useEffect } from 'react';
 
 const Team = () => {
-  const { globalTeamMembers } = useTeamMembers();
+  const { teamMembers } = useTeamMembers();
 
   // Listen for updates from admin panel
   useEffect(() => {
@@ -37,7 +37,7 @@ const Team = () => {
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {globalTeamMembers.map((member, index) => (
+            {teamMembers.map((member, index) => (
               <motion.div
                 key={member.id}
                 initial={{ opacity: 0, y: 20 }}

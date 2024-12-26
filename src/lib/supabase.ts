@@ -11,7 +11,7 @@ if (!supabaseUrl || !supabaseKey) {
 export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 
 // Test the connection
-supabase
+void supabase
   .from('daily_updates')
   .select('*')
   .limit(1)

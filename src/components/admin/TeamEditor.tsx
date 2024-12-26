@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { useTeamMembers } from './team/useTeamMembers';
 import TeamMemberForm from './team/TeamMemberForm';
