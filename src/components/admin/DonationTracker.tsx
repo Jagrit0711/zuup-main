@@ -5,44 +5,100 @@ import { Button } from '@/components/ui/button';
 import { DonationEntry } from '@/types/admin';
 import { format } from 'date-fns';
 import { Upload, ExternalLink } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 const DonationTracker = ({ currentUser }: { currentUser: string }) => {
   const { toast } = useToast();
-  const [donations, setDonations] = useState<DonationEntry[]>([]);
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [screenshot, setScreenshot] = useState<string>('');
+  const queryClient = useQueryClient();
 
-  // Load all donations on mount and listen for changes
-  useEffect(() => {
-    const loadDonations = () => {
-      const savedDonations = localStorage.getItem('donations');
-      if (savedDonations) {
-        setDonations(JSON.parse(savedDonations));
-      }
-    };
+  // Fetch donations
+  const { data: donations = [] } = useQuery({
+    queryKey: ['donations'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('donations')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
+    }
+  });
 
-    loadDonations();
-    
-    // Listen for changes from other tabs/windows
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'donations') {
-        loadDonations();
-      }
-    };
+  // Add donation mutation
+  const addDonation = useMutation({
+    mutationFn: async (newDonation: Omit<DonationEntry, 'id'>) => {
+      const { data, error } = await supabase
+        .from('donations')
+        .insert([{
+          user_id: newDonation.userId,
+          amount: newDonation.amount,
+          screenshot_url: newDonation.screenshot,
+          user_name: newDonation.userName,
+          description: newDonation.description
+        }])
+        .select()
+        .single();
 
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['donations'] });
+      toast({
+        title: "Success",
+        description: "Donation entry added successfully",
+      });
+      // Reset form
+      setAmount('');
+      setDescription('');
+      setScreenshot('');
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to add donation entry",
+        variant: "destructive"
+      });
+      console.error('Error adding donation:', error);
+    }
+  });
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setScreenshot(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      try {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const filePath = `donations/${fileName}`;
+
+        const { error: uploadError, data } = await supabase.storage
+          .from('donations')
+          .upload(filePath, file);
+
+        if (uploadError) throw uploadError;
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('donations')
+          .getPublicUrl(filePath);
+
+        setScreenshot(publicUrl);
+        toast({
+          title: "Success",
+          description: "Screenshot uploaded successfully",
+        });
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        toast({
+          title: "Error",
+          description: "Failed to upload screenshot",
+          variant: "destructive"
+        });
+      }
     }
   };
 
@@ -56,28 +112,13 @@ const DonationTracker = ({ currentUser }: { currentUser: string }) => {
       return;
     }
 
-    const donation: DonationEntry = {
-      id: Date.now().toString(),
+    addDonation.mutate({
       userId: currentUser,
       amount: parseFloat(amount),
       screenshot,
       timestamp: new Date().toISOString(),
       userName: currentUser,
       description
-    };
-
-    const updatedList = [...donations, donation];
-    setDonations(updatedList);
-    localStorage.setItem('donations', JSON.stringify(updatedList));
-    
-    // Reset form
-    setAmount('');
-    setDescription('');
-    setScreenshot('');
-    
-    toast({
-      title: "Success",
-      description: "Donation entry added successfully",
     });
   };
 
@@ -138,43 +179,42 @@ const DonationTracker = ({ currentUser }: { currentUser: string }) => {
             <Button 
               onClick={handleSubmitDonation}
               className="bg-[#FF6D59] hover:bg-[#ff8574]"
+              disabled={addDonation.isPending}
             >
-              Submit Donation Entry
+              {addDonation.isPending ? 'Submitting...' : 'Submit Donation Entry'}
             </Button>
           </div>
         </CardContent>
       </Card>
 
       <div className="space-y-4">
-        {donations
-          .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-          .map((donation) => (
-            <Card key={donation.id} className="bg-gray-900 border-gray-800">
-              <CardContent className="pt-6">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">{donation.userName}</h3>
-                    <p className="text-sm text-gray-400">
-                      {format(new Date(donation.timestamp), 'PPpp')}
-                    </p>
-                    <p className="text-xl font-bold text-[#FF6D59] mt-2">
-                      ₹{donation.amount.toLocaleString()}
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center gap-2"
-                    onClick={() => window.open(donation.screenshot, '_blank')}
-                  >
-                    <ExternalLink size={16} />
-                    View Screenshot
-                  </Button>
+        {donations.map((donation) => (
+          <Card key={donation.id} className="bg-gray-900 border-gray-800">
+            <CardContent className="pt-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-white">{donation.user_name}</h3>
+                  <p className="text-sm text-gray-400">
+                    {format(new Date(donation.created_at), 'PPpp')}
+                  </p>
+                  <p className="text-xl font-bold text-[#FF6D59] mt-2">
+                    ₹{donation.amount.toLocaleString()}
+                  </p>
                 </div>
-                <p className="text-gray-300 whitespace-pre-wrap">{donation.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-2"
+                  onClick={() => window.open(donation.screenshot_url, '_blank')}
+                >
+                  <ExternalLink size={16} />
+                  View Screenshot
+                </Button>
+              </div>
+              <p className="text-gray-300 whitespace-pre-wrap">{donation.description}</p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );
