@@ -8,16 +8,19 @@ if (!supabaseUrl || !supabaseKey) {
   throw new Error('Missing Supabase environment variables');
 }
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
+export const supabase = createClient<Database>(supabaseUrl, supabaseKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+  }
+});
 
-// Test the connection
+// Test the connection and storage access
 void (async () => {
   try {
-    await supabase
-      .from('daily_updates')
-      .select('*')
-      .limit(1);
+    const { data: bucketList } = await supabase.storage.listBuckets();
     console.log('Successfully connected to Supabase!');
+    console.log('Available buckets:', bucketList?.map(b => b.name));
   } catch (error) {
     console.error('Supabase connection error:', error);
   }
