@@ -9,7 +9,6 @@ import DonationTracker from '@/components/admin/DonationTracker';
 import { Lock } from 'lucide-react';
 import { adminUsers } from '@/data/adminUsers';
 import { AdminUser } from '@/types/admin';
-import { supabase } from '@/lib/supabase';
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,36 +17,19 @@ const Admin = () => {
   const [currentUser, setCurrentUser] = useState<AdminUser | null>(null);
   const { toast } = useToast();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     const user = adminUsers.find(
       u => u.username === username && u.password === password
     );
     
     if (user) {
-      try {
-        // Sign in with Supabase using a shared admin account
-        const { error } = await supabase.auth.signInWithPassword({
-          email: import.meta.env.VITE_ADMIN_EMAIL || 'admin@example.com',
-          password: import.meta.env.VITE_ADMIN_PASSWORD || 'admin123',
-        });
-
-        if (error) throw error;
-
-        setIsAuthenticated(true);
-        setCurrentUser(user);
-        toast({
-          title: "Logged in successfully",
-          description: `Welcome back, ${user.name}!`,
-        });
-      } catch (error) {
-        console.error('Supabase auth error:', error);
-        toast({
-          title: "Authentication error",
-          description: "Failed to authenticate with storage service",
-          variant: "destructive",
-        });
-      }
+      setIsAuthenticated(true);
+      setCurrentUser(user);
+      toast({
+        title: "Logged in successfully",
+        description: `Welcome back, ${user.name}!`,
+      });
     } else {
       toast({
         title: "Invalid credentials",
@@ -55,32 +37,6 @@ const Admin = () => {
         variant: "destructive",
       });
     }
-  };
-
-  // Check for existing session on mount
-  useEffect(() => {
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session && isAuthenticated) {
-        setIsAuthenticated(false);
-        setCurrentUser(null);
-        toast({
-          title: "Session expired",
-          description: "Please log in again",
-          variant: "destructive",
-        });
-      }
-    };
-
-    checkSession();
-  }, []);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setIsAuthenticated(false);
-    setCurrentUser(null);
-    setUsername('');
-    setPassword('');
   };
 
   if (!isAuthenticated || !currentUser) {
@@ -127,7 +83,12 @@ const Admin = () => {
         <div className="flex items-center gap-4">
           <span className="text-gray-400">Welcome, {currentUser.name}</span>
           <button
-            onClick={handleLogout}
+            onClick={() => {
+              setIsAuthenticated(false);
+              setCurrentUser(null);
+              setUsername('');
+              setPassword('');
+            }}
             className="text-[#FF6D59] hover:text-[#ff8574] transition-colors"
           >
             Logout
