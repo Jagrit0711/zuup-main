@@ -11,13 +11,14 @@ if (!supabaseUrl || !supabaseKey) {
 export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 
 // Test the connection
-void supabase
-  .from('daily_updates')
-  .select('*')
-  .limit(1)
-  .then(() => {
+void (async () => {
+  try {
+    await supabase
+      .from('daily_updates')
+      .select('*')
+      .limit(1);
     console.log('Successfully connected to Supabase!');
-  })
-  .catch((error: Error) => {
+  } catch (error) {
     console.error('Supabase connection error:', error);
-  });
+  }
+})();
