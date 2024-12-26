@@ -1,13 +1,17 @@
-import { createClient } from '@supabase/supabase-js'
-import { Database } from '@/types/supabase'
+import { createClient } from '@supabase/supabase-js';
+import { Database } from '@/types/supabase';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-  throw new Error(
-    'Missing Supabase environment variables. Please check your .env file.'
-  )
+  console.error('Missing Supabase environment variables. Please check your .env file.');
+  throw new Error('Missing Supabase environment variables. Please check your .env file.');
 }
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseKey)
+export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
+
+// Test the connection
+supabase.from('daily_updates').select('count').single()
+  .then(() => console.log('Successfully connected to Supabase!'))
+  .catch(error => console.error('Supabase connection error:', error));
