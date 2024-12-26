@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Users, TrendingUp, Eye, DollarSign } from 'lucide-react';
+import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Eye, DollarSign } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
@@ -33,89 +33,106 @@ const SiteStats = () => {
     }
   });
 
+  const { data: adminDonations = [] } = useQuery({
+    queryKey: ['admin-donations'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('donations')
+        .select('user_name, amount')
+        .eq('is_admin', true)
+        .order('amount', { ascending: false });
+      
+      if (error) throw error;
+      
+      // Group donations by admin
+      const groupedDonations = data?.reduce((acc, curr) => {
+        acc[curr.user_name] = (acc[curr.user_name] || 0) + curr.amount;
+        return acc;
+      }, {});
+      
+      // Convert to array format for chart
+      return Object.entries(groupedDonations || {}).map(([name, amount]) => ({
+        name,
+        amount
+      }));
+    }
+  });
+
   const totalDonations = donations.reduce((acc, curr) => acc + curr.amount, 0);
   const totalViews = viewsData.reduce((acc, curr) => acc + curr.views, 0);
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-gradient-to-br from-purple-500/10 to-purple-600/10 border-purple-500/20 hover:scale-105 transition-transform duration-300">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="bg-gradient-to-br from-indigo-500/20 to-purple-600/20 border-indigo-500/30 hover:scale-105 transition-transform duration-300">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="bg-purple-500/20 p-3 rounded-lg">
-                <Eye className="h-6 w-6 text-purple-500" />
+              <div className="bg-indigo-500/20 p-3 rounded-lg">
+                <Eye className="h-6 w-6 text-indigo-400" />
               </div>
               <div>
-                <p className="text-sm font-medium text-purple-500">Total Views</p>
-                <h3 className="text-2xl font-bold text-white">{totalViews.toLocaleString()}</h3>
+                <p className="text-sm font-medium text-indigo-300">Total Views</p>
+                <h3 className="text-2xl font-bold text-indigo-50">{totalViews.toLocaleString()}</h3>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-[#FF6D59]/10 to-[#ff8574]/10 border-[#FF6D59]/20 hover:scale-105 transition-transform duration-300">
+        <Card className="bg-gradient-to-br from-rose-500/20 to-orange-500/20 border-rose-500/30 hover:scale-105 transition-transform duration-300">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="bg-[#FF6D59]/20 p-3 rounded-lg">
-                <DollarSign className="h-6 w-6 text-[#FF6D59]" />
+              <div className="bg-rose-500/20 p-3 rounded-lg">
+                <DollarSign className="h-6 w-6 text-rose-400" />
               </div>
               <div>
-                <p className="text-sm font-medium text-[#FF6D59]">Total Donations</p>
-                <h3 className="text-2xl font-bold text-white">₹{totalDonations.toLocaleString()}</h3>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border-blue-500/20 hover:scale-105 transition-transform duration-300">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-4">
-              <div className="bg-blue-500/20 p-3 rounded-lg">
-                <Users className="h-6 w-6 text-blue-500" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-blue-500">Top Donors</p>
-                <h3 className="text-2xl font-bold text-white">{donations.length}</h3>
+                <p className="text-sm font-medium text-rose-300">Total Donations</p>
+                <h3 className="text-2xl font-bold text-rose-50">₹{totalDonations.toLocaleString()}</h3>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         <Card className="bg-gray-800/50 border-gray-700">
           <CardHeader>
-            <CardTitle className="text-white">Views Over Time</CardTitle>
+            <CardTitle className="text-gray-100">Admin Donation Collections</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={viewsData}>
-                  <defs>
-                    <linearGradient id="colorViews" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#9333EA" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#9333EA" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
+                <BarChart data={adminDonations}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis dataKey="date" stroke="#9CA3AF" />
-                  <YAxis stroke="#9CA3AF" />
-                  <Tooltip 
-                    contentStyle={{ 
+                  <XAxis 
+                    dataKey="name" 
+                    stroke="#9CA3AF"
+                    tick={{ fill: '#9CA3AF' }}
+                  />
+                  <YAxis 
+                    stroke="#9CA3AF"
+                    tick={{ fill: '#9CA3AF' }}
+                  />
+                  <Tooltip
+                    contentStyle={{
                       backgroundColor: '#1F2937',
                       border: '1px solid #374151',
                       borderRadius: '8px',
-                      color: '#fff'
+                      color: '#F3F4F6'
                     }}
                   />
-                  <Area 
-                    type="monotone" 
-                    dataKey="views" 
-                    stroke="#9333EA"
-                    fill="url(#colorViews)"
-                    strokeWidth={2}
-                  />
-                </AreaChart>
+                  <Bar 
+                    dataKey="amount" 
+                    fill="url(#adminBarGradient)"
+                    radius={[4, 4, 0, 0]}
+                  >
+                    <defs>
+                      <linearGradient id="adminBarGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#4F46E5" stopOpacity={0.8}/>
+                        <stop offset="100%" stopColor="#4F46E5" stopOpacity={0.3}/>
+                      </linearGradient>
+                    </defs>
+                  </Bar>
+                </BarChart>
               </ResponsiveContainer>
             </div>
           </CardContent>
@@ -123,34 +140,41 @@ const SiteStats = () => {
 
         <Card className="bg-gray-800/50 border-gray-700">
           <CardHeader>
-            <CardTitle className="text-white">Top Donations</CardTitle>
+            <CardTitle className="text-gray-100">Views Over Time</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={donations}>
+                <AreaChart data={viewsData}>
                   <defs>
-                    <linearGradient id="colorDonations" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#FF6D59" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#FF6D59" stopOpacity={0}/>
+                    <linearGradient id="colorViews" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#4F46E5" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis dataKey="user_name" stroke="#9CA3AF" />
-                  <YAxis stroke="#9CA3AF" />
+                  <XAxis 
+                    dataKey="date" 
+                    stroke="#9CA3AF"
+                    tick={{ fill: '#9CA3AF' }}
+                  />
+                  <YAxis 
+                    stroke="#9CA3AF"
+                    tick={{ fill: '#9CA3AF' }}
+                  />
                   <Tooltip 
                     contentStyle={{ 
                       backgroundColor: '#1F2937',
                       border: '1px solid #374151',
                       borderRadius: '8px',
-                      color: '#fff'
+                      color: '#F3F4F6'
                     }}
                   />
                   <Area 
                     type="monotone" 
-                    dataKey="amount" 
-                    stroke="#FF6D59"
-                    fill="url(#colorDonations)"
+                    dataKey="views" 
+                    stroke="#4F46E5"
+                    fill="url(#colorViews)"
                     strokeWidth={2}
                   />
                 </AreaChart>
