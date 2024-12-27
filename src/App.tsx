@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Team from "./pages/Team";
 import Admin from "./pages/Admin";
 import TermsAndConditions from "./pages/TermsAndConditions";
+import FamilyLoveChecker from "./pages/FamilyLoveChecker";
 import FloatingOverlay from "./components/FloatingOverlay";
 
 const queryClient = new QueryClient();
@@ -52,6 +53,7 @@ const App = () => (
           <Route path="/team" element={<Team />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/terms" element={<TermsAndConditions />} />
+          <Route path="/family-check" element={<FamilyLoveChecker />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
