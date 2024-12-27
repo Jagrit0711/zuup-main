@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DonationSection from '@/components/DonationSection';
 import { Card } from '@/components/ui/card';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const questions = [
   {
@@ -80,51 +80,79 @@ const FamilyLoveChecker = () => {
           </p>
 
           {!showResults ? (
-            <Card className="max-w-2xl mx-auto p-8 bg-gray-900 border-gray-800">
-              <h2 className="text-2xl font-semibold text-white mb-6">
-                {questions[currentQuestion].text}
-              </h2>
-              
-              <div className="grid gap-4">
-                {questions[currentQuestion].options.map((option) => (
-                  <Button
-                    key={option}
-                    onClick={() => handleAnswer(option)}
-                    variant="outline"
-                    className="w-full text-lg py-6 hover:bg-primary hover:text-white transition-colors"
-                  >
-                    {option}
-                  </Button>
-                ))}
-              </div>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="max-w-2xl mx-auto p-8 bg-gray-900 border-gray-800">
+                <h2 className="text-2xl font-semibold text-white mb-6">
+                  {questions[currentQuestion].text}
+                </h2>
+                
+                <div className="grid gap-4">
+                  {questions[currentQuestion].options.map((option) => (
+                    <motion.div
+                      key={option}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <Button
+                        onClick={() => handleAnswer(option)}
+                        variant="outline"
+                        className="w-full text-lg py-6 hover:bg-primary hover:text-white transition-colors"
+                      >
+                        {option}
+                      </Button>
+                    </motion.div>
+                  ))}
+                </div>
+              </Card>
+            </motion.div>
           ) : (
             <div className="space-y-12">
               <Card className="max-w-2xl mx-auto p-8 bg-gray-900 border-gray-800">
-                <h2 className="text-2xl font-semibold text-white mb-6">
-                  {hasLovingFamily() ? (
-                    "You have a loving family ❤️"
-                  ) : (
-                    "You are not alone ❤️"
+                <AnimatePresence mode="wait">
+                  {hasLovingFamily() && (
+                    <motion.h2
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      className="text-4xl font-impact text-center text-white mb-8"
+                    >
+                      You have a loving family ❤️
+                    </motion.h2>
                   )}
-                </h2>
+                </AnimatePresence>
                 
                 {showStats && (
                   <div className="space-y-6">
                     {statistics.map((stat, index) => (
-                      <Typewriter
+                      <motion.div
                         key={index}
-                        text={stat}
-                        className="text-gray-300"
-                        delay={50}
-                        startDelay={index * 2000}
-                      />
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: index * 0.5 }}
+                      >
+                        <Typewriter
+                          text={stat}
+                          className="text-2xl font-impact text-gray-300"
+                          delay={50}
+                          startDelay={index * 2000}
+                        />
+                      </motion.div>
                     ))}
                   </div>
                 )}
               </Card>
 
-              <DonationSection />
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2 }}
+              >
+                <DonationSection />
+              </motion.div>
             </div>
           )}
         </motion.div>
