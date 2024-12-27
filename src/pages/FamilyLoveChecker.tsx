@@ -44,6 +44,7 @@ const FamilyLoveChecker = () => {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [showStats, setShowStats] = useState(false);
+  const [currentStatIndex, setCurrentStatIndex] = useState(0);
   const navigate = useNavigate();
 
   const handleAnswer = (answer: string) => {
@@ -59,6 +60,14 @@ const FamilyLoveChecker = () => {
 
   const hasLovingFamily = () => {
     return answers[0] === "Yes" || answers[1] === "Yes";
+  };
+
+  const handleStatisticsComplete = () => {
+    if (currentStatIndex < statistics.length - 1) {
+      setTimeout(() => {
+        setCurrentStatIndex(prev => prev + 1);
+      }, 1000);
+    }
   };
 
   return (
@@ -126,22 +135,24 @@ const FamilyLoveChecker = () => {
                 </AnimatePresence>
                 
                 {showStats && (
-                  <div className="space-y-6">
-                    {statistics.map((stat, index) => (
+                  <div className="h-24 flex items-center justify-center">
+                    <AnimatePresence mode="wait">
                       <motion.div
-                        key={index}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: index * 0.5 }}
+                        key={currentStatIndex}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="text-center"
                       >
                         <Typewriter
-                          text={stat}
+                          text={statistics[currentStatIndex]}
                           className="text-2xl font-impact text-gray-300"
                           delay={50}
-                          startDelay={index * 2000}
+                          startDelay={0}
+                          onComplete={handleStatisticsComplete}
                         />
                       </motion.div>
-                    ))}
+                    </AnimatePresence>
                   </div>
                 )}
               </Card>

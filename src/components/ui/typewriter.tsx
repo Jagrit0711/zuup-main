@@ -6,9 +6,10 @@ interface TypewriterProps {
   delay?: number;
   startDelay?: number;
   className?: string;
+  onComplete?: () => void;
 }
 
-export const Typewriter = ({ text, delay = 50, startDelay = 0, className }: TypewriterProps) => {
+export const Typewriter = ({ text, delay = 50, startDelay = 0, className, onComplete }: TypewriterProps) => {
   const [currentText, setCurrentText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -18,6 +19,8 @@ export const Typewriter = ({ text, delay = 50, startDelay = 0, className }: Type
         if (currentIndex < text.length) {
           setCurrentText(prev => prev + text[currentIndex]);
           setCurrentIndex(prevIndex => prevIndex + 1);
+        } else if (onComplete) {
+          onComplete();
         }
       }, startDelay);
 
@@ -29,8 +32,10 @@ export const Typewriter = ({ text, delay = 50, startDelay = 0, className }: Type
       }, delay);
 
       return () => clearTimeout(timeout);
+    } else if (onComplete) {
+      onComplete();
     }
-  }, [currentIndex, delay, startDelay, text]);
+  }, [currentIndex, delay, startDelay, text, onComplete]);
 
   return (
     <p className={cn("font-mono", className)}>
