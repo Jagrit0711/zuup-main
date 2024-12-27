@@ -32,11 +32,11 @@ const questions = [
 ];
 
 const statistics = [
-  "Over 16 million elderly parents are living alone in India",
-  "More than 20 million children face abandonment or neglect",
-  "But you're not alone - we're here to help",
-  "At Zuup, we believe in empowering individuals through skills and opportunities",
-  "Join our community of freelancers building better lives"
+  "You have a happy family, but not everyone is as fortunate",
+  "Over 16 million elderly parents in India face abandonment",
+  "More than 20 million children need care and support",
+  "At Zuup, we empower individuals through skills and freelancing",
+  "Join us in building better lives for abandoned families"
 ];
 
 const FamilyLoveChecker = () => {
