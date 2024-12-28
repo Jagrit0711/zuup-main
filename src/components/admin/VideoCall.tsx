@@ -3,11 +3,42 @@ import { DyteProvider, useDyteClient } from '@dytesdk/react-web-core';
 import { DyteMeeting } from '@dytesdk/react-ui-kit';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Copy } from 'lucide-react';
+
+interface Meeting {
+  id: string;
+  title: string;
+  created_at?: string;
+}
 
 const VideoCall = () => {
   const [meeting, setMeeting] = useState<any>(null);
   const [client, initClient] = useDyteClient();
   const { toast } = useToast();
+  const [pastMeetings, setPastMeetings] = useState<Meeting[]>([]);
+
+  useEffect(() => {
+    // Load past meetings from localStorage
+    const savedMeetings = localStorage.getItem('dyteMeetings');
+    if (savedMeetings) {
+      setPastMeetings(JSON.parse(savedMeetings));
+    }
+  }, []);
+
+  const saveMeetingToHistory = (newMeeting: Meeting) => {
+    const updatedMeetings = [newMeeting, ...pastMeetings].slice(0, 10); // Keep last 10 meetings
+    setPastMeetings(updatedMeetings);
+    localStorage.setItem('dyteMeetings', JSON.stringify(updatedMeetings));
+  };
+
+  const copyMeetingId = (meetingId: string) => {
+    navigator.clipboard.writeText(meetingId);
+    toast({
+      title: "Meeting ID copied",
+      description: "The meeting ID has been copied to your clipboard",
+    });
+  };
 
   const createMeeting = async () => {
     try {
@@ -30,6 +61,13 @@ const VideoCall = () => {
       const meetingData = await response.json();
       setMeeting(meetingData.data);
       
+      // Save to meeting history
+      saveMeetingToHistory({
+        id: meetingData.data.id,
+        title: 'Admin Support Call',
+        created_at: new Date().toISOString(),
+      });
+
       toast({
         title: "Meeting created",
         description: "You can now join the video call",
@@ -44,14 +82,15 @@ const VideoCall = () => {
     }
   };
 
-  const joinMeeting = async () => {
-    if (!meeting) return;
+  const joinMeeting = async (meetingId?: string) => {
+    const meetingToJoin = meetingId || meeting?.id;
+    if (!meetingToJoin) return;
     
     try {
       const DYTE_ORGANIZATION_ID = import.meta.env.VITE_DYTE_ORG_ID;
       const DYTE_API_KEY = import.meta.env.VITE_DYTE_API_KEY;
 
-      const response = await fetch(`https://api.dyte.io/v2/meetings/${meeting.id}/participants`, {
+      const response = await fetch(`https://api.dyte.io/v2/meetings/${meetingToJoin}/participants`, {
         method: 'POST',
         headers: {
           'Authorization': `Basic ${btoa(DYTE_ORGANIZATION_ID + ':' + DYTE_API_KEY)}`,
@@ -88,9 +127,51 @@ const VideoCall = () => {
         <Button onClick={createMeeting} disabled={!!meeting}>
           Create Meeting
         </Button>
-        <Button onClick={joinMeeting} disabled={!meeting || !!client}>
+        <Button onClick={() => joinMeeting()} disabled={!meeting || !!client}>
           Join Meeting
         </Button>
+      </div>
+      
+      {/* Past Meetings Section */}
+      <div className="mt-8">
+        <h3 className="text-lg font-semibold mb-4">Recent Meetings</h3>
+        <ScrollArea className="h-[200px] w-full rounded-md border border-gray-700 p-4">
+          {pastMeetings.length === 0 ? (
+            <p className="text-gray-500 text-center">No previous meetings found</p>
+          ) : (
+            <div className="space-y-4">
+              {pastMeetings.map((pastMeeting) => (
+                <div
+                  key={pastMeeting.id}
+                  className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg"
+                >
+                  <div className="flex-1">
+                    <p className="font-medium">{pastMeeting.title}</p>
+                    <p className="text-sm text-gray-400">
+                      {new Date(pastMeeting.created_at || '').toLocaleString()}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => copyMeetingId(pastMeeting.id)}
+                    >
+                      <Copy className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={() => joinMeeting(pastMeeting.id)}
+                      disabled={!!client}
+                    >
+                      Join
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </ScrollArea>
       </div>
       
       {client && (
