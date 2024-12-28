@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DyteProvider, useDyteClient } from '@dytesdk/react-web-core';
 import { DyteMeeting } from '@dytesdk/react-ui-kit';
-import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 
@@ -12,10 +11,8 @@ const VideoCall = () => {
 
   const createMeeting = async () => {
     try {
-      const { data: { DYTE_ORGANIZATION_ID, DYTE_API_KEY } } = await supabase
-        .functions.invoke('get-secrets', {
-          body: { keys: ['DYTE_ORGANIZATION_ID', 'DYTE_API_KEY'] }
-        });
+      const DYTE_ORGANIZATION_ID = import.meta.env.VITE_DYTE_ORG_ID;
+      const DYTE_API_KEY = import.meta.env.VITE_DYTE_API_KEY;
 
       const response = await fetch('https://api.dyte.io/v2/meetings', {
         method: 'POST',
@@ -51,10 +48,8 @@ const VideoCall = () => {
     if (!meeting) return;
     
     try {
-      const { data: { DYTE_ORGANIZATION_ID, DYTE_API_KEY } } = await supabase
-        .functions.invoke('get-secrets', {
-          body: { keys: ['DYTE_ORGANIZATION_ID', 'DYTE_API_KEY'] }
-        });
+      const DYTE_ORGANIZATION_ID = import.meta.env.VITE_DYTE_ORG_ID;
+      const DYTE_API_KEY = import.meta.env.VITE_DYTE_API_KEY;
 
       const response = await fetch(`https://api.dyte.io/v2/meetings/${meeting.id}/participants`, {
         method: 'POST',
@@ -100,7 +95,7 @@ const VideoCall = () => {
       
       {client && (
         <div className="h-[600px] w-full rounded-lg overflow-hidden border border-gray-700">
-          <DyteProvider client={client}>
+          <DyteProvider value={client}>
             <DyteMeeting meeting={client} />
           </DyteProvider>
         </div>
