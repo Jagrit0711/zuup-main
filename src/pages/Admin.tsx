@@ -6,6 +6,7 @@ import ContactEditor from '@/components/admin/ContactEditor';
 import SiteStats from '@/components/admin/SiteStats';
 import DailyUpdates from '@/components/admin/DailyUpdates';
 import DonationTracker from '@/components/admin/DonationTracker';
+import VideoCall from '@/components/admin/VideoCall';
 import { adminUsers } from '@/data/adminUsers';
 import { AdminUser } from '@/types/admin';
 import AdminHeader from '@/components/admin/layout/AdminHeader';
@@ -97,6 +98,12 @@ const Admin = () => {
             >
               Donations
             </TabsTrigger>
+            <TabsTrigger 
+              value="video"
+              className="data-[state=active]:bg-[#FF6D59] data-[state=active]:text-white text-gray-300"
+            >
+              Video Call
+            </TabsTrigger>
             {currentUser?.role === 'super_admin' && (
               <>
                 <TabsTrigger 
@@ -126,6 +133,10 @@ const Admin = () => {
 
             <TabsContent value="donations">
               <DonationTracker currentUser={currentUser.username} />
+            </TabsContent>
+
+            <TabsContent value="video">
+              <VideoCall />
             </TabsContent>
 
             {currentUser.role === 'super_admin' && (
