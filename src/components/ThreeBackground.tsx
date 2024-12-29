@@ -21,13 +21,14 @@ const ThreeBackground = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     containerRef.current.appendChild(renderer.domElement);
 
-    // Create particles for galaxy
+    // Create particles for galaxy effect
     const particlesGeometry = new THREE.BufferGeometry();
     const particlesCount = 15000;
     const posArray = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
+    const scales = new Float32Array(particlesCount);
 
-    // Generate galaxy shape
+    // Generate galaxy shape with dynamic colors
     for (let i = 0; i < particlesCount * 3; i += 3) {
       // Create spiral galaxy effect
       const radius = Math.random() * 20;
@@ -42,7 +43,7 @@ const ThreeBackground = () => {
       posArray[i + 1] = y;
       posArray[i + 2] = z;
 
-      // Color variation (blue, purple, white)
+      // Dynamic color variation
       const color = new THREE.Color();
       const colorChoice = Math.random();
       
@@ -57,17 +58,41 @@ const ThreeBackground = () => {
       colors[i] = color.r;
       colors[i + 1] = color.g;
       colors[i + 2] = color.b;
+
+      // Random scales for twinkling effect
+      scales[i/3] = Math.random();
     }
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    particlesGeometry.setAttribute('scale', new THREE.BufferAttribute(scales, 1));
 
-    // Material for particles
-    const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.1,
-      vertexColors: true,
+    // Custom shader material for particles
+    const particlesMaterial = new THREE.ShaderMaterial({
+      vertexShader: `
+        attribute float scale;
+        varying vec3 vColor;
+        
+        void main() {
+          vColor = color;
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = scale * 2.0 * (300.0 / -mvPosition.z);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vColor;
+        
+        void main() {
+          float strength = distance(gl_PointCoord, vec2(0.5));
+          strength = 1.0 - strength;
+          strength = pow(strength, 3.0);
+          vec3 finalColor = mix(vec3(0.0), vColor, strength);
+          gl_FragColor = vec4(finalColor, strength);
+        }
+      `,
       transparent: true,
-      opacity: 0.8,
+      vertexColors: true,
       blending: THREE.AdditiveBlending
     });
 
@@ -105,14 +130,21 @@ const ThreeBackground = () => {
       particlesMesh.rotation.y = elapsedTime * 0.05 + targetX;
       particlesMesh.rotation.x = targetY * 0.3;
 
-      // Gentle wave animation
+      // Dynamic particle animation
       const positions = particlesGeometry.attributes.position.array as Float32Array;
+      const scales = particlesGeometry.attributes.scale.array as Float32Array;
+      
       for (let i = 0; i < positions.length; i += 3) {
-        const x = positions[i];
-        const z = positions[i + 2];
-        positions[i + 1] += Math.sin(elapsedTime + x + z) * 0.001;
+        // Gentle wave animation
+        positions[i + 1] += Math.sin(elapsedTime + positions[i] + positions[i + 2]) * 0.001;
+        
+        // Twinkling effect
+        const idx = i / 3;
+        scales[idx] = Math.sin(elapsedTime * 2 + idx) * 0.5 + 1;
       }
+      
       particlesGeometry.attributes.position.needsUpdate = true;
+      particlesGeometry.attributes.scale.needsUpdate = true;
 
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
