@@ -14,7 +14,8 @@ const ThreeBackground = () => {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
     const renderer = new THREE.WebGLRenderer({ 
       alpha: true,
-      antialias: true 
+      antialias: true,
+      powerPreference: "high-performance" // Optimize for better performance
     });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -23,7 +24,7 @@ const ThreeBackground = () => {
 
     // Create particles for galaxy effect
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 15000;
+    const particlesCount = window.innerWidth < 768 ? 7500 : 15000; // Reduce particles on mobile
     const posArray = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
     const scales = new Float32Array(particlesCount);
@@ -105,18 +106,56 @@ const ThreeBackground = () => {
     camera.position.y = 5;
     camera.lookAt(0, 0, 0);
 
-    // Mouse movement effect
+    // Mouse/Touch movement effect
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
     let targetY = 0;
+    let isInteracting = false;
 
-    const handleMouseMove = (event: MouseEvent) => {
-      mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-      mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+    const updateMousePosition = (x: number, y: number) => {
+      mouseX = (x / window.innerWidth) * 2 - 1;
+      mouseY = -(y / window.innerHeight) * 2 + 1;
     };
 
+    // Mouse events
+    const handleMouseDown = () => {
+      isInteracting = true;
+    };
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (isInteracting) {
+        updateMousePosition(event.clientX, event.clientY);
+      }
+    };
+
+    const handleMouseUp = () => {
+      isInteracting = false;
+    };
+
+    // Touch events
+    const handleTouchStart = () => {
+      isInteracting = true;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (isInteracting && event.touches[0]) {
+        event.preventDefault();
+        updateMousePosition(event.touches[0].clientX, event.touches[0].clientY);
+      }
+    };
+
+    const handleTouchEnd = () => {
+      isInteracting = false;
+    };
+
+    // Add event listeners
+    window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd);
 
     // Animation
     const clock = new THREE.Clock();
@@ -167,8 +206,18 @@ const ThreeBackground = () => {
       if (containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
       }
+      window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('resize', handleResize);
+      
+      // Dispose of resources
+      particlesGeometry.dispose();
+      particlesMaterial.dispose();
+      renderer.dispose();
     };
   }, []);
 
