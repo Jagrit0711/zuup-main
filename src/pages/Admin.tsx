@@ -8,66 +8,37 @@ import DailyUpdates from '@/components/admin/DailyUpdates';
 import DonationTracker from '@/components/admin/DonationTracker';
 import VideoCall from '@/components/admin/VideoCall';
 import AdminUserManager from '@/components/admin/users/AdminUserManager';
-import { adminUsers } from '@/data/adminUsers';
 import { AdminUser } from '@/types/admin';
 import AdminHeader from '@/components/admin/layout/AdminHeader';
 import AdminLogin from '@/components/admin/auth/AdminLogin';
 
 const Admin = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [currentUser, setCurrentUser] = useState<AdminUser | null>(null);
-  const [notifications, setNotifications] = useState<string[]>([]);
+  const [notifications] = useState<string[]>([
+    'New donation received: ₹5000',
+    'Team member updated their status',
+    'Website traffic increased by 25%'
+  ]);
   const { toast } = useToast();
 
   useEffect(() => {
-    setNotifications([
-      'New donation received: ₹5000',
-      'Team member updated their status',
-      'Website traffic increased by 25%'
-    ]);
+    const storedUser = localStorage.getItem('adminUser');
+    if (storedUser) {
+      setCurrentUser(JSON.parse(storedUser));
+    }
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    const user = adminUsers.find(
-      u => u.username === username && u.password === password
-    );
-    
-    if (user) {
-      setIsAuthenticated(true);
-      setCurrentUser(user);
-      toast({
-        title: "Logged in successfully",
-        description: `Welcome back, ${user.name}!`,
-      });
-    } else {
-      toast({
-        title: "Invalid credentials",
-        description: "Please check your username and password",
-        variant: "destructive",
-      });
-    }
-  };
-
   const handleLogout = () => {
-    setIsAuthenticated(false);
+    localStorage.removeItem('adminUser');
     setCurrentUser(null);
-    setUsername('');
-    setPassword('');
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+    });
   };
 
-  if (!isAuthenticated || !currentUser) {
-    return (
-      <AdminLogin
-        username={username}
-        password={password}
-        onUsernameChange={setUsername}
-        onPasswordChange={setPassword}
-        onSubmit={handleLogin}
-      />
-    );
+  if (!currentUser) {
+    return <AdminLogin />;
   }
 
   return (
