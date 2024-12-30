@@ -45,6 +45,22 @@ export interface Database {
           created_at?: string
         }
       }
+      meetings: {
+        Row: {
+          id: string
+          meeting_id: string
+          title: string
+          created_at: string
+          created_by: string
+        }
+        Insert: {
+          id?: string
+          meeting_id: string
+          title: string
+          created_at?: string
+          created_by: string
+        }
+      }
       donations: {
         Row: {
           id: string
