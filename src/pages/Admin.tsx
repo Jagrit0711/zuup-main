@@ -7,6 +7,7 @@ import SiteStats from '@/components/admin/SiteStats';
 import DailyUpdates from '@/components/admin/DailyUpdates';
 import DonationTracker from '@/components/admin/DonationTracker';
 import VideoCall from '@/components/admin/VideoCall';
+import AdminUserManager from '@/components/admin/users/AdminUserManager';
 import { adminUsers } from '@/data/adminUsers';
 import { AdminUser } from '@/types/admin';
 import AdminHeader from '@/components/admin/layout/AdminHeader';
@@ -118,6 +119,12 @@ const Admin = () => {
                 >
                   Contact Information
                 </TabsTrigger>
+                <TabsTrigger 
+                  value="users"
+                  className="data-[state=active]:bg-[#FF6D59] data-[state=active]:text-white text-gray-300"
+                >
+                  Admin Users
+                </TabsTrigger>
               </>
             )}
           </TabsList>
@@ -147,6 +154,10 @@ const Admin = () => {
 
                 <TabsContent value="contact">
                   <ContactEditor />
+                </TabsContent>
+
+                <TabsContent value="users">
+                  <AdminUserManager />
                 </TabsContent>
               </>
             )}
