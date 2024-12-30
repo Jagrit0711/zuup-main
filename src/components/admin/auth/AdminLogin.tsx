@@ -15,14 +15,25 @@ const AdminLogin = () => {
     setIsLoading(true);
 
     try {
+      // First, get all matching users
       const { data: adminUsers, error: fetchError } = await supabase
         .from('admin_users')
         .select('*')
         .eq('username', username)
-        .eq('password', password)
-        .single();
+        .eq('password', password);
 
-      if (fetchError || !adminUsers) {
+      if (fetchError) {
+        console.error('Database error:', fetchError);
+        toast({
+          title: "Login failed",
+          description: "Database error occurred",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Check if we found any matching users
+      if (!adminUsers || adminUsers.length === 0) {
         toast({
           title: "Login failed",
           description: "Invalid username or password",
@@ -31,18 +42,22 @@ const AdminLogin = () => {
         return;
       }
 
+      // Use the first matching user
+      const adminUser = adminUsers[0];
+
       // Store admin user data in localStorage
-      localStorage.setItem('adminUser', JSON.stringify(adminUsers));
+      localStorage.setItem('adminUser', JSON.stringify(adminUser));
 
       toast({
         title: "Login successful",
-        description: `Welcome back, ${adminUsers.name}!`,
+        description: `Welcome back, ${adminUser.name}!`,
       });
 
       // Refresh the page to trigger re-render with authenticated state
       window.location.reload();
 
     } catch (error) {
+      console.error('Login error:', error);
       toast({
         title: "Login error",
         description: "An unexpected error occurred",
