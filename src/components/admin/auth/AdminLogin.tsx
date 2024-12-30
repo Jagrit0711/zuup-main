@@ -15,12 +15,15 @@ const AdminLogin = () => {
     setIsLoading(true);
 
     try {
-      // First, get all matching users
+      console.log('Attempting login with:', { username }); // Don't log password
+      
       const { data: adminUsers, error: fetchError } = await supabase
         .from('admin_users')
         .select('*')
         .eq('username', username)
         .eq('password', password);
+
+      console.log('Query response:', { adminUsers, fetchError });
 
       if (fetchError) {
         console.error('Database error:', fetchError);
@@ -34,6 +37,7 @@ const AdminLogin = () => {
 
       // Check if we found any matching users
       if (!adminUsers || adminUsers.length === 0) {
+        console.log('No matching users found');
         toast({
           title: "Login failed",
           description: "Invalid username or password",
@@ -44,6 +48,7 @@ const AdminLogin = () => {
 
       // Use the first matching user
       const adminUser = adminUsers[0];
+      console.log('Login successful for user:', adminUser.username);
 
       // Store admin user data in localStorage
       localStorage.setItem('adminUser', JSON.stringify(adminUser));
