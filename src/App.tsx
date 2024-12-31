@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import Index from "./pages/Index";
 import Team from "./pages/Team";
 import Admin from "./pages/Admin";
+import Careers from "./pages/Careers";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import FamilyLoveChecker from "./pages/FamilyLoveChecker";
 import FloatingOverlay from "./components/FloatingOverlay";
@@ -52,6 +53,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/team" element={<Team />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/careers" element={<Careers />} />
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/family-check" element={<FamilyLoveChecker />} />
         </Routes>
