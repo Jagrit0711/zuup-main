@@ -8,6 +8,7 @@ import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
 import DonationSection from '../components/DonationSection';
 import FamilyCheckerPopup from '../components/FamilyCheckerPopup';
+import { Alert, AlertTitle, AlertDescription } from '../components/ui/alert';
 import { useToast } from '../components/ui/use-toast';
 
 const Index = () => {
@@ -19,6 +20,15 @@ const Index = () => {
       <Navbar />
       <FamilyCheckerPopup />
       
+      <div className="container mx-auto px-4 py-4">
+        <Alert variant="destructive" className="mb-6">
+          <AlertTitle className="text-lg font-semibold">Important Announcement</AlertTitle>
+          <AlertDescription className="text-base">
+            All operations are delayed until March 2025. We apologize for any inconvenience.
+          </AlertDescription>
+        </Alert>
+      </div>
+
       <section className="relative">
         <Hero />
       </section>
