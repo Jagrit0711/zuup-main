@@ -47,6 +47,10 @@ const Index = () => {
         <CallToAction />
       </section>
 
+      <div className="fixed bottom-4 right-4 z-50">
+        <elevenlabs-convai agent-id="T2IOvA5G9yIgmNJO5WZm"></elevenlabs-convai>
+      </div>
+
       <Footer />
     </div>
   );

@@ -9,7 +9,6 @@ import Team from "./pages/Team";
 import Admin from "./pages/Admin";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import FamilyLoveChecker from "./pages/FamilyLoveChecker";
-import FloatingOverlay from "./components/FloatingOverlay";
 
 const queryClient = new QueryClient();
 
@@ -45,7 +44,6 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <FloatingOverlay />
       <BrowserRouter>
         <ViewTracker />
         <Routes>
