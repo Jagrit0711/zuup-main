@@ -1,10 +1,8 @@
 export interface AdminUser {
-  id: string;
   username: string;
   password: string;
   role: 'super_admin' | 'team_member';
   name: string;
-  created_at?: string;
 }
 
 export interface DailyUpdate {

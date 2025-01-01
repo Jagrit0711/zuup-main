@@ -41,9 +41,6 @@ const Navbar = () => {
               <Link to="/team" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Our Team
               </Link>
-              <Link to="/careers" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Careers
-              </Link>
             </div>
           </div>
           
@@ -76,9 +73,6 @@ const Navbar = () => {
             <MobileNavLink href="#contact">Contact</MobileNavLink>
             <Link to="/team" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
               Our Team
-            </Link>
-            <Link to="/careers" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-              Careers
             </Link>
           </div>
         </motion.div>

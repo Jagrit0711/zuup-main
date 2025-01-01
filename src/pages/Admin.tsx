@@ -7,38 +7,66 @@ import SiteStats from '@/components/admin/SiteStats';
 import DailyUpdates from '@/components/admin/DailyUpdates';
 import DonationTracker from '@/components/admin/DonationTracker';
 import VideoCall from '@/components/admin/VideoCall';
-import AdminUserManager from '@/components/admin/users/AdminUserManager';
+import { adminUsers } from '@/data/adminUsers';
 import { AdminUser } from '@/types/admin';
 import AdminHeader from '@/components/admin/layout/AdminHeader';
 import AdminLogin from '@/components/admin/auth/AdminLogin';
 
 const Admin = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [currentUser, setCurrentUser] = useState<AdminUser | null>(null);
-  const [notifications] = useState<string[]>([
-    'New donation received: ₹5000',
-    'Team member updated their status',
-    'Website traffic increased by 25%'
-  ]);
+  const [notifications, setNotifications] = useState<string[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('adminUser');
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
-    }
+    setNotifications([
+      'New donation received: ₹5000',
+      'Team member updated their status',
+      'Website traffic increased by 25%'
+    ]);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminUser');
-    setCurrentUser(null);
-    toast({
-      title: "Logged out",
-      description: "You have been successfully logged out.",
-    });
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    const user = adminUsers.find(
+      u => u.username === username && u.password === password
+    );
+    
+    if (user) {
+      setIsAuthenticated(true);
+      setCurrentUser(user);
+      toast({
+        title: "Logged in successfully",
+        description: `Welcome back, ${user.name}!`,
+      });
+    } else {
+      toast({
+        title: "Invalid credentials",
+        description: "Please check your username and password",
+        variant: "destructive",
+      });
+    }
   };
 
-  if (!currentUser) {
-    return <AdminLogin />;
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setCurrentUser(null);
+    setUsername('');
+    setPassword('');
+  };
+
+  if (!isAuthenticated || !currentUser) {
+    return (
+      <AdminLogin
+        username={username}
+        password={password}
+        onUsernameChange={setUsername}
+        onPasswordChange={setPassword}
+        onSubmit={handleLogin}
+      />
+    );
   }
 
   return (
@@ -90,12 +118,6 @@ const Admin = () => {
                 >
                   Contact Information
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="users"
-                  className="data-[state=active]:bg-[#FF6D59] data-[state=active]:text-white text-gray-300"
-                >
-                  Admin Users
-                </TabsTrigger>
               </>
             )}
           </TabsList>
@@ -125,10 +147,6 @@ const Admin = () => {
 
                 <TabsContent value="contact">
                   <ContactEditor />
-                </TabsContent>
-
-                <TabsContent value="users">
-                  <AdminUserManager />
                 </TabsContent>
               </>
             )}

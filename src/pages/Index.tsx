@@ -8,7 +8,6 @@ import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
 import DonationSection from '../components/DonationSection';
 import FamilyCheckerPopup from '../components/FamilyCheckerPopup';
-import Announcement from '../components/Announcement';
 import { useToast } from '../components/ui/use-toast';
 
 const Index = () => {
@@ -22,10 +21,6 @@ const Index = () => {
       
       <section className="relative">
         <Hero />
-      </section>
-
-      <section className="py-4">
-        <Announcement />
       </section>
 
       <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="about">
