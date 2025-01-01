@@ -8,7 +8,6 @@ import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
 import DonationSection from '../components/DonationSection';
 import FamilyCheckerPopup from '../components/FamilyCheckerPopup';
-import { Alert, AlertTitle, AlertDescription } from '../components/ui/alert';
 import { useToast } from '../components/ui/use-toast';
 
 const Index = () => {
@@ -20,14 +19,19 @@ const Index = () => {
       <Navbar />
       <FamilyCheckerPopup />
       
-      <div className="container mx-auto px-4 py-4">
-        <Alert variant="destructive" className="mb-6">
-          <AlertTitle className="text-lg font-semibold">Important Announcement</AlertTitle>
-          <AlertDescription className="text-base">
-            All operations are delayed until March 2025. We apologize for any inconvenience.
-          </AlertDescription>
-        </Alert>
-      </div>
+      <section className="py-16 bg-gradient-to-r from-red-600 to-red-800">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl font-bold text-white mb-6">Announcement</h2>
+            <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-8 shadow-xl border border-white/10">
+              <h3 className="text-2xl font-semibold text-white mb-4">Operations Update</h3>
+              <p className="text-xl text-white/90">
+                All operations are delayed until March 2025
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="relative">
         <Hero />
