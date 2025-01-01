@@ -15,7 +15,7 @@ const FloatingOverlay = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="mb-4 bg-white/10 backdrop-blur-lg rounded-lg border border-gray-200/20 shadow-xl p-4 w-64"
+            className="mb-4 bg-white/10 backdrop-blur-lg rounded-lg border border-gray-200/20 shadow-xl p-4"
           >
             <button
               onClick={() => setIsOpen(false)}
@@ -24,22 +24,9 @@ const FloatingOverlay = () => {
               <X size={16} />
             </button>
             <div className="space-y-3">
-              <a
-                href="https://aistudio.instagram.com/ai/1588807355358359?utm_source=ai_agent"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col space-y-1 p-2 rounded-lg hover:bg-white/10 transition-colors text-white"
-              >
-                <div className="flex items-center space-x-2">
-                  <MessageCircle className="text-[#4299e1]" />
-                  <span>Chat with AI Assistant</span>
-                </div>
-                {isMobile ? null : (
-                  <span className="text-xs text-gray-400 pl-7">
-                    Only available on mobile devices
-                  </span>
-                )}
-              </a>
+              <div className="elevenlabs-widget-container">
+                <elevenlabs-convai agent-id="T2IOvA5G9yIgmNJO5WZm" />
+              </div>
             </div>
           </motion.div>
         )}
