@@ -19,6 +19,19 @@ const Index = () => {
       <Navbar />
       <FamilyCheckerPopup />
       
+      <section className="bg-gradient-to-r from-gray-900 to-black py-4 overflow-hidden">
+        <div className="container mx-auto">
+          <h2 className="text-2xl font-bold text-white mb-4 text-center">Notices</h2>
+          <div className="relative">
+            <div className="animate-[slide_20s_linear_infinite] whitespace-nowrap">
+              <span className="text-xl text-red-500 inline-block px-4">
+                ⚠️ All operations are delayed until March 2025 ⚠️
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="relative">
         <Hero />
       </section>
