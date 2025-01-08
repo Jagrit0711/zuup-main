@@ -10,6 +10,7 @@ import Admin from "./pages/Admin";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import FamilyLoveChecker from "./pages/FamilyLoveChecker";
 import Careers from "./pages/Careers";
+import OurStory from "./pages/OurStory";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,7 @@ const App = () => (
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/family-check" element={<FamilyLoveChecker />} />
           <Route path="/careers" element={<Careers />} />
+          <Route path="/our-story" element={<OurStory />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
