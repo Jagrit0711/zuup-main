@@ -1,10 +1,85 @@
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
-import { BookOpen, Users, Rocket, DollarSign, Heart } from "lucide-react";
+import { BookOpen, Users, Rocket, DollarSign, Heart, Volume2, VolumeX } from "lucide-react";
+import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 const OurStory = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
+  const { toast } = useToast();
+
+  const storyText = `At just 16, Jagrit Sachdev was already making waves in the digital world. 
+    Like many young entrepreneurs, his initial focus was straightforward: creating 
+    successful ventures that generated profit. He was good at it - perhaps too good.
+    But something didn't feel right. Despite his success, Jagrit had an epiphany: 
+    he was essentially "printing money" without making a real difference in society. 
+    This realization hit hard, sparking a desire for meaningful change and impact.
+    Driven by this new purpose, Jagrit reached out to his friends - other young, 
+    talented individuals who shared his vision for social impact. Together, they 
+    began brainstorming ways to use their skills and technology to make a real 
+    difference in people's lives.
+    After months of planning and preparation, Zuup was born. The vision was clear: 
+    create a platform that would bridge the digital divide, making technology 
+    accessible and beneficial for everyone, from underprivileged teens to senior 
+    citizens.
+    Today, at 16, Jagrit leads Zuup with a clear purpose: to ensure that digital 
+    literacy and opportunities are available to everyone, regardless of their age 
+    or background. It's no longer about just creating successful ventures - it's 
+    about creating meaningful impact and positive change in society.`;
+
+  const handleTextToSpeech = async () => {
+    if (isPlaying && audioElement) {
+      audioElement.pause();
+      setIsPlaying(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'xi-api-key': import.meta.env.VITE_ELEVEN_LABS_API_KEY || '',
+        },
+        body: JSON.stringify({
+          text: storyText,
+          model_id: "eleven_multilingual_v2",
+          voice_settings: {
+            stability: 0.5,
+            similarity_boost: 0.75,
+          }
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate speech');
+      }
+
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      
+      audio.onended = () => {
+        setIsPlaying(false);
+      };
+
+      setAudioElement(audio);
+      audio.play();
+      setIsPlaying(true);
+    } catch (error) {
+      console.error('Error generating speech:', error);
+      toast({
+        title: "Error",
+        description: "Failed to generate speech. Please make sure you have set up your ElevenLabs API key.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -53,7 +128,7 @@ const OurStory = () => {
         <Navbar />
         
         <div className="max-w-4xl mx-auto px-4 py-20 space-y-16">
-          {/* Hero Section */}
+          {/* Hero Section with Listen Button */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -67,6 +142,23 @@ const OurStory = () => {
             <p className="text-xl text-gray-400">
               A Journey from Ambition to Purpose
             </p>
+            <Button
+              onClick={handleTextToSpeech}
+              variant="outline"
+              className="mt-4 flex items-center gap-2"
+            >
+              {isPlaying ? (
+                <>
+                  <VolumeX className="w-4 h-4" />
+                  Stop Listening
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-4 h-4" />
+                  Listen to Our Story
+                </>
+              )}
+            </Button>
           </motion.div>
 
           {/* Story Sections */}
