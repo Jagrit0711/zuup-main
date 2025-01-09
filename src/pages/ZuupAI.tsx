@@ -18,7 +18,7 @@ const ZuupAI = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hello! I'm Zuup AI Beta. How can I assist you today?",
+      content: "Hello! I'm Zuup AI Beta. I can tell you all about Zuup, our mission, team, and services. How can I assist you today?",
       timestamp: new Date(),
     },
   ]);
@@ -27,33 +27,43 @@ const ZuupAI = () => {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
+  const zuupKnowledge = {
+    about: "Zuup is a youth-led organization founded by 16-year-old Jagrit Sachdev. We're dedicated to making digital skills accessible to everyone, from underprivileged teens to senior citizens.",
+    mission: "Our mission is to bridge the digital divide and ensure that digital literacy and opportunities are available to everyone, regardless of their age or background.",
+    founder: "Jagrit Sachdev, our 16-year-old founder, started Zuup with a vision to transform from profit-focused ventures to creating meaningful social impact through digital education.",
+    services: "We provide comprehensive training in various digital skills including graphic design, video editing, and coding. These skills are in high demand in the freelance market.",
+    contact: "You can reach us at jag@techygram.onmicrosoft.com or jagrit0711@gmail.com. Our phone numbers are +91 113-550-4576 and +91 885-184-4602.",
+    team: "We're a group of passionate teenagers working together to make digital education accessible to all generations.",
+    story: "Jagrit's journey began with creating successful profit-focused ventures. However, he realized he wanted to make a real difference in society. This led to the creation of Zuup, focusing on bridging the digital divide."
+  };
+
   const generateResponse = async (userMessage: string) => {
-    // Simulate AI thinking with predefined responses
-    const responses = [
-      "I understand your question. Let me help you with that.",
-      "That's an interesting perspective. Here's what I think...",
-      "Based on my analysis, I would suggest...",
-      "Let me process that information and provide a helpful response.",
-      "I can assist you with that. Here's my recommendation..."
-    ];
-    
-    // Simulate processing time
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Generate a "smart" response based on user input
+    const message = userMessage.toLowerCase();
     let response = "";
-    if (userMessage.toLowerCase().includes("hello") || userMessage.toLowerCase().includes("hi")) {
-      response = "Hello! It's great to meet you. How can I help you today?";
-    } else if (userMessage.toLowerCase().includes("how are you")) {
-      response = "I'm functioning well, thank you for asking! I'm here to assist you.";
-    } else if (userMessage.toLowerCase().includes("help")) {
-      response = "I'd be happy to help! I can assist with various tasks, answer questions, or engage in conversation. What specific assistance do you need?";
+
+    // Check for specific topics in the message
+    if (message.includes("about") || message.includes("what is zuup")) {
+      response = zuupKnowledge.about;
+    } else if (message.includes("mission") || message.includes("purpose")) {
+      response = zuupKnowledge.mission;
+    } else if (message.includes("founder") || message.includes("jagrit")) {
+      response = zuupKnowledge.founder;
+    } else if (message.includes("services") || message.includes("teach") || message.includes("training")) {
+      response = zuupKnowledge.services;
+    } else if (message.includes("contact") || message.includes("reach") || message.includes("email")) {
+      response = zuupKnowledge.contact;
+    } else if (message.includes("team") || message.includes("who")) {
+      response = zuupKnowledge.team;
+    } else if (message.includes("story") || message.includes("history")) {
+      response = zuupKnowledge.story;
+    } else if (message.includes("hello") || message.includes("hi")) {
+      response = "Hello! I'm here to help you learn about Zuup. Feel free to ask about our mission, services, team, or anything else!";
     } else {
-      // Pick a random response for other queries
-      response = responses[Math.floor(Math.random() * responses.length)] +
-                " Based on your message: '" + userMessage + "', I would suggest exploring this topic further.";
+      response = "I understand you're interested in learning about Zuup. Could you please be more specific? You can ask about our mission, services, team, founder, or how to contact us.";
     }
     
+    // Simulate processing time
+    await new Promise(resolve => setTimeout(resolve, 1000));
     return response;
   };
 
@@ -191,7 +201,7 @@ const ZuupAI = () => {
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your message..."
+                placeholder="Ask me anything about Zuup..."
                 className="bg-gray-800 border-gray-700 text-white"
               />
               <Button type="submit" disabled={isTyping}>
