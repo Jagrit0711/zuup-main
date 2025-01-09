@@ -1,15 +1,18 @@
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
-import { BookOpen, Users, Rocket, DollarSign, Heart, Volume2, VolumeX } from "lucide-react";
+import { BookOpen, Users, Rocket, DollarSign, Heart, Volume2, VolumeX, Key } from "lucide-react";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 const OurStory = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
+  const [apiKey, setApiKey] = useState(localStorage.getItem('elevenLabsApiKey') || '');
   const { toast } = useToast();
 
   const storyText = `At just 16, Jagrit Sachdev was already making waves in the digital world. 
@@ -38,12 +41,21 @@ const OurStory = () => {
       return;
     }
 
+    if (!apiKey) {
+      toast({
+        title: "API Key Required",
+        description: "Please set your ElevenLabs API key first",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'xi-api-key': import.meta.env.VITE_ELEVEN_LABS_API_KEY || '',
+          'xi-api-key': apiKey,
         },
         body: JSON.stringify({
           text: storyText,
@@ -74,10 +86,18 @@ const OurStory = () => {
       console.error('Error generating speech:', error);
       toast({
         title: "Error",
-        description: "Failed to generate speech. Please make sure you have set up your ElevenLabs API key.",
+        description: "Failed to generate speech. Please check your API key.",
         variant: "destructive",
       });
     }
+  };
+
+  const handleSaveApiKey = () => {
+    localStorage.setItem('elevenLabsApiKey', apiKey);
+    toast({
+      title: "Success",
+      description: "API key saved successfully",
+    });
   };
 
   return (
@@ -142,23 +162,47 @@ const OurStory = () => {
             <p className="text-xl text-gray-400">
               A Journey from Ambition to Purpose
             </p>
-            <Button
-              onClick={handleTextToSpeech}
-              variant="outline"
-              className="mt-4 flex items-center gap-2"
-            >
-              {isPlaying ? (
-                <>
-                  <VolumeX className="w-4 h-4" />
-                  Stop Listening
-                </>
-              ) : (
-                <>
-                  <Volume2 className="w-4 h-4" />
-                  Listen to Our Story
-                </>
-              )}
-            </Button>
+            <div className="flex justify-center gap-4">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <Key className="w-4 h-4" />
+                    Set API Key
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Set ElevenLabs API Key</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <Input
+                      type="password"
+                      value={apiKey}
+                      onChange={(e) => setApiKey(e.target.value)}
+                      placeholder="Enter your ElevenLabs API key"
+                    />
+                    <Button onClick={handleSaveApiKey}>Save Key</Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
+              <Button
+                onClick={handleTextToSpeech}
+                variant="outline"
+                className="flex items-center gap-2"
+              >
+                {isPlaying ? (
+                  <>
+                    <VolumeX className="w-4 h-4" />
+                    Stop Listening
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="w-4 h-4" />
+                    Listen to Our Story
+                  </>
+                )}
+              </Button>
+            </div>
           </motion.div>
 
           {/* Story Sections */}
