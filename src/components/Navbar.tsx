@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Home, Users, BookOpen, Heart, Mail, Lock, Info } from 'lucide-react';
+import { Menu, X, Home, Users, BookOpen, Heart, Mail, Lock, Info, Bot } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -47,6 +47,9 @@ const Navbar = () => {
               <Link to="/careers" className="text-gray-300 hover:text-[#ea384c] px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
                 <Heart size={16} /> Careers
               </Link>
+              <Link to="/zuup-ai" className="text-gray-300 hover:text-[#ea384c] px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
+                <Bot size={16} /> Zuup AI Beta
+              </Link>
               <NavLink href="#contact" icon={<Mail size={16} />}>Contact</NavLink>
               <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
                 <Lock size={16} /> Admin
@@ -89,6 +92,9 @@ const Navbar = () => {
             </Link>
             <Link to="/careers" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2">
               <Heart size={16} /> Careers
+            </Link>
+            <Link to="/zuup-ai" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2">
+              <Bot size={16} /> Zuup AI Beta
             </Link>
             <MobileNavLink href="#contact" icon={<Mail size={16} />}>Contact</MobileNavLink>
             <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2">

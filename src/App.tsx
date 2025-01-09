@@ -11,6 +11,7 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import FamilyLoveChecker from "./pages/FamilyLoveChecker";
 import Careers from "./pages/Careers";
 import OurStory from "./pages/OurStory";
+import ZuupAI from "./pages/ZuupAI";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +57,7 @@ const App = () => (
           <Route path="/family-check" element={<FamilyLoveChecker />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/our-story" element={<OurStory />} />
+          <Route path="/zuup-ai" element={<ZuupAI />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
