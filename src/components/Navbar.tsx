@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Home, Users, BookOpen, Heart, Mail, Lock, Info, Bot } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ const Navbar = () => {
 
   return (
     <motion.nav 
-      className="fixed w-full z-50 bg-black/80 backdrop-blur-sm"
+      className="fixed w-full z-50 bg-black/80 backdrop-blur-sm border-b border-white/10"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
@@ -35,24 +35,24 @@ const Navbar = () => {
           
           {/* Desktop Menu */}
           <div className="hidden md:block">
-            <div className="ml-4 flex items-baseline space-x-2 lg:space-x-4">
-              <NavLink href="/" icon={<Home size={16} />}>Home</NavLink>
-              <NavLink href="#about" icon={<Info size={16} />}>About Us</NavLink>
-              <Link to="/our-story" className="text-gray-300 hover:text-[#ea384c] px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-                <BookOpen size={16} /> Our Story
+            <div className="ml-4 flex items-baseline space-x-1 lg:space-x-2">
+              <NavLink href="/">Home</NavLink>
+              <NavLink href="#about">About Us</NavLink>
+              <Link to="/our-story" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Our Story
               </Link>
-              <Link to="/team" className="text-gray-300 hover:text-[#ea384c] px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-                <Users size={16} /> Our Team
+              <Link to="/team" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Our Team
               </Link>
-              <Link to="/careers" className="text-gray-300 hover:text-[#ea384c] px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-                <Heart size={16} /> Careers
+              <Link to="/careers" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Careers
               </Link>
-              <Link to="/zuup-ai" className="text-gray-300 hover:text-[#ea384c] px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-                <Bot size={16} /> Zuup AI Beta
+              <Link to="/zuup-ai" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Zuup AI Beta
               </Link>
-              <NavLink href="#contact" icon={<Mail size={16} />}>Contact</NavLink>
-              <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-                <Lock size={16} /> Admin
+              <NavLink href="#contact">Contact</NavLink>
+              <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Admin
               </Link>
             </div>
           </div>
@@ -82,23 +82,23 @@ const Navbar = () => {
           transition={{ duration: 0.3 }}
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <MobileNavLink href="/" icon={<Home size={16} />}>Home</MobileNavLink>
-            <MobileNavLink href="#about" icon={<Info size={16} />}>About Us</MobileNavLink>
-            <Link to="/our-story" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2">
-              <BookOpen size={16} /> Our Story
+            <MobileNavLink href="/">Home</MobileNavLink>
+            <MobileNavLink href="#about">About Us</MobileNavLink>
+            <Link to="/our-story" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
+              Our Story
             </Link>
-            <Link to="/team" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2">
-              <Users size={16} /> Our Team
+            <Link to="/team" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
+              Our Team
             </Link>
-            <Link to="/careers" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2">
-              <Heart size={16} /> Careers
+            <Link to="/careers" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
+              Careers
             </Link>
-            <Link to="/zuup-ai" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2">
-              <Bot size={16} /> Zuup AI Beta
+            <Link to="/zuup-ai" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
+              Zuup AI Beta
             </Link>
-            <MobileNavLink href="#contact" icon={<Mail size={16} />}>Contact</MobileNavLink>
-            <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2">
-              <Lock size={16} /> Admin
+            <MobileNavLink href="#contact">Contact</MobileNavLink>
+            <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
+              Admin
             </Link>
           </div>
         </motion.div>
@@ -107,26 +107,24 @@ const Navbar = () => {
   );
 };
 
-const NavLink = ({ href, children, icon }: { href: string; children: React.ReactNode; icon: React.ReactNode }) => (
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <motion.a
     href={href}
-    className="text-gray-300 hover:text-[#ea384c] px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2"
+    className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors"
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.95 }}
   >
-    {icon}
     {children}
   </motion.a>
 );
 
-const MobileNavLink = ({ href, children, icon }: { href: string; children: React.ReactNode; icon: React.ReactNode }) => (
+const MobileNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <motion.a
     href={href}
-    className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2"
+    className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium"
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
   >
-    {icon}
     {children}
   </motion.a>
 );
