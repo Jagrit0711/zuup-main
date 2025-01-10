@@ -5,9 +5,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { AdminAuthProvider } from "./contexts/AdminAuthContext";
+import { AdminEditorProvider } from "./contexts/AdminEditorContext";
 import Index from "./pages/Index";
 import Team from "./pages/Team";
 import Admin from "./pages/Admin";
+import AdminUpdate from "./pages/AdminUpdate";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import FamilyLoveChecker from "./pages/FamilyLoveChecker";
 import Careers from "./pages/Careers";
@@ -50,17 +52,20 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <ViewTracker />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/terms" element={<TermsAndConditions />} />
-            <Route path="/family-check" element={<FamilyLoveChecker />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/our-story" element={<OurStory />} />
-            <Route path="/zuup-ai" element={<ZuupAI />} />
-          </Routes>
+          <AdminEditorProvider>
+            <ViewTracker />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/adminupdate/*" element={<AdminUpdate />} />
+              <Route path="/terms" element={<TermsAndConditions />} />
+              <Route path="/family-check" element={<FamilyLoveChecker />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/our-story" element={<OurStory />} />
+              <Route path="/zuup-ai" element={<ZuupAI />} />
+            </Routes>
+          </AdminEditorProvider>
         </BrowserRouter>
       </TooltipProvider>
     </AdminAuthProvider>
