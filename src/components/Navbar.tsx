@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useAdminAuth } from '@/contexts/AdminAuthContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated, logout } = useAdminAuth();
 
   return (
     <motion.nav 
@@ -51,9 +53,23 @@ const Navbar = () => {
                 Zuup AI Beta
               </Link>
               <NavLink href="#contact">Contact</NavLink>
-              <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Admin
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={logout}
+                    className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Admin
+                </Link>
+              )}
             </div>
           </div>
           
@@ -97,9 +113,23 @@ const Navbar = () => {
               Zuup AI Beta
             </Link>
             <MobileNavLink href="#contact">Contact</MobileNavLink>
-            <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-              Admin
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
+                  Dashboard
+                </Link>
+                <button
+                  onClick={logout}
+                  className="text-gray-300 hover:text-[#ea384c] block w-full text-left px-3 py-2 rounded-md text-base font-medium"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
+                Admin
+              </Link>
+            )}
           </div>
         </motion.div>
       )}

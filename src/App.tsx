@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { AdminAuthProvider } from "./contexts/AdminAuthContext";
 import Index from "./pages/Index";
 import Team from "./pages/Team";
 import Admin from "./pages/Admin";
@@ -44,23 +45,25 @@ const ViewTracker = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ViewTracker />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/terms" element={<TermsAndConditions />} />
-          <Route path="/family-check" element={<FamilyLoveChecker />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/our-story" element={<OurStory />} />
-          <Route path="/zuup-ai" element={<ZuupAI />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <AdminAuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ViewTracker />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/terms" element={<TermsAndConditions />} />
+            <Route path="/family-check" element={<FamilyLoveChecker />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/our-story" element={<OurStory />} />
+            <Route path="/zuup-ai" element={<ZuupAI />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </AdminAuthProvider>
   </QueryClientProvider>
 );
 
