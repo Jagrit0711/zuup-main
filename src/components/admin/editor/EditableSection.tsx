@@ -5,7 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 
 interface EditableSectionProps {
   initialContent: string;
-  type: 'text' | 'heading' | 'button';
+  type: 'text' | 'heading' | 'button' | 'image';
   onDelete?: () => void;
 }
 
@@ -34,6 +34,17 @@ const EditableSection = ({ initialContent, type, onDelete }: EditableSectionProp
           />
         );
       }
+      if (type === 'image') {
+        return (
+          <input
+            type="url"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Enter image URL"
+            className="w-full p-2 bg-gray-900 text-white border border-gray-700 rounded-lg"
+          />
+        );
+      }
       return (
         <input
           type="text"
@@ -52,6 +63,19 @@ const EditableSection = ({ initialContent, type, onDelete }: EditableSectionProp
         <button className="bg-[#FF6D59] text-white px-6 py-2 rounded-lg hover:bg-[#ff8574] transition-colors">
           {content}
         </button>
+      );
+    }
+    if (type === 'image') {
+      return (
+        <img 
+          src={content} 
+          alt="Content" 
+          className="w-full h-auto rounded-lg"
+          onError={(e) => {
+            const img = e.target as HTMLImageElement;
+            img.src = '/placeholder.svg';
+          }}
+        />
       );
     }
     return <p className="text-gray-300">{content}</p>;
