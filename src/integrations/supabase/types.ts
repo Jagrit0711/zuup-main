@@ -117,6 +117,45 @@ export type Database = {
         }
         Relationships: []
       }
+      jobs: {
+        Row: {
+          company: string
+          created_at: string | null
+          deadline: string
+          description: string
+          id: string
+          job_type: string
+          location: string
+          requirements: string
+          salary_range: string
+          title: string
+        }
+        Insert: {
+          company: string
+          created_at?: string | null
+          deadline: string
+          description: string
+          id?: string
+          job_type: string
+          location: string
+          requirements: string
+          salary_range: string
+          title: string
+        }
+        Update: {
+          company?: string
+          created_at?: string | null
+          deadline?: string
+          description?: string
+          id?: string
+          job_type?: string
+          location?: string
+          requirements?: string
+          salary_range?: string
+          title?: string
+        }
+        Relationships: []
+      }
       meetings: {
         Row: {
           created_at: string
