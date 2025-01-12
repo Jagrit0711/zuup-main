@@ -1,33 +1,66 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 
 const LiveStream = () => {
-  const [streamKey, setStreamKey] = useState('');
+  const [isStreaming, setIsStreaming] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const { toast } = useToast();
-  const streamUrl = 'rtmp://your-streaming-service-url/live';
 
-  const handleCopyStreamUrl = () => {
-    navigator.clipboard.writeText(streamUrl);
-    toast({
-      title: "Stream URL copied",
-      description: "The stream URL has been copied to your clipboard",
-    });
-  };
+  const startStream = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
+      });
+      
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
 
-  const handleCopyStreamKey = () => {
-    if (streamKey) {
-      navigator.clipboard.writeText(streamKey);
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      mediaRecorderRef.current.start();
+      setIsStreaming(true);
+
       toast({
-        title: "Stream key copied",
-        description: "The stream key has been copied to your clipboard",
+        title: "Stream started",
+        description: "Your camera and microphone are now live",
+      });
+    } catch (error) {
+      console.error('Error accessing media devices:', error);
+      toast({
+        title: "Error starting stream",
+        description: "Please make sure you have a camera and microphone connected",
+        variant: "destructive"
       });
     }
   };
+
+  const stopStream = () => {
+    if (mediaRecorderRef.current && videoRef.current) {
+      mediaRecorderRef.current.stop();
+      const tracks = (videoRef.current.srcObject as MediaStream)?.getTracks();
+      tracks?.forEach(track => track.stop());
+      videoRef.current.srcObject = null;
+      setIsStreaming(false);
+      
+      toast({
+        title: "Stream stopped",
+        description: "Your stream has ended",
+      });
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (isStreaming) {
+        stopStream();
+      }
+    };
+  }, [isStreaming]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -37,55 +70,47 @@ const LiveStream = () => {
         
         <div className="grid gap-8 md:grid-cols-2">
           <Card className="p-6">
-            <h2 className="text-2xl font-semibold mb-4">Stream Settings</h2>
+            <h2 className="text-2xl font-semibold mb-4">Stream Controls</h2>
             <div className="space-y-4">
-              <div>
-                <Label htmlFor="streamUrl">Stream URL</Label>
-                <div className="flex gap-2">
-                  <Input 
-                    id="streamUrl"
-                    value={streamUrl}
-                    readOnly
-                    className="flex-1"
-                  />
-                  <Button onClick={handleCopyStreamUrl}>Copy</Button>
-                </div>
-              </div>
+              <Button 
+                onClick={isStreaming ? stopStream : startStream}
+                className={isStreaming ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"}
+              >
+                {isStreaming ? "Stop Streaming" : "Start Streaming"}
+              </Button>
               
-              <div>
-                <Label htmlFor="streamKey">Stream Key</Label>
-                <div className="flex gap-2">
-                  <Input
-                    id="streamKey"
-                    type="password"
-                    value={streamKey}
-                    onChange={(e) => setStreamKey(e.target.value)}
-                    placeholder="Enter your stream key"
-                    className="flex-1"
-                  />
-                  <Button onClick={handleCopyStreamKey}>Copy</Button>
-                </div>
+              <div className="text-sm text-gray-500">
+                {isStreaming ? (
+                  <p>🔴 Live: Your camera and microphone are active</p>
+                ) : (
+                  <p>Click 'Start Streaming' to begin broadcasting</p>
+                )}
               </div>
             </div>
           </Card>
 
           <Card className="p-6">
-            <h2 className="text-2xl font-semibold mb-4">Live Stream</h2>
-            <div className="aspect-video bg-black rounded-lg flex items-center justify-center">
-              <p className="text-white">Stream preview will appear here</p>
+            <h2 className="text-2xl font-semibold mb-4">Stream Preview</h2>
+            <div className="aspect-video bg-black rounded-lg overflow-hidden">
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                muted
+                className="w-full h-full object-cover"
+              />
             </div>
           </Card>
         </div>
 
         <div className="mt-8">
-          <h3 className="text-xl font-semibold mb-4">How to Stream</h3>
+          <h3 className="text-xl font-semibold mb-4">How to Use</h3>
           <ol className="list-decimal list-inside space-y-2">
-            <li>Open OBS Studio on your computer</li>
-            <li>Go to Settings → Stream</li>
-            <li>Select "Custom" as the service</li>
-            <li>Copy and paste the Stream URL provided above</li>
-            <li>Copy and paste your Stream Key</li>
-            <li>Click "Start Streaming" in OBS</li>
+            <li>Make sure your camera and microphone are connected</li>
+            <li>Click the "Start Streaming" button to begin</li>
+            <li>Allow browser permissions for camera and microphone access</li>
+            <li>Your stream will appear in the preview window</li>
+            <li>Click "Stop Streaming" when you're done</li>
           </ol>
         </div>
       </div>
