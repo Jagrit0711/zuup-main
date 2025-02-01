@@ -9,6 +9,8 @@ interface DonationFormProps {
   currentUser: string;
 }
 
+const MAX_DONATION_AMOUNT = 1000000; // 10 lakhs in rupees
+
 const DonationForm = ({ currentUser }: DonationFormProps) => {
   const { toast } = useToast();
   const [amount, setAmount] = useState('');
@@ -27,7 +29,7 @@ const DonationForm = ({ currentUser }: DonationFormProps) => {
         .insert([{
           user_id: newDonation.userId,
           amount: newDonation.amount,
-          screenshot_url: 'https://placeholder.com/donation-placeholder.png', // Default placeholder URL
+          screenshot_url: 'https://placeholder.com/donation-placeholder.png',
           user_name: newDonation.userName,
           description: newDonation.description
         }])
@@ -43,7 +45,6 @@ const DonationForm = ({ currentUser }: DonationFormProps) => {
         title: "Success",
         description: "Donation entry added successfully",
       });
-      // Reset form
       setAmount('');
       setDescription('');
     },
@@ -67,9 +68,19 @@ const DonationForm = ({ currentUser }: DonationFormProps) => {
       return;
     }
 
+    const numAmount = parseFloat(amount);
+    if (numAmount > MAX_DONATION_AMOUNT) {
+      toast({
+        title: "Error",
+        description: "Maximum donation amount is ₹10 lakhs",
+        variant: "destructive"
+      });
+      return;
+    }
+
     addDonation.mutate({
       userId: currentUser,
-      amount: parseFloat(amount),
+      amount: numAmount,
       userName: currentUser,
       description
     });
@@ -91,7 +102,8 @@ const DonationForm = ({ currentUser }: DonationFormProps) => {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
-              placeholder="Enter amount"
+              placeholder="Enter amount (max ₹10 lakhs)"
+              max={MAX_DONATION_AMOUNT}
             />
           </div>
           
