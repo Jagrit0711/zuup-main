@@ -36,6 +36,35 @@ export type Database = {
         }
         Relationships: []
       }
+      admin_permissions: {
+        Row: {
+          admin_id: string | null
+          created_at: string | null
+          id: string
+          permission: Database["public"]["Enums"]["admin_permission"]
+        }
+        Insert: {
+          admin_id?: string | null
+          created_at?: string | null
+          id?: string
+          permission: Database["public"]["Enums"]["admin_permission"]
+        }
+        Update: {
+          admin_id?: string | null
+          created_at?: string | null
+          id?: string
+          permission?: Database["public"]["Enums"]["admin_permission"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_permissions_admin_id_fkey"
+            columns: ["admin_id"]
+            isOneToOne: false
+            referencedRelation: "admin_users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       admin_users: {
         Row: {
           created_at: string
@@ -368,6 +397,13 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      admin_permission:
+        | "manage_team"
+        | "manage_content"
+        | "manage_donations"
+        | "view_stats"
+        | "manage_meetings"
+        | "manage_admins"
       class_level: "class_6" | "class_7" | "class_8"
       resource_category: "notes" | "lesson_plans" | "tests" | "revision"
       subject_type: "chemistry" | "biology" | "physics"
