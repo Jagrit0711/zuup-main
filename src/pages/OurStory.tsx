@@ -103,9 +103,9 @@ const OurStory = () => {
   return (
     <>
       <Helmet>
-        <title>Our Story | Zuup - Teen-Led NGO by Jagrit Sachdev</title>
-        <meta name="description" content="Discover how 16-year-old Jagrit Sachdev transformed from a profit-focused entrepreneur to founding Zuup, a teen-led NGO empowering underprivileged youth through digital skills." />
-        <meta name="keywords" content="Jagrit Sachdev, teenage NGO, Zuup founder, youth empowerment, digital skills education, teen entrepreneur" />
+        <title>Our Story | Zuup - Teen-Led Non-Profit Organization by Jagrit Sachdev</title>
+        <meta name="description" content="Discover how 16-year-old Jagrit Sachdev transformed from a profit-focused entrepreneur to founding Zuup, a teen-led initiative partnering with Non-Profit Organizations to empower underprivileged youth through digital skills." />
+        <meta name="keywords" content="Jagrit Sachdev, Non-Profit Organization, Zuup founder, youth empowerment, digital skills education, teen entrepreneur" />
         <link rel="canonical" href="https://zuup.org/our-story" />
         
         {/* Open Graph / Social Media Meta Tags */}

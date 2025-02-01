@@ -10,9 +10,9 @@ const About = () => {
           </span>
         </h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          We're a group of passionate teenagers on a mission to make digital skills and 
-          opportunities accessible to everyone, from underprivileged teens to senior citizens, 
-          regardless of their background or age.
+          Through partnerships with established Non-Profit Organizations, we're a group of passionate 
+          teenagers on a mission to make digital skills and opportunities accessible to everyone, 
+          from underprivileged teens to senior citizens, regardless of their background or age.
         </p>
       </div>
 

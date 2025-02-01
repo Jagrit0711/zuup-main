@@ -336,6 +336,30 @@ export type Database = {
         }
         Relationships: []
       }
+      team_messages: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          user_id: string
+          user_name: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          user_id: string
+          user_name: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          user_id?: string
+          user_name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
