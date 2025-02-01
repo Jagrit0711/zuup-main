@@ -9,6 +9,33 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      about_content: {
+        Row: {
+          bio: string
+          education: string[]
+          experience: string[]
+          id: string
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          bio: string
+          education?: string[]
+          experience?: string[]
+          id?: string
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          bio?: string
+          education?: string[]
+          experience?: string[]
+          id?: string
+          name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       admin_users: {
         Row: {
           created_at: string
@@ -117,6 +144,66 @@ export type Database = {
         }
         Relationships: []
       }
+      educational_resources: {
+        Row: {
+          category: string
+          chapter: string | null
+          class_level: Database["public"]["Enums"]["class_level"] | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          file_type: string
+          file_url: string
+          id: string
+          is_premium: boolean | null
+          last_viewed: string | null
+          preview_url: string | null
+          subject: Database["public"]["Enums"]["subject_type"] | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          view_count: number | null
+        }
+        Insert: {
+          category: string
+          chapter?: string | null
+          class_level?: Database["public"]["Enums"]["class_level"] | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          file_type: string
+          file_url: string
+          id?: string
+          is_premium?: boolean | null
+          last_viewed?: string | null
+          preview_url?: string | null
+          subject?: Database["public"]["Enums"]["subject_type"] | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          view_count?: number | null
+        }
+        Update: {
+          category?: string
+          chapter?: string | null
+          class_level?: Database["public"]["Enums"]["class_level"] | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          file_type?: string
+          file_url?: string
+          id?: string
+          is_premium?: boolean | null
+          last_viewed?: string | null
+          preview_url?: string | null
+          subject?: Database["public"]["Enums"]["subject_type"] | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          view_count?: number | null
+        }
+        Relationships: []
+      }
       jobs: {
         Row: {
           company: string
@@ -192,6 +279,33 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       team_members: {
         Row: {
           created_at: string | null
@@ -230,7 +344,9 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      class_level: "class_6" | "class_7" | "class_8"
+      resource_category: "notes" | "lesson_plans" | "tests" | "revision"
+      subject_type: "chemistry" | "biology" | "physics"
     }
     CompositeTypes: {
       [_ in never]: never
