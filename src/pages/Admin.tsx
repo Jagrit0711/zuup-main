@@ -33,26 +33,33 @@ const Admin = () => {
     e.preventDefault();
     
     try {
-      const { data, error } = await supabase
+      // First, check if the user exists in admin_users table
+      const { data: adminUser, error: adminError } = await supabase
         .from('admin_users')
-        .select()
+        .select('*')
         .eq('username', username)
         .eq('password', password)
         .maybeSingle();
 
-      if (error) throw error;
-      
-      if (data) {
+      if (adminError) {
+        throw adminError;
+      }
+
+      if (adminUser) {
         setIsAuthenticated(true);
         setCurrentUser({
-          username: data.username,
-          password: data.password,
-          role: data.role as 'team_member' | 'super_admin',
-          name: data.name
+          username: adminUser.username,
+          password: adminUser.password,
+          role: adminUser.role as 'super_admin' | 'team_member',
+          name: adminUser.name
         });
+
+        // Clear sensitive data
+        setPassword('');
+        
         toast({
-          title: "Logged in successfully",
-          description: `Welcome back, ${data.name}!`,
+          title: "Login successful",
+          description: `Welcome back, ${adminUser.name}!`,
         });
       } else {
         toast({
@@ -62,9 +69,10 @@ const Admin = () => {
         });
       }
     } catch (error: any) {
+      console.error('Login error:', error);
       toast({
         title: "Error",
-        description: error.message,
+        description: "An error occurred during login. Please try again.",
         variant: "destructive",
       });
     }
@@ -75,6 +83,10 @@ const Admin = () => {
     setCurrentUser(null);
     setUsername('');
     setPassword('');
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+    });
   };
 
   if (!isAuthenticated || !currentUser) {
