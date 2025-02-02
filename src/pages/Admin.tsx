@@ -44,9 +44,19 @@ const Admin = () => {
         .select()
         .eq('username', username)
         .eq('password', password)
-        .single();
+        .maybeSingle();
 
       if (error) {
+        console.error('Login error:', error);
+        toast({
+          title: "Login failed",
+          description: "An error occurred during login",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (!data) {
         toast({
           title: "Login failed",
           description: "Invalid username or password",
@@ -55,25 +65,24 @@ const Admin = () => {
         return;
       }
 
-      if (data) {
-        const adminUser: AdminUser = {
-          id: data.id,
-          username: data.username,
-          password: data.password,
-          role: data.role as 'admin' | 'super_admin', // Type assertion to match AdminUser type
-          name: data.name
-        };
-        
-        setIsAuthenticated(true);
-        setCurrentUser(adminUser);
-        localStorage.setItem('adminUser', JSON.stringify(adminUser));
-        
-        toast({
-          title: "Login successful",
-          description: `Welcome back, ${adminUser.name}!`,
-        });
-      }
+      const adminUser: AdminUser = {
+        id: data.id,
+        username: data.username,
+        password: data.password,
+        role: data.role as 'admin' | 'super_admin',
+        name: data.name
+      };
+      
+      setIsAuthenticated(true);
+      setCurrentUser(adminUser);
+      localStorage.setItem('adminUser', JSON.stringify(adminUser));
+      
+      toast({
+        title: "Login successful",
+        description: `Welcome back, ${adminUser.name}!`,
+      });
     } catch (error) {
+      console.error('Login error:', error);
       toast({
         title: "Login failed",
         description: "Please check your credentials",
