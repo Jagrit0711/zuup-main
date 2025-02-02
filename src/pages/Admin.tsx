@@ -39,22 +39,17 @@ const Admin = () => {
     e.preventDefault();
     
     try {
-      console.log('Attempting login with:', { username });
-      
       const { data, error } = await supabase
         .from('admin_users')
-        .select('*')
+        .select()
         .eq('username', username)
         .eq('password', password)
-        .maybeSingle();
-
-      console.log('Login response:', { data, error });
+        .single();
 
       if (error) {
-        console.error('Login error:', error);
         toast({
           title: "Login failed",
-          description: error.message,
+          description: "Invalid username or password",
           variant: "destructive",
         });
         return;
@@ -65,7 +60,7 @@ const Admin = () => {
           id: data.id,
           username: data.username,
           password: data.password,
-          role: data.role as AdminUser['role'],
+          role: data.role,
           name: data.name
         };
         
@@ -77,18 +72,11 @@ const Admin = () => {
           title: "Login successful",
           description: `Welcome back, ${adminUser.name}!`,
         });
-      } else {
-        toast({
-          title: "Invalid credentials",
-          description: "Please check your username and password",
-          variant: "destructive",
-        });
       }
     } catch (error) {
-      console.error('Login error:', error);
       toast({
         title: "Login failed",
-        description: "An error occurred during login. Please try again.",
+        description: "Please check your credentials",
         variant: "destructive"
       });
     }
