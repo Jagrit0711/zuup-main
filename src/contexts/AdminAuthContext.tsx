@@ -1,10 +1,9 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 
 interface AdminAuthContextType {
   isAuthenticated: boolean;
   currentUser: AdminUser | null;
-  login: (username: string, password: string) => Promise<boolean>;
+  login: (username: string, password: string) => boolean;
   logout: () => void;
 }
 
@@ -30,33 +29,22 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
     }
   }, []);
 
-  const login = async (username: string, password: string) => {
-    try {
-      const { data: user, error } = await supabase
-        .from('admin_users')
-        .select('*')
-        .eq('username', username)
-        .eq('password', password)
-        .maybeSingle();
+  const login = (username: string, password: string) => {
+    // For demo purposes, hardcoded credentials
+    const validUsers = [
+      { username: 'admin', password: 'admin123', name: 'Admin User', role: 'admin' as const },
+      { username: 'superadmin', password: 'super123', name: 'Super Admin', role: 'super_admin' as const }
+    ];
 
-      if (error) throw error;
-      
-      if (user) {
-        setIsAuthenticated(true);
-        const adminUser = {
-          username: user.username,
-          name: user.name,
-          role: user.role as 'admin' | 'super_admin'
-        };
-        setCurrentUser(adminUser);
-        localStorage.setItem('adminAuth', JSON.stringify({ user: adminUser }));
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.error('Login error:', error);
-      return false;
+    const user = validUsers.find(u => u.username === username && u.password === password);
+    
+    if (user) {
+      setIsAuthenticated(true);
+      setCurrentUser({ username: user.username, name: user.name, role: user.role });
+      localStorage.setItem('adminAuth', JSON.stringify({ user: { username: user.username, name: user.name, role: user.role } }));
+      return true;
     }
+    return false;
   };
 
   const logout = () => {

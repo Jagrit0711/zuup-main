@@ -7,11 +7,10 @@ import SiteStats from '@/components/admin/SiteStats';
 import DailyUpdates from '@/components/admin/DailyUpdates';
 import DonationTracker from '@/components/admin/DonationTracker';
 import VideoCall from '@/components/admin/VideoCall';
+import { adminUsers } from '@/data/adminUsers';
 import { AdminUser } from '@/types/admin';
 import AdminHeader from '@/components/admin/layout/AdminHeader';
 import AdminLogin from '@/components/admin/auth/AdminLogin';
-import UnifiedAdminManager from '@/components/admin/UnifiedAdminManager';
-import { supabase } from '@/integrations/supabase/client';
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -29,50 +28,23 @@ const Admin = () => {
     ]);
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    const user = adminUsers.find(
+      u => u.username === username && u.password === password
+    );
     
-    try {
-      // First, check if the user exists in admin_users table
-      const { data: adminUser, error: adminError } = await supabase
-        .from('admin_users')
-        .select('*')
-        .eq('username', username)
-        .eq('password', password)
-        .maybeSingle();
-
-      if (adminError) {
-        throw adminError;
-      }
-
-      if (adminUser) {
-        setIsAuthenticated(true);
-        setCurrentUser({
-          username: adminUser.username,
-          password: adminUser.password,
-          role: adminUser.role as 'super_admin' | 'team_member',
-          name: adminUser.name
-        });
-
-        // Clear sensitive data
-        setPassword('');
-        
-        toast({
-          title: "Login successful",
-          description: `Welcome back, ${adminUser.name}!`,
-        });
-      } else {
-        toast({
-          title: "Invalid credentials",
-          description: "Please check your username and password",
-          variant: "destructive",
-        });
-      }
-    } catch (error: any) {
-      console.error('Login error:', error);
+    if (user) {
+      setIsAuthenticated(true);
+      setCurrentUser(user);
       toast({
-        title: "Error",
-        description: "An error occurred during login. Please try again.",
+        title: "Logged in successfully",
+        description: `Welcome back, ${user.name}!`,
+      });
+    } else {
+      toast({
+        title: "Invalid credentials",
+        description: "Please check your username and password",
         variant: "destructive",
       });
     }
@@ -83,10 +55,6 @@ const Admin = () => {
     setCurrentUser(null);
     setUsername('');
     setPassword('');
-    toast({
-      title: "Logged out",
-      description: "You have been successfully logged out.",
-    });
   };
 
   if (!isAuthenticated || !currentUser) {
@@ -150,12 +118,6 @@ const Admin = () => {
                 >
                   Contact Information
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="admin"
-                  className="data-[state=active]:bg-[#FF6D59] data-[state=active]:text-white text-gray-300"
-                >
-                  Admin Management
-                </TabsTrigger>
               </>
             )}
           </TabsList>
@@ -185,10 +147,6 @@ const Admin = () => {
 
                 <TabsContent value="contact">
                   <ContactEditor />
-                </TabsContent>
-
-                <TabsContent value="admin">
-                  <UnifiedAdminManager />
                 </TabsContent>
               </>
             )}
