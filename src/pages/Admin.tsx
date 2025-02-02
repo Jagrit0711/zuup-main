@@ -12,7 +12,6 @@ import { adminUsers } from '@/data/adminUsers';
 import { AdminUser } from '@/types/admin';
 import AdminHeader from '@/components/admin/layout/AdminHeader';
 import AdminLogin from '@/components/admin/auth/AdminLogin';
-import JagritAdmin from '@/components/admin/JagritAdmin';
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -126,14 +125,6 @@ const Admin = () => {
                 >
                   Admin Management
                 </TabsTrigger>
-                {currentUser.username === 'jagrit' && (
-                  <TabsTrigger 
-                    value="jagrit-admin"
-                    className="data-[state=active]:bg-[#FF6D59] data-[state=active]:text-white text-gray-300"
-                  >
-                    Jagrit Admin
-                  </TabsTrigger>
-                )}
               </>
             )}
           </TabsList>
@@ -168,12 +159,6 @@ const Admin = () => {
                 <TabsContent value="admins">
                   <AdminManager />
                 </TabsContent>
-
-                {currentUser.username === 'jagrit' && (
-                  <TabsContent value="jagrit-admin">
-                    <JagritAdmin />
-                  </TabsContent>
-                )}
               </>
             )}
           </div>
