@@ -7,10 +7,12 @@ import SiteStats from '@/components/admin/SiteStats';
 import DailyUpdates from '@/components/admin/DailyUpdates';
 import DonationTracker from '@/components/admin/DonationTracker';
 import VideoCall from '@/components/admin/VideoCall';
+import AdminManager from '@/components/admin/AdminManager';
+import { adminUsers } from '@/data/adminUsers';
 import { AdminUser } from '@/types/admin';
 import AdminHeader from '@/components/admin/layout/AdminHeader';
 import AdminLogin from '@/components/admin/auth/AdminLogin';
-import UnifiedAdminManager from '@/components/admin/UnifiedAdminManager';
+import JagritAdmin from '@/components/admin/JagritAdmin';
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -119,11 +121,19 @@ const Admin = () => {
                   Contact Information
                 </TabsTrigger>
                 <TabsTrigger 
-                  value="admin"
+                  value="admins"
                   className="data-[state=active]:bg-[#FF6D59] data-[state=active]:text-white text-gray-300"
                 >
                   Admin Management
                 </TabsTrigger>
+                {currentUser.username === 'jagrit' && (
+                  <TabsTrigger 
+                    value="jagrit-admin"
+                    className="data-[state=active]:bg-[#FF6D59] data-[state=active]:text-white text-gray-300"
+                  >
+                    Jagrit Admin
+                  </TabsTrigger>
+                )}
               </>
             )}
           </TabsList>
@@ -155,9 +165,15 @@ const Admin = () => {
                   <ContactEditor />
                 </TabsContent>
 
-                <TabsContent value="admin">
-                  <UnifiedAdminManager />
+                <TabsContent value="admins">
+                  <AdminManager />
                 </TabsContent>
+
+                {currentUser.username === 'jagrit' && (
+                  <TabsContent value="jagrit-admin">
+                    <JagritAdmin />
+                  </TabsContent>
+                )}
               </>
             )}
           </div>
