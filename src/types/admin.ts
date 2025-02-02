@@ -40,3 +40,10 @@ export interface ContactInfo {
   email1: string;
   email2: string;
 }
+
+export interface AdminPermission {
+  id: string;
+  admin_id: string;
+  permission: 'manage_team' | 'manage_content' | 'manage_donations' | 'view_stats' | 'manage_meetings' | 'manage_admins';
+  created_at: string;
+}
