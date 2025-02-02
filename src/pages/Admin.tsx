@@ -8,10 +8,10 @@ import DailyUpdates from '@/components/admin/DailyUpdates';
 import DonationTracker from '@/components/admin/DonationTracker';
 import VideoCall from '@/components/admin/VideoCall';
 import AdminManager from '@/components/admin/AdminManager';
-import { adminUsers } from '@/data/adminUsers';
 import { AdminUser } from '@/types/admin';
 import AdminHeader from '@/components/admin/layout/AdminHeader';
 import AdminLogin from '@/components/admin/auth/AdminLogin';
+import { supabase } from '@/integrations/supabase/client';
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,6 +22,12 @@ const Admin = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    const storedUser = localStorage.getItem('adminUser');
+    if (storedUser) {
+      setCurrentUser(JSON.parse(storedUser));
+      setIsAuthenticated(true);
+    }
+
     setNotifications([
       'New donation received: ₹5000',
       'Team member updated their status',
@@ -29,24 +35,42 @@ const Admin = () => {
     ]);
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = adminUsers.find(
-      u => u.username === username && u.password === password
-    );
     
-    if (user) {
-      setIsAuthenticated(true);
-      setCurrentUser(user);
+    try {
+      const { data: adminUser, error } = await supabase
+        .from('admin_users')
+        .select('*')
+        .eq('username', username)
+        .eq('password', password)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      if (adminUser) {
+        setIsAuthenticated(true);
+        setCurrentUser(adminUser);
+        localStorage.setItem('adminUser', JSON.stringify(adminUser));
+        toast({
+          title: "Login successful",
+          description: `Welcome back, ${adminUser.name}!`,
+        });
+      } else {
+        toast({
+          title: "Invalid credentials",
+          description: "Please check your username and password",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Login error:', error);
       toast({
-        title: "Logged in successfully",
-        description: `Welcome back, ${user.name}!`,
-      });
-    } else {
-      toast({
-        title: "Invalid credentials",
-        description: "Please check your username and password",
-        variant: "destructive",
+        title: "Login failed",
+        description: "An error occurred during login.",
+        variant: "destructive"
       });
     }
   };
@@ -56,6 +80,8 @@ const Admin = () => {
     setCurrentUser(null);
     setUsername('');
     setPassword('');
+    localStorage.removeItem('adminUser');
+    localStorage.removeItem('adminEditorAuth');
   };
 
   if (!isAuthenticated || !currentUser) {

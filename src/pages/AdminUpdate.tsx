@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { adminUsers } from '@/data/adminUsers';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 import AdminLogin from '@/components/admin/auth/AdminLogin';
 import PageEditor from '@/components/admin/editor/PageEditor';
@@ -10,7 +10,6 @@ const AdminUpdate = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const location = useLocation();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -20,23 +19,41 @@ const AdminUpdate = () => {
     }
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = adminUsers.find(
-      (u) => u.username === username && u.password === password
-    );
+    
+    try {
+      const { data: adminUser, error } = await supabase
+        .from('admin_users')
+        .select('*')
+        .eq('username', username)
+        .eq('password', password)
+        .single();
 
-    if (user) {
-      setIsAuthenticated(true);
-      localStorage.setItem('adminEditorAuth', 'true');
-      toast({
-        title: "Login successful",
-        description: "You can now edit the website content.",
-      });
-    } else {
+      if (error) {
+        throw error;
+      }
+
+      if (adminUser) {
+        setIsAuthenticated(true);
+        localStorage.setItem('adminEditorAuth', 'true');
+        localStorage.setItem('adminUser', JSON.stringify(adminUser));
+        toast({
+          title: "Login successful",
+          description: `Welcome back, ${adminUser.name}!`,
+        });
+      } else {
+        toast({
+          title: "Login failed",
+          description: "Invalid username or password.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Login error:', error);
       toast({
         title: "Login failed",
-        description: "Invalid username or password.",
+        description: "An error occurred during login.",
         variant: "destructive"
       });
     }
