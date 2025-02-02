@@ -38,7 +38,7 @@ const Admin = () => {
         .select()
         .eq('username', username)
         .eq('password', password)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
       
