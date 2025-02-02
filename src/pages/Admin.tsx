@@ -60,7 +60,7 @@ const Admin = () => {
           id: data.id,
           username: data.username,
           password: data.password,
-          role: data.role,
+          role: data.role as 'admin' | 'super_admin', // Type assertion to match AdminUser type
           name: data.name
         };
         

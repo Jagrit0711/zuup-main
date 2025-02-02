@@ -2,7 +2,7 @@ export interface AdminUser {
   id?: string;
   username: string;
   password: string;
-  role: 'super_admin' | 'admin' | 'team_member';
+  role: 'admin' | 'super_admin';  // Updated to match actual roles in admin_users table
   name: string;
   created_at?: string;
 }
