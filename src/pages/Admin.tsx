@@ -39,6 +39,8 @@ const Admin = () => {
     e.preventDefault();
     
     try {
+      console.log('Attempting login with:', { username, password });
+      
       const { data, error } = await supabase
         .from('admin_users')
         .select('*')
@@ -46,8 +48,16 @@ const Admin = () => {
         .eq('password', password)
         .maybeSingle();
 
+      console.log('Login response:', { data, error });
+
       if (error) {
-        throw error;
+        console.error('Login error:', error);
+        toast({
+          title: "Login failed",
+          description: error.message,
+          variant: "destructive",
+        });
+        return;
       }
 
       if (data) {
@@ -63,6 +73,7 @@ const Admin = () => {
         setIsAuthenticated(true);
         setCurrentUser(adminUser);
         localStorage.setItem('adminUser', JSON.stringify(adminUser));
+        
         toast({
           title: "Login successful",
           description: `Welcome back, ${adminUser.name}!`,
@@ -78,7 +89,7 @@ const Admin = () => {
       console.error('Login error:', error);
       toast({
         title: "Login failed",
-        description: "An error occurred during login.",
+        description: "An error occurred during login. Please try again.",
         variant: "destructive"
       });
     }
