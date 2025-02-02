@@ -15,7 +15,8 @@ const UnifiedAdminManager = () => {
   const [formData, setFormData] = useState({
     email: '',
     name: '',
-    role: 'team_member'
+    role: 'team_member',
+    password: ''
   });
 
   useEffect(() => {
@@ -35,40 +36,28 @@ const UnifiedAdminManager = () => {
     setLoading(true);
 
     try {
-      // First create the auth user
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: formData.email,
-        password: Math.random().toString(36).slice(-8), // Generate random password
-        options: {
-          data: {
-            name: formData.name,
-            role: formData.role
-          }
-        }
-      });
-
-      if (authError) throw authError;
-
-      // Then create the admin user record
+      // Create the admin user record
       const { error: adminError } = await supabase
         .from('admin_users')
-        .insert([{
+        .insert({
           username: formData.email,
           name: formData.name,
-          role: formData.role
-        }]);
+          role: formData.role,
+          password: formData.password
+        });
 
       if (adminError) throw adminError;
 
       toast({
         title: "Success",
-        description: "Admin user added successfully. They will receive an email to set their password.",
+        description: "Admin user added successfully.",
       });
 
       setFormData({
         email: '',
         name: '',
-        role: 'team_member'
+        role: 'team_member',
+        password: ''
       });
 
       fetchAdmins();
@@ -101,20 +90,14 @@ const UnifiedAdminManager = () => {
     }
   };
 
-  const deleteAdmin = async (id: string, email: string) => {
+  const deleteAdmin = async (id: string) => {
     try {
-      // Delete from admin_users table
       const { error: adminError } = await supabase
         .from('admin_users')
         .delete()
         .eq('id', id);
 
       if (adminError) throw adminError;
-
-      // Delete the auth user
-      const { error: authError } = await supabase.auth.admin.deleteUser(id);
-      
-      if (authError) throw authError;
 
       toast({
         title: "Success",
@@ -140,7 +123,7 @@ const UnifiedAdminManager = () => {
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -158,6 +141,17 @@ const UnifiedAdminManager = () => {
                 id="name"
                 name="name"
                 value={formData.name}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
                 onChange={handleInputChange}
                 required
               />
@@ -209,7 +203,7 @@ const UnifiedAdminManager = () => {
                   <Button
                     variant="destructive"
                     size="sm"
-                    onClick={() => deleteAdmin(admin.id, admin.username)}
+                    onClick={() => deleteAdmin(admin.id)}
                     className="flex items-center gap-2"
                   >
                     <Trash2 className="h-4 w-4" />

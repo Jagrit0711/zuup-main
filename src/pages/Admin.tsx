@@ -11,6 +11,7 @@ import { AdminUser } from '@/types/admin';
 import AdminHeader from '@/components/admin/layout/AdminHeader';
 import AdminLogin from '@/components/admin/auth/AdminLogin';
 import UnifiedAdminManager from '@/components/admin/UnifiedAdminManager';
+import { supabase } from '@/integrations/supabase/client';
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,23 +29,42 @@ const Admin = () => {
     ]);
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = adminUsers.find(
-      u => u.username === username && u.password === password
-    );
     
-    if (user) {
-      setIsAuthenticated(true);
-      setCurrentUser(user);
+    try {
+      const { data, error } = await supabase
+        .from('admin_users')
+        .select()
+        .eq('username', username)
+        .eq('password', password)
+        .single();
+
+      if (error) throw error;
+      
+      if (data) {
+        setIsAuthenticated(true);
+        setCurrentUser({
+          username: data.username,
+          password: data.password,
+          role: data.role,
+          name: data.name
+        });
+        toast({
+          title: "Logged in successfully",
+          description: `Welcome back, ${data.name}!`,
+        });
+      } else {
+        toast({
+          title: "Invalid credentials",
+          description: "Please check your username and password",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
       toast({
-        title: "Logged in successfully",
-        description: `Welcome back, ${user.name}!`,
-      });
-    } else {
-      toast({
-        title: "Invalid credentials",
-        description: "Please check your username and password",
+        title: "Error",
+        description: error.message,
         variant: "destructive",
       });
     }
