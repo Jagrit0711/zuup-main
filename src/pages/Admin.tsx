@@ -47,7 +47,7 @@ const Admin = () => {
         setCurrentUser({
           username: data.username,
           password: data.password,
-          role: data.role,
+          role: data.role as 'team_member' | 'super_admin',
           name: data.name
         });
         toast({

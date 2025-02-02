@@ -8,11 +8,20 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { supabase } from '@/integrations/supabase/client';
 import { Shield, UserPlus, Trash2 } from 'lucide-react';
 
+type AdminRole = 'team_member' | 'super_admin';
+
+interface FormData {
+  email: string;
+  name: string;
+  role: AdminRole;
+  password: string;
+}
+
 const UnifiedAdminManager = () => {
   const [loading, setLoading] = useState(false);
   const [admins, setAdmins] = useState<any[]>([]);
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     email: '',
     name: '',
     role: 'team_member',
@@ -36,7 +45,6 @@ const UnifiedAdminManager = () => {
     setLoading(true);
 
     try {
-      // Create the admin user record
       const { error: adminError } = await supabase
         .from('admin_users')
         .insert({
