@@ -39,7 +39,7 @@ const Admin = () => {
     e.preventDefault();
     
     try {
-      console.log('Attempting login with:', { username, password });
+      console.log('Attempting login with:', { username });
       
       const { data, error } = await supabase
         .from('admin_users')
@@ -66,8 +66,7 @@ const Admin = () => {
           username: data.username,
           password: data.password,
           role: data.role as AdminUser['role'],
-          name: data.name,
-          created_at: data.created_at
+          name: data.name
         };
         
         setIsAuthenticated(true);
@@ -101,6 +100,10 @@ const Admin = () => {
     setUsername('');
     setPassword('');
     localStorage.removeItem('adminUser');
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+    });
   };
 
   if (!isAuthenticated || !currentUser) {
