@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,17 +6,21 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { supabase } from '@/integrations/supabase/client';
+import { Shield, UserPlus, Trash2 } from 'lucide-react';
 
-const JagritAdmin = () => {
+const UnifiedAdminManager = () => {
   const [loading, setLoading] = useState(false);
   const [admins, setAdmins] = useState<any[]>([]);
   const { toast } = useToast();
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
+    email: '',
     name: '',
     role: 'team_member'
   });
+
+  useEffect(() => {
+    fetchAdmins();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -31,20 +35,38 @@ const JagritAdmin = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase
-        .from('admin_users')
-        .insert([formData]);
+      // First create the auth user
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: Math.random().toString(36).slice(-8), // Generate random password
+        options: {
+          data: {
+            name: formData.name,
+            role: formData.role
+          }
+        }
+      });
 
-      if (error) throw error;
+      if (authError) throw authError;
+
+      // Then create the admin user record
+      const { error: adminError } = await supabase
+        .from('admin_users')
+        .insert([{
+          username: formData.email,
+          name: formData.name,
+          role: formData.role
+        }]);
+
+      if (adminError) throw adminError;
 
       toast({
         title: "Success",
-        description: "Admin user added successfully",
+        description: "Admin user added successfully. They will receive an email to set their password.",
       });
 
       setFormData({
-        username: '',
-        password: '',
+        email: '',
         name: '',
         role: 'team_member'
       });
@@ -79,14 +101,20 @@ const JagritAdmin = () => {
     }
   };
 
-  const deleteAdmin = async (id: string) => {
+  const deleteAdmin = async (id: string, email: string) => {
     try {
-      const { error } = await supabase
+      // Delete from admin_users table
+      const { error: adminError } = await supabase
         .from('admin_users')
         .delete()
         .eq('id', id);
 
-      if (error) throw error;
+      if (adminError) throw adminError;
+
+      // Delete the auth user
+      const { error: authError } = await supabase.auth.admin.deleteUser(id);
+      
+      if (authError) throw authError;
 
       toast({
         title: "Success",
@@ -106,26 +134,20 @@ const JagritAdmin = () => {
   return (
     <div className="space-y-6">
       <Card className="p-6">
-        <h2 className="text-2xl font-bold text-white mb-4">Add New Admin</h2>
+        <div className="flex items-center gap-2 mb-4">
+          <Shield className="h-6 w-6 text-[#FF6D59]" />
+          <h2 className="text-2xl font-bold text-white">Admin Management</h2>
+        </div>
+        
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
-                id="username"
-                name="username"
-                value={formData.username}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                value={formData.password}
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
                 onChange={handleInputChange}
                 required
               />
@@ -155,19 +177,24 @@ const JagritAdmin = () => {
               </select>
             </div>
           </div>
-          <Button type="submit" disabled={loading}>
+          <Button type="submit" disabled={loading} className="flex items-center gap-2">
+            <UserPlus className="h-4 w-4" />
             {loading ? 'Adding...' : 'Add Admin'}
           </Button>
         </form>
       </Card>
 
       <Card className="p-6">
-        <h2 className="text-2xl font-bold text-white mb-4">Admin List</h2>
+        <div className="flex items-center gap-2 mb-4">
+          <Shield className="h-6 w-6 text-[#FF6D59]" />
+          <h2 className="text-2xl font-bold text-white">Admin List</h2>
+        </div>
+        
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
-              <TableHead>Username</TableHead>
+              <TableHead>Email</TableHead>
               <TableHead>Role</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
@@ -177,13 +204,15 @@ const JagritAdmin = () => {
               <TableRow key={admin.id}>
                 <TableCell>{admin.name}</TableCell>
                 <TableCell>{admin.username}</TableCell>
-                <TableCell>{admin.role}</TableCell>
+                <TableCell className="capitalize">{admin.role}</TableCell>
                 <TableCell>
                   <Button
                     variant="destructive"
                     size="sm"
-                    onClick={() => deleteAdmin(admin.id)}
+                    onClick={() => deleteAdmin(admin.id, admin.username)}
+                    className="flex items-center gap-2"
                   >
+                    <Trash2 className="h-4 w-4" />
                     Delete
                   </Button>
                 </TableCell>
@@ -196,4 +225,4 @@ const JagritAdmin = () => {
   );
 };
 
-export default JagritAdmin;
+export default UnifiedAdminManager;
