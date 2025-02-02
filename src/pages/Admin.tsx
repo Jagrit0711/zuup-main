@@ -39,18 +39,27 @@ const Admin = () => {
     e.preventDefault();
     
     try {
-      const { data: adminUser, error } = await supabase
+      const { data, error } = await supabase
         .from('admin_users')
         .select('*')
         .eq('username', username)
         .eq('password', password)
-        .single();
+        .maybeSingle();
 
       if (error) {
         throw error;
       }
 
-      if (adminUser) {
+      if (data) {
+        const adminUser: AdminUser = {
+          id: data.id,
+          username: data.username,
+          password: data.password,
+          role: data.role as AdminUser['role'],
+          name: data.name,
+          created_at: data.created_at
+        };
+        
         setIsAuthenticated(true);
         setCurrentUser(adminUser);
         localStorage.setItem('adminUser', JSON.stringify(adminUser));
@@ -81,7 +90,6 @@ const Admin = () => {
     setUsername('');
     setPassword('');
     localStorage.removeItem('adminUser');
-    localStorage.removeItem('adminEditorAuth');
   };
 
   if (!isAuthenticated || !currentUser) {

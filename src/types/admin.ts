@@ -1,9 +1,19 @@
 export interface AdminUser {
+  id?: string;
   username: string;
   password: string;
-  role: 'super_admin' | 'team_member';
+  role: 'super_admin' | 'admin' | 'team_member';
   name: string;
+  created_at?: string;
 }
+
+export type AdminPermissionType = 
+  | 'manage_team'
+  | 'manage_content'
+  | 'manage_donations'
+  | 'view_stats'
+  | 'manage_meetings'
+  | 'manage_admins';
 
 export interface DailyUpdate {
   id: string;

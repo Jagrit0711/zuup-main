@@ -5,16 +5,17 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { supabase } from '@/integrations/supabase/client';
 import { X, Plus } from 'lucide-react';
+import { AdminPermissionType } from '@/types/admin';
 
 interface AdminForm {
   username: string;
   password: string;
   name: string;
   role: 'admin' | 'super_admin';
-  permissions: string[];
+  permissions: AdminPermissionType[];
 }
 
-const PERMISSIONS = [
+const PERMISSIONS: { id: AdminPermissionType; label: string }[] = [
   { id: 'manage_team', label: 'Manage Team' },
   { id: 'manage_content', label: 'Manage Content' },
   { id: 'manage_donations', label: 'Manage Donations' },
