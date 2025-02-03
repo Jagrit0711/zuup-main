@@ -55,40 +55,29 @@ export type Database = {
           id?: string
           permission?: Database["public"]["Enums"]["admin_permission"]
         }
-        Relationships: [
-          {
-            foreignKeyName: "admin_permissions_admin_id_fkey"
-            columns: ["admin_id"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       admin_users: {
         Row: {
           created_at: string
+          email: string
           id: string
           name: string
           password: string
-          role: string
-          username: string
         }
         Insert: {
           created_at?: string
+          email: string
           id?: string
           name: string
           password: string
-          role: string
-          username: string
         }
         Update: {
           created_at?: string
+          email?: string
           id?: string
           name?: string
           password?: string
-          role?: string
-          username?: string
         }
         Relationships: []
       }
@@ -123,15 +112,7 @@ export type Database = {
           title?: string
           updated_at?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "blog_posts_author_id_fkey"
-            columns: ["author_id"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       contact_info: {
         Row: {

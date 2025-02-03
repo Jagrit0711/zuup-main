@@ -7,7 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
 const AdminLogin = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { toast } = useToast();
 
@@ -18,7 +18,7 @@ const AdminLogin = () => {
       const { data, error } = await supabase
         .from('admin_users')
         .select('*')
-        .eq('username', username)
+        .eq('email', email)
         .eq('password', password)
         .maybeSingle();
 
@@ -35,7 +35,7 @@ const AdminLogin = () => {
       if (!data) {
         toast({
           title: "Login failed",
-          description: "Invalid username or password",
+          description: "Invalid email or password",
           variant: "destructive",
         });
         return;
@@ -74,13 +74,13 @@ const AdminLogin = () => {
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-gray-300 mb-1 block">Username</label>
+              <label className="text-sm font-medium text-gray-300 mb-1 block">Email</label>
               <Input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#FF6D59] focus:border-transparent transition-all"
-                placeholder="Enter username"
+                placeholder="Enter your email"
               />
             </div>
             <div>
