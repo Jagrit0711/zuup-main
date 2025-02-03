@@ -8,6 +8,7 @@ import DailyUpdates from '@/components/admin/DailyUpdates';
 import DonationTracker from '@/components/admin/DonationTracker';
 import VideoCall from '@/components/admin/VideoCall';
 import AdminManager from '@/components/admin/AdminManager';
+import BlogEditor from '@/components/admin/BlogEditor';
 import { AdminUser } from '@/types/admin';
 import AdminHeader from '@/components/admin/layout/AdminHeader';
 import AdminLogin from '@/components/admin/auth/AdminLogin';
@@ -76,6 +77,12 @@ const Admin = () => {
             >
               Video Call
             </TabsTrigger>
+            <TabsTrigger 
+              value="blog"
+              className="data-[state=active]:bg-[#FF6D59] data-[state=active]:text-white text-gray-300"
+            >
+              Blog Posts
+            </TabsTrigger>
             {currentUser?.role === 'super_admin' && (
               <>
                 <TabsTrigger 
@@ -115,6 +122,10 @@ const Admin = () => {
 
             <TabsContent value="video">
               <VideoCall />
+            </TabsContent>
+
+            <TabsContent value="blog">
+              <BlogEditor />
             </TabsContent>
 
             {currentUser.role === 'super_admin' && (
