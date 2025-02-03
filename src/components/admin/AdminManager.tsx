@@ -8,7 +8,7 @@ import { X, Plus } from 'lucide-react';
 import { AdminPermissionType } from '@/types/admin';
 
 interface AdminForm {
-  username: string;
+  email: string;
   password: string;
   name: string;
   role: 'admin' | 'super_admin';
@@ -28,7 +28,7 @@ const AdminManager = () => {
   const { toast } = useToast();
   const [admins, setAdmins] = useState<any[]>([]);
   const [newAdmin, setNewAdmin] = useState<AdminForm>({
-    username: '',
+    email: '',
     password: '',
     name: '',
     role: 'admin',
@@ -58,7 +58,7 @@ const AdminManager = () => {
   };
 
   const handleAddAdmin = async () => {
-    if (!newAdmin.username || !newAdmin.password || !newAdmin.name) {
+    if (!newAdmin.email || !newAdmin.password || !newAdmin.name) {
       toast({
         title: 'Missing fields',
         description: 'Please fill in all required fields',
@@ -71,10 +71,9 @@ const AdminManager = () => {
     const { data: adminData, error: adminError } = await supabase
       .from('admin_users')
       .insert({
-        username: newAdmin.username,
+        email: newAdmin.email,
         password: newAdmin.password,
-        name: newAdmin.name,
-        role: newAdmin.role
+        name: newAdmin.name
       })
       .select()
       .single();
@@ -114,7 +113,7 @@ const AdminManager = () => {
     });
 
     setNewAdmin({
-      username: '',
+      email: '',
       password: '',
       name: '',
       role: 'admin',
@@ -153,9 +152,10 @@ const AdminManager = () => {
         <h3 className="text-xl font-semibold text-white">Add New Admin</h3>
         <div className="grid gap-4">
           <Input
-            placeholder="Username"
-            value={newAdmin.username}
-            onChange={(e) => setNewAdmin({ ...newAdmin, username: e.target.value })}
+            type="email"
+            placeholder="Email"
+            value={newAdmin.email}
+            onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
           />
           <Input
             type="password"
@@ -222,7 +222,7 @@ const AdminManager = () => {
             >
               <div>
                 <p className="font-medium text-white">{admin.name}</p>
-                <p className="text-sm text-gray-400">@{admin.username}</p>
+                <p className="text-sm text-gray-400">{admin.email}</p>
                 <div className="mt-1 flex flex-wrap gap-1">
                   {admin.admin_permissions?.map((p: any) => (
                     <span
