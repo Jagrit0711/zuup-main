@@ -16,6 +16,7 @@ import Careers from "./pages/Careers";
 import OurStory from "./pages/OurStory";
 import ZuupAI from "./pages/ZuupAI";
 import Jobs from "./pages/Jobs";
+import Blog from "./pages/Blog";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,7 @@ const App = () => (
               <Route path="/our-story" element={<OurStory />} />
               <Route path="/zuup-ai" element={<ZuupAI />} />
               <Route path="/jobs" element={<Jobs />} />
+              <Route path="/blog" element={<Blog />} />
             </Routes>
           </AdminEditorProvider>
         </BrowserRouter>
