@@ -11,91 +11,25 @@ import AdminManager from '@/components/admin/AdminManager';
 import { AdminUser } from '@/types/admin';
 import AdminHeader from '@/components/admin/layout/AdminHeader';
 import AdminLogin from '@/components/admin/auth/AdminLogin';
-import { supabase } from '@/integrations/supabase/client';
 
 const Admin = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [currentUser, setCurrentUser] = useState<AdminUser | null>(null);
-  const [notifications, setNotifications] = useState<string[]>([]);
+  const [notifications] = useState<string[]>([
+    'New donation received: ₹5000',
+    'Team member updated their status',
+    'Website traffic increased by 25%'
+  ]);
   const { toast } = useToast();
 
   useEffect(() => {
     const storedUser = localStorage.getItem('adminUser');
     if (storedUser) {
       setCurrentUser(JSON.parse(storedUser));
-      setIsAuthenticated(true);
     }
-
-    setNotifications([
-      'New donation received: ₹5000',
-      'Team member updated their status',
-      'Website traffic increased by 25%'
-    ]);
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    try {
-      const { data, error } = await supabase
-        .from('admin_users')
-        .select()
-        .eq('username', username)
-        .eq('password', password)
-        .maybeSingle();
-
-      if (error) {
-        console.error('Login error:', error);
-        toast({
-          title: "Login failed",
-          description: "An error occurred during login",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      if (!data) {
-        toast({
-          title: "Login failed",
-          description: "Invalid username or password",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      const adminUser: AdminUser = {
-        id: data.id,
-        username: data.username,
-        password: data.password,
-        role: data.role as 'admin' | 'super_admin',
-        name: data.name
-      };
-      
-      setIsAuthenticated(true);
-      setCurrentUser(adminUser);
-      localStorage.setItem('adminUser', JSON.stringify(adminUser));
-      
-      toast({
-        title: "Login successful",
-        description: `Welcome back, ${adminUser.name}!`,
-      });
-    } catch (error) {
-      console.error('Login error:', error);
-      toast({
-        title: "Login failed",
-        description: "Please check your credentials",
-        variant: "destructive"
-      });
-    }
-  };
-
   const handleLogout = () => {
-    setIsAuthenticated(false);
     setCurrentUser(null);
-    setUsername('');
-    setPassword('');
     localStorage.removeItem('adminUser');
     toast({
       title: "Logged out",
@@ -103,16 +37,8 @@ const Admin = () => {
     });
   };
 
-  if (!isAuthenticated || !currentUser) {
-    return (
-      <AdminLogin
-        username={username}
-        password={password}
-        onUsernameChange={setUsername}
-        onPasswordChange={setPassword}
-        onSubmit={handleLogin}
-      />
-    );
+  if (!currentUser) {
+    return <AdminLogin />;
   }
 
   return (

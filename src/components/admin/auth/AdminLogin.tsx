@@ -1,16 +1,66 @@
+import { useState } from 'react';
 import { Lock } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
-interface AdminLoginProps {
-  username: string;
-  password: string;
-  onUsernameChange: (value: string) => void;
-  onPasswordChange: (value: string) => void;
-  onSubmit: (e: React.FormEvent) => void;
-}
+const AdminLogin = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { toast } = useToast();
 
-const AdminLogin = ({ username, password, onUsernameChange, onPasswordChange, onSubmit }: AdminLoginProps) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      const { data, error } = await supabase
+        .from('admin_users')
+        .select('*')
+        .eq('username', username)
+        .eq('password', password)
+        .maybeSingle();
+
+      if (error) {
+        console.error('Login error:', error);
+        toast({
+          title: "Login failed",
+          description: "An error occurred during login",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (!data) {
+        toast({
+          title: "Login failed",
+          description: "Invalid username or password",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Store admin data in localStorage
+      localStorage.setItem('adminUser', JSON.stringify(data));
+      
+      // Reload the page to trigger the auth check
+      window.location.reload();
+      
+      toast({
+        title: "Login successful",
+        description: `Welcome back, ${data.name}!`,
+      });
+    } catch (error) {
+      console.error('Login error:', error);
+      toast({
+        title: "Login failed",
+        description: "Please check your credentials",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
       <Card className="w-full max-w-md space-y-8 p-8 bg-gray-800/50 border-gray-700 animate-fade-in">
@@ -21,24 +71,24 @@ const AdminLogin = ({ username, password, onUsernameChange, onPasswordChange, on
           <h2 className="text-3xl font-bold text-white">Admin Access</h2>
           <p className="text-gray-300 mt-2">Enter your credentials to continue</p>
         </div>
-        <form onSubmit={onSubmit} className="mt-8 space-y-6">
+        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div className="space-y-4">
             <div>
               <label className="text-sm font-medium text-gray-300 mb-1 block">Username</label>
-              <input
+              <Input
                 type="text"
                 value={username}
-                onChange={(e) => onUsernameChange(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#FF6D59] focus:border-transparent transition-all"
                 placeholder="Enter username"
               />
             </div>
             <div>
               <label className="text-sm font-medium text-gray-300 mb-1 block">Password</label>
-              <input
+              <Input
                 type="password"
                 value={password}
-                onChange={(e) => onPasswordChange(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#FF6D59] focus:border-transparent transition-all"
                 placeholder="Enter password"
               />
