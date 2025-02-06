@@ -15,24 +15,24 @@ const OurStory = () => {
   const [apiKey, setApiKey] = useState(localStorage.getItem('elevenLabsApiKey') || '');
   const { toast } = useToast();
 
-  const storyText = `At just 16, Jagrit Sachdev was already making waves in the digital world. 
-    Like many young entrepreneurs, his initial focus was straightforward: creating 
-    successful ventures that generated profit. He was good at it - perhaps too good.
-    But something didn't feel right. Despite his success, Jagrit had an epiphany: 
-    he was essentially "printing money" without making a real difference in society. 
-    This realization hit hard, sparking a desire for meaningful change and impact.
-    Driven by this new purpose, Jagrit reached out to his friends - other young, 
-    talented individuals who shared his vision for social impact. Together, they 
-    began brainstorming ways to use their skills and technology to make a real 
-    difference in people's lives.
-    After months of planning and preparation, Zuup was born. The vision was clear: 
-    create a platform that would bridge the digital divide, making technology 
-    accessible and beneficial for everyone, from underprivileged teens to senior 
-    citizens.
-    Today, at 16, Jagrit leads Zuup with a clear purpose: to ensure that digital 
-    literacy and opportunities are available to everyone, regardless of their age 
-    or background. It's no longer about just creating successful ventures - it's 
-    about creating meaningful impact and positive change in society.`;
+  const storyText = `At just 16, Jagrit Sachdev envisioned a future where digital skills and opportunities 
+    would be accessible to everyone, regardless of their background. As the founder of Zylon Labs, 
+    he recognized a critical gap in digital education and employment opportunities for underprivileged youth.
+    This realization led to the birth of Zuup, a revolutionary youth-led initiative launching in March 2025.
+    
+    Zuup's mission is clear: to bridge the digital divide by providing free, comprehensive training in 
+    graphic design, video editing, and coding. But we're not just about education - we're about creating 
+    real opportunities. Through partnerships with nonprofits and sponsors, we connect our trained 
+    individuals with actual freelance opportunities, helping them build sustainable careers.
+    
+    What sets Zuup apart is our commitment to lasting social change. Unlike traditional profit-focused 
+    ventures, we measure our success by the lives we transform. Our initiative extends beyond youth to 
+    include senior citizens and others who need digital literacy support, ensuring no one is left behind 
+    in the digital age.
+    
+    Through collaborations with nonprofits and sponsors, we're building a network that will help us 
+    reach more communities and create greater impact. We believe in the power of digital skills to 
+    transform lives, and we're dedicated to making this transformation accessible to all.`;
 
   const handleTextToSpeech = async () => {
     if (isPlaying && audioElement) {
@@ -103,27 +103,26 @@ const OurStory = () => {
   return (
     <>
       <Helmet>
-        <title>Our Story | Zuup - Teen-Led Non-Profit Organization by Jagrit Sachdev</title>
-        <meta name="description" content="Discover how 16-year-old Jagrit Sachdev transformed from a profit-focused entrepreneur to founding Zuup, a teen-led initiative partnering with Non-Profit Organizations to empower underprivileged youth through digital skills." />
-        <meta name="keywords" content="Jagrit Sachdev, Non-Profit Organization, Zuup founder, youth empowerment, digital skills education, teen entrepreneur" />
+        <title>Our Story | Teen-Led NGO by Jagrit Sachdev | Zuup</title>
+        <meta name="description" content="Discover how 16-year-old Jagrit Sachdev founded Zuup, a revolutionary teen-led NGO transforming lives through digital education and freelance opportunities. Launching March 2025." />
+        <meta name="keywords" content="Jagrit Sachdev, teen NGO founder, Zuup founder, youth empowerment, digital skills education, teen entrepreneur, Gen Z social impact" />
         <link rel="canonical" href="https://zuup.org/our-story" />
         
-        {/* Open Graph / Social Media Meta Tags */}
-        <meta property="og:title" content="Our Story | Zuup - Teen-Led NGO by Jagrit Sachdev" />
-        <meta property="og:description" content="From profit to purpose: How 16-year-old Jagrit Sachdev founded Zuup to empower underprivileged youth through digital skills education." />
+        <meta property="og:title" content="Our Story | Teen-Led NGO by Jagrit Sachdev | Zuup" />
+        <meta property="og:description" content="From vision to reality: How 16-year-old Jagrit Sachdev is revolutionizing digital education through Zuup, launching March 2025." />
         <meta property="og:url" content="https://zuup.org/our-story" />
         <meta property="og:type" content="article" />
         
-        {/* Article Specific Schema.org Markup */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "The Story of Zuup: A Teen-Led NGO",
+            "headline": "The Story of Zuup: A Revolutionary Teen-Led NGO",
             "author": {
               "@type": "Person",
               "name": "Jagrit Sachdev",
-              "birthDate": "2008"
+              "birthDate": "2008",
+              "description": "16-year-old founder of Zuup and Zylon Labs"
             },
             "datePublished": "2024-01-01",
             "dateModified": new Date().toISOString(),
@@ -135,7 +134,7 @@ const OurStory = () => {
                 "url": "https://zuup.org/og-image.png"
               }
             },
-            "description": "How a 16-year-old transformed from focusing on profits to creating social impact through digital education.",
+            "description": "How a 16-year-old is revolutionizing digital education and creating opportunities for underprivileged youth through Zuup.",
             "mainEntityOfPage": {
               "@type": "WebPage",
               "@id": "https://zuup.org/our-story"
@@ -148,7 +147,6 @@ const OurStory = () => {
         <Navbar />
         
         <div className="max-w-4xl mx-auto px-4 py-20 space-y-16">
-          {/* Hero Section with Listen Button */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -160,9 +158,8 @@ const OurStory = () => {
               </span>
             </h1>
             <p className="text-xl text-gray-400">
-              A Journey from Ambition to Purpose
+              A Teen's Vision for Digital Empowerment
             </p>
-            <div className="flex justify-center gap-4">
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="flex items-center gap-2">
@@ -202,10 +199,8 @@ const OurStory = () => {
                   </>
                 )}
               </Button>
-            </div>
           </motion.div>
 
-          {/* Story Sections */}
           <div className="space-y-20">
             <motion.section 
               initial={{ opacity: 0, x: -20 }}
@@ -215,52 +210,13 @@ const OurStory = () => {
             >
               <div className="flex items-center space-x-3">
                 <BookOpen className="w-8 h-8 text-[#ea384c]" />
-                <h2 className="text-3xl font-bold text-white">The Beginning</h2>
+                <h2 className="text-3xl font-bold text-white">The Vision</h2>
               </div>
               <article className="text-gray-300 leading-relaxed">
                 <p>
-                  At just 16, Jagrit Sachdev was already making waves in the digital world. 
-                  Like many young entrepreneurs, his initial focus was straightforward: creating 
-                  successful ventures that generated profit. He was good at it - perhaps too good.
-                </p>
-              </article>
-            </motion.section>
-
-            <motion.section 
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <div className="flex items-center space-x-3">
-                <DollarSign className="w-8 h-8 text-[#ea384c]" />
-                <h2 className="text-3xl font-bold text-white">The Realization</h2>
-              </div>
-              <article className="text-gray-300 leading-relaxed">
-                <p>
-                  But something didn't feel right. Despite his success, Jagrit had an epiphany: 
-                  he was essentially "printing money" without making a real difference in society. 
-                  This realization hit hard, sparking a desire for meaningful change and impact.
-                </p>
-              </article>
-            </motion.section>
-
-            <motion.section 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <div className="flex items-center space-x-3">
-                <Users className="w-8 h-8 text-[#ea384c]" />
-                <h2 className="text-3xl font-bold text-white">Building the Team</h2>
-              </div>
-              <article className="text-gray-300 leading-relaxed">
-                <p>
-                  Driven by this new purpose, Jagrit reached out to his friends - other young, 
-                  talented individuals who shared his vision for social impact. Together, they 
-                  began brainstorming ways to use their skills and technology to make a real 
-                  difference in people's lives.
+                  At just 16, Jagrit Sachdev envisioned a future where digital skills and opportunities 
+                  would be accessible to everyone. As the founder of Zylon Labs, he recognized a critical 
+                  gap in digital education and employment opportunities for underprivileged youth.
                 </p>
               </article>
             </motion.section>
@@ -273,14 +229,14 @@ const OurStory = () => {
             >
               <div className="flex items-center space-x-3">
                 <Rocket className="w-8 h-8 text-[#ea384c]" />
-                <h2 className="text-3xl font-bold text-white">The Birth of Zuup</h2>
+                <h2 className="text-3xl font-bold text-white">The Mission</h2>
               </div>
               <article className="text-gray-300 leading-relaxed">
                 <p>
-                  After months of planning and preparation, Zuup was born. The vision was clear: 
-                  create a platform that would bridge the digital divide, making technology 
-                  accessible and beneficial for everyone, from underprivileged teens to senior 
-                  citizens.
+                  Launching in March 2025, Zuup aims to bridge the digital divide by providing free, 
+                  comprehensive training in graphic design, video editing, and coding. We're not just 
+                  about education - we're about creating real opportunities through partnerships with 
+                  nonprofits and sponsors.
                 </p>
               </article>
             </motion.section>
@@ -292,21 +248,39 @@ const OurStory = () => {
               className="space-y-6"
             >
               <div className="flex items-center space-x-3">
-                <Heart className="w-8 h-8 text-[#ea384c]" />
-                <h2 className="text-3xl font-bold text-white">Our Mission Today</h2>
+                <Users className="w-8 h-8 text-[#ea384c]" />
+                <h2 className="text-3xl font-bold text-white">Our Approach</h2>
               </div>
               <article className="text-gray-300 leading-relaxed">
                 <p>
-                  Today, at 16, Jagrit leads Zuup with a clear purpose: to ensure that digital 
-                  literacy and opportunities are available to everyone, regardless of their age 
-                  or background. It's no longer about just creating successful ventures - it's 
-                  about creating meaningful impact and positive change in society.
+                  What sets Zuup apart is our commitment to lasting social change. Unlike traditional 
+                  profit-focused ventures, we measure our success by the lives we transform. Our initiative 
+                  extends beyond youth to include senior citizens and others who need digital literacy support.
+                </p>
+              </article>
+            </motion.section>
+
+            <motion.section 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              <div className="flex items-center space-x-3">
+                <Heart className="w-8 h-8 text-[#ea384c]" />
+                <h2 className="text-3xl font-bold text-white">Our Impact</h2>
+              </div>
+              <article className="text-gray-300 leading-relaxed">
+                <p>
+                  Through collaborations with nonprofits and sponsors, we're building a network that 
+                  will help us reach more communities and create greater impact. We believe in the power 
+                  of digital skills to transform lives, and we're dedicated to making this transformation 
+                  accessible to all.
                 </p>
               </article>
             </motion.section>
           </div>
 
-          {/* Call to Action */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -314,11 +288,10 @@ const OurStory = () => {
             className="text-center space-y-6 pt-10"
           >
             <p className="text-2xl font-bold text-[#4299e1]">
-              Join Us in Making a Difference
+              Join Our Mission
             </p>
             <p className="text-gray-300">
-              We're just getting started, and we invite you to be part of our journey 
-              to make digital education accessible to all.
+              Together, we can empower the next generation with digital skills and create lasting change.
             </p>
           </motion.div>
         </div>
