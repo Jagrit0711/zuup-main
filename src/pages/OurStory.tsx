@@ -1,112 +1,15 @@
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
-import { BookOpen, Users, Rocket, DollarSign, Heart, Volume2, VolumeX, Key, Calendar, Award, Target } from "lucide-react";
-import { useState } from "react";
+import { Users, Award, Calendar, Heart } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Progress } from "@/components/ui/progress";
+import DonationSection from "../components/DonationSection";
 
 const OurStory = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
-  const [apiKey, setApiKey] = useState(localStorage.getItem('elevenLabsApiKey') || '');
-  const { toast } = useToast();
-  const [progress] = useState(75); // Example progress for impact metrics
-
-  const storyText = `At just 16, Jagrit Sachdev envisioned a future where digital skills and opportunities 
-    would be accessible to everyone, regardless of their background. As the founder of Zylon Labs, 
-    he recognized a critical gap in digital education and employment opportunities for underprivileged youth.
-    This realization led to the birth of Zuup, a revolutionary youth-led initiative launching in March 2025.
-    
-    Zuup's mission is clear: to bridge the digital divide by providing free, comprehensive training in 
-    graphic design, video editing, and coding. But we're not just about education - we're about creating 
-    real opportunities. Through partnerships with nonprofits and sponsors, we connect our trained 
-    individuals with actual freelance opportunities, helping them build sustainable careers.
-    
-    What sets Zuup apart is our commitment to lasting social change. Unlike traditional profit-focused 
-    ventures, we measure our success by the lives we transform. Our initiative extends beyond youth to 
-    include senior citizens and others who need digital literacy support, ensuring no one is left behind 
-    in the digital age.
-    
-    Through collaborations with nonprofits and sponsors, we're building a network that will help us 
-    reach more communities and create greater impact. We believe in the power of digital skills to 
-    transform lives, and we're dedicated to making this transformation accessible to all.`;
-
-  const handleTextToSpeech = async () => {
-    if (isPlaying && audioElement) {
-      audioElement.pause();
-      setIsPlaying(false);
-      return;
-    }
-
-    if (!apiKey) {
-      toast({
-        title: "API Key Required",
-        description: "Please set your ElevenLabs API key first",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'xi-api-key': apiKey,
-        },
-        body: JSON.stringify({
-          text: storyText,
-          model_id: "eleven_multilingual_v2",
-          voice_settings: {
-            stability: 0.5,
-            similarity_boost: 0.75,
-          }
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to generate speech');
-      }
-
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
-      
-      audio.onended = () => {
-        setIsPlaying(false);
-      };
-
-      setAudioElement(audio);
-      audio.play();
-      setIsPlaying(true);
-    } catch (error) {
-      console.error('Error generating speech:', error);
-      toast({
-        title: "Error",
-        description: "Failed to generate speech. Please check your API key.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleSaveApiKey = () => {
-    localStorage.setItem('elevenLabsApiKey', apiKey);
-    toast({
-      title: "Success",
-      description: "API key saved successfully",
-    });
-  };
-
   const impactMetrics = [
-    { label: "Youth Trained", value: "500+", icon: Users },
+    { label: "Youth Trained", value: "0", icon: Users },
     { label: "Digital Skills", value: "3", icon: Award },
     { label: "Launch Date", value: "March 2025", icon: Calendar },
-    { label: "Target Impact", value: "1000+", icon: Target },
   ];
 
   const timelineEvents = [
@@ -189,7 +92,7 @@ const OurStory = () => {
             </p>
 
             {/* Impact Metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
               {impactMetrics.map((metric, index) => (
                 <motion.div
                   key={index}
@@ -203,49 +106,6 @@ const OurStory = () => {
                   <div className="text-sm text-gray-400">{metric.label}</div>
                 </motion.div>
               ))}
-            </div>
-
-            {/* Audio Controls */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <Key className="w-4 h-4" />
-                    Set API Key
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Set ElevenLabs API Key</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <Input
-                      type="password"
-                      value={apiKey}
-                      onChange={(e) => setApiKey(e.target.value)}
-                      placeholder="Enter your ElevenLabs API key"
-                    />
-                    <Button onClick={handleSaveApiKey}>Save Key</Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
-              <Button
-                onClick={handleTextToSpeech}
-                variant="outline"
-                className="flex items-center gap-2"
-              >
-                {isPlaying ? (
-                  <>
-                    <VolumeX className="w-4 h-4" />
-                    Stop Listening
-                  </>
-                ) : (
-                  <>
-                    <Volume2 className="w-4 h-4" />
-                    Listen to Our Story
-                  </>
-                )}
-              </Button>
             </div>
           </motion.div>
 
@@ -279,106 +139,33 @@ const OurStory = () => {
             ))}
           </motion.div>
 
-          {/* Progress Section */}
+          {/* About Zuup */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-gray-900/50 p-6 rounded-lg"
+            className="bg-gray-900/50 p-8 rounded-lg space-y-6"
           >
-            <h3 className="text-2xl font-bold text-white mb-4">Our Progress</h3>
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span className="text-gray-400">Launch Preparation</span>
-                  <span className="text-[#ea384c]">{progress}%</span>
-                </div>
-                <Progress value={progress} className="h-2" />
-              </div>
+            <div className="flex items-center justify-center mb-4">
+              <Heart className="w-8 h-8 text-[#ea384c]" />
+            </div>
+            <div className="text-gray-300 leading-relaxed space-y-4">
+              <p>
+                Zuup is a youth-led initiative by Zylon Labs, founded by Jagrit Sachdev, aimed at empowering 
+                underprivileged youth through digital skill development and freelance opportunities. The organization 
+                focuses on bridging the digital divide by providing free training in graphic design, video editing, 
+                and coding to individuals who may not have access to such resources.
+              </p>
+              <p>
+                Through collaborations with nonprofits and sponsors, we're building a network that helps us reach 
+                more communities and create greater impact. Unlike traditional profit-focused ventures, we measure 
+                our success by the lives we transform, ensuring digital literacy support for students, senior citizens, 
+                and others in need.
+              </p>
             </div>
           </motion.div>
 
-          {/* Main Content Sections */}
-          <div className="space-y-20">
-            <motion.section 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <div className="flex items-center space-x-3">
-                <BookOpen className="w-8 h-8 text-[#ea384c]" />
-                <h2 className="text-3xl font-bold text-white">The Vision</h2>
-              </div>
-              <article className="text-gray-300 leading-relaxed">
-                <p>
-                  At just 16, Jagrit Sachdev envisioned a future where digital skills and opportunities 
-                  would be accessible to everyone. As the founder of Zylon Labs, he recognized a critical 
-                  gap in digital education and employment opportunities for underprivileged youth.
-                </p>
-              </article>
-            </motion.section>
-
-            <motion.section 
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <div className="flex items-center space-x-3">
-                <Rocket className="w-8 h-8 text-[#ea384c]" />
-                <h2 className="text-3xl font-bold text-white">The Mission</h2>
-              </div>
-              <article className="text-gray-300 leading-relaxed">
-                <p>
-                  Launching in March 2025, Zuup aims to bridge the digital divide by providing free, 
-                  comprehensive training in graphic design, video editing, and coding. We're not just 
-                  about education - we're about creating real opportunities through partnerships with 
-                  nonprofits and sponsors.
-                </p>
-              </article>
-            </motion.section>
-
-            <motion.section 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <div className="flex items-center space-x-3">
-                <Users className="w-8 h-8 text-[#ea384c]" />
-                <h2 className="text-3xl font-bold text-white">Our Approach</h2>
-              </div>
-              <article className="text-gray-300 leading-relaxed">
-                <p>
-                  What sets Zuup apart is our commitment to lasting social change. Unlike traditional 
-                  profit-focused ventures, we measure our success by the lives we transform. Our initiative 
-                  extends beyond youth to include senior citizens and others who need digital literacy support.
-                </p>
-              </article>
-            </motion.section>
-
-            <motion.section 
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <div className="flex items-center space-x-3">
-                <Heart className="w-8 h-8 text-[#ea384c]" />
-                <h2 className="text-3xl font-bold text-white">Our Impact</h2>
-              </div>
-              <article className="text-gray-300 leading-relaxed">
-                <p>
-                  Through collaborations with nonprofits and sponsors, we're building a network that 
-                  will help us reach more communities and create greater impact. We believe in the power 
-                  of digital skills to transform lives, and we're dedicated to making this transformation 
-                  accessible to all.
-                </p>
-              </article>
-            </motion.section>
-          </div>
-
+          {/* Join Our Mission & Donation */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -391,6 +178,7 @@ const OurStory = () => {
             <p className="text-gray-300">
               Together, we can empower the next generation with digital skills and create lasting change.
             </p>
+            <DonationSection />
           </motion.div>
         </div>
         
