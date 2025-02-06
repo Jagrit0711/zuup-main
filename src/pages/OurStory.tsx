@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
-import { BookOpen, Users, Rocket, DollarSign, Heart, Volume2, VolumeX, Key } from "lucide-react";
+import { BookOpen, Users, Rocket, DollarSign, Heart, Volume2, VolumeX, Key, Calendar, Award, Target } from "lucide-react";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Progress } from "@/components/ui/progress";
 
 const OurStory = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
   const [apiKey, setApiKey] = useState(localStorage.getItem('elevenLabsApiKey') || '');
   const { toast } = useToast();
+  const [progress] = useState(75); // Example progress for impact metrics
 
   const storyText = `At just 16, Jagrit Sachdev envisioned a future where digital skills and opportunities 
     would be accessible to everyone, regardless of their background. As the founder of Zylon Labs, 
@@ -100,6 +102,31 @@ const OurStory = () => {
     });
   };
 
+  const impactMetrics = [
+    { label: "Youth Trained", value: "500+", icon: Users },
+    { label: "Digital Skills", value: "3", icon: Award },
+    { label: "Launch Date", value: "March 2025", icon: Calendar },
+    { label: "Target Impact", value: "1000+", icon: Target },
+  ];
+
+  const timelineEvents = [
+    {
+      year: "2024",
+      title: "Vision Formation",
+      description: "Jagrit Sachdev conceptualizes Zuup at age 16"
+    },
+    {
+      year: "2025",
+      title: "Official Launch",
+      description: "Zuup begins operations with its first batch of students"
+    },
+    {
+      year: "2025",
+      title: "Partnership Program",
+      description: "Establishing collaborations with nonprofits and sponsors"
+    },
+  ];
+
   return (
     <>
       <Helmet>
@@ -160,6 +187,26 @@ const OurStory = () => {
             <p className="text-xl text-gray-400">
               A Teen's Vision for Digital Empowerment
             </p>
+
+            {/* Impact Metrics */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+              {impactMetrics.map((metric, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="p-4 bg-gray-900/50 rounded-lg"
+                >
+                  <metric.icon className="w-8 h-8 text-[#ea384c] mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">{metric.value}</div>
+                  <div className="text-sm text-gray-400">{metric.label}</div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Audio Controls */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="flex items-center gap-2">
@@ -199,8 +246,59 @@ const OurStory = () => {
                   </>
                 )}
               </Button>
+            </div>
           </motion.div>
 
+          {/* Timeline */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-[#ea384c] to-[#4299e1]" />
+            {timelineEvents.map((event, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2 }}
+                className={`flex items-center mb-8 ${
+                  index % 2 === 0 ? "flex-row-reverse" : ""
+                }`}
+              >
+                <div className="w-1/2" />
+                <div className="w-4 h-4 bg-[#ea384c] rounded-full z-10 transform -translate-x-1/2" />
+                <div className={`w-1/2 ${index % 2 === 0 ? "pr-8 text-right" : "pl-8"}`}>
+                  <div className="text-[#ea384c] font-bold">{event.year}</div>
+                  <h3 className="text-xl font-bold text-white">{event.title}</h3>
+                  <p className="text-gray-400">{event.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Progress Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-gray-900/50 p-6 rounded-lg"
+          >
+            <h3 className="text-2xl font-bold text-white mb-4">Our Progress</h3>
+            <div className="space-y-4">
+              <div>
+                <div className="flex justify-between text-sm mb-2">
+                  <span className="text-gray-400">Launch Preparation</span>
+                  <span className="text-[#ea384c]">{progress}%</span>
+                </div>
+                <Progress value={progress} className="h-2" />
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Main Content Sections */}
           <div className="space-y-20">
             <motion.section 
               initial={{ opacity: 0, x: -20 }}
