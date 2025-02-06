@@ -34,10 +34,10 @@ const Features = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-4xl font-bold text-white mb-4">What We Teach</h2>
+        <h2 className="text-4xl font-bold text-white mb-4">Free Digital Skills Training</h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          We provide comprehensive training in various digital skills that are in high demand 
-          in the freelance market.
+          We provide comprehensive training in high-demand digital skills, completely free 
+          for underprivileged youth. Our courses are designed to create real career opportunities.
         </p>
       </motion.div>
 
@@ -52,21 +52,21 @@ const Features = () => {
           <FeatureCard
             icon={<Palette className="w-12 h-12 text-[#FF6D59]" />}
             title="Graphic Design"
-            description="Learn to create stunning visuals, logos, and marketing materials."
+            description="Master professional design tools and techniques for creating impactful visual content that clients love."
           />
         </motion.div>
         <motion.div variants={itemVariants}>
           <FeatureCard
             icon={<Video className="w-12 h-12 text-[#FF6D59]" />}
             title="Video Editing"
-            description="Master the art of video editing and content creation."
+            description="Learn to create engaging video content using industry-standard editing tools and techniques."
           />
         </motion.div>
         <motion.div variants={itemVariants}>
           <FeatureCard
             icon={<Code2 className="w-12 h-12 text-[#FF6D59]" />}
             title="Coding"
-            description="Develop websites and applications with modern technologies."
+            description="Develop practical programming skills that are in high demand in today's digital economy."
           />
         </motion.div>
       </motion.div>
@@ -78,7 +78,7 @@ const Features = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-4xl font-bold text-white mb-16 text-center">Our Sponsors</h2>
+        <h2 className="text-4xl font-bold text-white mb-16 text-center">Our Partners</h2>
         <div className="grid md:grid-cols-3 gap-8">
           <motion.div 
             className="p-8 rounded-lg bg-gray-900/50 hover:bg-gray-900/70 transition-colors flex items-center justify-center min-h-[200px]"
@@ -96,14 +96,14 @@ const Features = () => {
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300, damping: 10 }}
           >
-            <p className="text-gray-400 text-center">Add Your Brand Here</p>
+            <p className="text-gray-400 text-center">Become a Partner</p>
           </motion.div>
           <motion.div 
             className="p-8 rounded-lg bg-gray-900/50 hover:bg-gray-900/70 transition-colors flex items-center justify-center min-h-[200px] border-2 border-dashed border-gray-700"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300, damping: 10 }}
           >
-            <p className="text-gray-400 text-center">Add Your Brand Here</p>
+            <p className="text-gray-400 text-center">Support Our Mission</p>
           </motion.div>
         </div>
       </motion.div>
