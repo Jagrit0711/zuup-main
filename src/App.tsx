@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,6 +18,7 @@ import OurStory from "./pages/OurStory";
 import ZuupAI from "./pages/ZuupAI";
 import Jobs from "./pages/Jobs";
 import Blog from "./pages/Blog";
+import Projects from "./pages/Projects";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +70,7 @@ const App = () => (
               <Route path="/zuup-ai" element={<ZuupAI />} />
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/projects" element={<Projects />} />
             </Routes>
           </AdminEditorProvider>
         </BrowserRouter>

@@ -7,8 +7,32 @@ const Hero = () => {
     <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-b from-black via-gray-900 to-black">
       <ThreeBackground />
       
+      {/* Animated grid background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSkiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20 animate-[pulse_4s_ease-in-out_infinite]" />
+      </div>
+
+      {/* Floating particles effect */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-white rounded-full opacity-20"
+            initial={{
+              x: Math.random() * window.innerWidth,
+              y: Math.random() * window.innerHeight,
+            }}
+            animate={{
+              y: [null, Math.random() * -500],
+              opacity: [0.2, 0],
+            }}
+            transition={{
+              duration: Math.random() * 10 + 5,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        ))}
       </div>
 
       <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
@@ -45,7 +69,17 @@ const Hero = () => {
             />
           </motion.div>
           
-          <div className="flex space-x-2 mb-6">
+          <motion.div 
+            className="flex space-x-4 mb-6"
+            animate={{
+              scale: [1, 1.02, 1],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
             <motion.div 
               className="w-12 h-2 bg-[#fcd34d] rounded"
               whileHover={{ width: "5rem", backgroundColor: "#fbbf24" }}
@@ -56,7 +90,7 @@ const Hero = () => {
               whileHover={{ width: "5rem", backgroundColor: "#34d399" }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             />
-          </div>
+          </motion.div>
 
           <motion.p 
             className="text-2xl md:text-3xl mb-8 text-white font-light"
@@ -102,7 +136,17 @@ const Hero = () => {
                   ease: "easeInOut"
                 }}
               />
-              <motion.p className="relative text-xl md:text-2xl text-gray-200 italic font-serif leading-relaxed">
+              <motion.p 
+                className="relative text-xl md:text-2xl text-gray-200 italic font-serif leading-relaxed"
+                animate={{
+                  opacity: [0.8, 1, 0.8],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
                 "Give a man a fish and you feed him for a day. Teach a man to fish and you feed him for a lifetime"
               </motion.p>
             </motion.div>
@@ -127,7 +171,18 @@ const Hero = () => {
           }}
           className="text-white/50 text-sm flex flex-col items-center"
         >
-          <span>Scroll to explore</span>
+          <motion.span
+            animate={{
+              opacity: [0.5, 1, 0.5],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            Scroll to explore
+          </motion.span>
           <svg
             className="w-6 h-6 mt-2"
             fill="none"
@@ -146,4 +201,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
