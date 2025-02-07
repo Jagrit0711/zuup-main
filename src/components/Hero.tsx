@@ -18,14 +18,26 @@ const Hero = () => {
           className="flex flex-col items-center justify-center mb-8"
         >
           <motion.div 
-            className="mb-4 group cursor-pointer"
+            className="mb-4 group cursor-pointer relative"
             whileHover={{ scale: 1.05, rotate: [0, -2, 2, -2, 0] }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
+            <motion.div
+              className="absolute -inset-2 bg-gradient-to-r from-[#ea384c]/20 via-[#4299e1]/20 to-[#ea384c]/20 rounded-full blur-lg"
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.5, 0.8, 0.5],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
             <motion.img 
               src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png"
               alt="Zuup Logo"
-              className="h-40 w-auto"
+              className="h-40 w-auto relative"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
@@ -73,7 +85,6 @@ const Hero = () => {
               boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1)"
             }}
           >
-            <motion.p className="text-gray-400 mb-4 font-medium">We are inspired by the timeless wisdom:</motion.p>
             <motion.div 
               className="relative"
               whileHover={{ scale: 1.01 }}
@@ -95,8 +106,64 @@ const Hero = () => {
               </motion.p>
             </motion.div>
           </motion.div>
+
+          <motion.div 
+            className="mt-8 flex gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+          >
+            <motion.a
+              href="/our-story"
+              className="px-6 py-3 bg-gradient-to-r from-[#ea384c] to-[#4299e1] rounded-full text-white font-semibold shadow-lg hover:shadow-xl transition-shadow"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Learn More
+            </motion.a>
+            <motion.a
+              href="#donate"
+              className="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full text-white font-semibold shadow-lg hover:shadow-xl transition-shadow border border-white/20"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Support Us
+            </motion.a>
+          </motion.div>
         </motion.div>
       </div>
+
+      <motion.div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+      >
+        <motion.div
+          animate={{
+            y: [0, 10, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="text-white/50 text-sm flex flex-col items-center"
+        >
+          <span>Scroll to explore</span>
+          <svg
+            className="w-6 h-6 mt-2"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
