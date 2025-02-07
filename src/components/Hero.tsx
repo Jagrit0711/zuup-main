@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import ThreeBackground from "./ThreeBackground";
 
@@ -107,28 +108,37 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
+          {/* Added new decorative elements */}
           <motion.div 
-            className="mt-8 flex gap-4"
+            className="mt-12 grid grid-cols-3 gap-4 w-full max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
-            <motion.a
-              href="/our-story"
-              className="px-6 py-3 bg-gradient-to-r from-[#ea384c] to-[#4299e1] rounded-full text-white font-semibold shadow-lg hover:shadow-xl transition-shadow"
+            <motion.div 
+              className="h-24 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 backdrop-blur-sm"
               whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Learn More
-            </motion.a>
-            <motion.a
-              href="#donate"
-              className="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full text-white font-semibold shadow-lg hover:shadow-xl transition-shadow border border-white/20"
+              animate={{
+                boxShadow: ["0 0 0 rgba(168, 85, 247, 0.4)", "0 0 20px rgba(168, 85, 247, 0.2)", "0 0 0 rgba(168, 85, 247, 0.4)"],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <motion.div 
+              className="h-24 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 backdrop-blur-sm"
               whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Support Us
-            </motion.a>
+              animate={{
+                boxShadow: ["0 0 0 rgba(59, 130, 246, 0.4)", "0 0 20px rgba(59, 130, 246, 0.2)", "0 0 0 rgba(59, 130, 246, 0.4)"],
+              }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+            />
+            <motion.div 
+              className="h-24 rounded-lg bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 backdrop-blur-sm"
+              whileHover={{ scale: 1.05 }}
+              animate={{
+                boxShadow: ["0 0 0 rgba(16, 185, 129, 0.4)", "0 0 20px rgba(16, 185, 129, 0.2)", "0 0 0 rgba(16, 185, 129, 0.4)"],
+              }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+            />
           </motion.div>
         </motion.div>
       </div>
