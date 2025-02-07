@@ -107,39 +107,6 @@ const Hero = () => {
               </motion.p>
             </motion.div>
           </motion.div>
-
-          {/* Added new decorative elements */}
-          <motion.div 
-            className="mt-12 grid grid-cols-3 gap-4 w-full max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-          >
-            <motion.div 
-              className="h-24 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 backdrop-blur-sm"
-              whileHover={{ scale: 1.05 }}
-              animate={{
-                boxShadow: ["0 0 0 rgba(168, 85, 247, 0.4)", "0 0 20px rgba(168, 85, 247, 0.2)", "0 0 0 rgba(168, 85, 247, 0.4)"],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-            <motion.div 
-              className="h-24 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 backdrop-blur-sm"
-              whileHover={{ scale: 1.05 }}
-              animate={{
-                boxShadow: ["0 0 0 rgba(59, 130, 246, 0.4)", "0 0 20px rgba(59, 130, 246, 0.2)", "0 0 0 rgba(59, 130, 246, 0.4)"],
-              }}
-              transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-            />
-            <motion.div 
-              className="h-24 rounded-lg bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 backdrop-blur-sm"
-              whileHover={{ scale: 1.05 }}
-              animate={{
-                boxShadow: ["0 0 0 rgba(16, 185, 129, 0.4)", "0 0 20px rgba(16, 185, 129, 0.2)", "0 0 0 rgba(16, 185, 129, 0.4)"],
-              }}
-              transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
-            />
-          </motion.div>
         </motion.div>
       </div>
 
@@ -179,3 +146,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
