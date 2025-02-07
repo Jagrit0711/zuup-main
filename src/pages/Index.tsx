@@ -1,3 +1,4 @@
+
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import About from '../components/About';
@@ -8,6 +9,7 @@ import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
 import DonationSection from '../components/DonationSection';
 import FamilyCheckerPopup from '../components/FamilyCheckerPopup';
+import InstallPrompt from '../components/InstallPrompt';
 import { useToast } from '../components/ui/use-toast';
 
 const Index = () => {
@@ -18,6 +20,7 @@ const Index = () => {
     <div className="min-h-screen bg-black">
       <Navbar />
       <FamilyCheckerPopup />
+      <InstallPrompt />
       
       <section className="relative">
         <Hero />

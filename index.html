@@ -1,9 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#000000" />
     <title>Zuup - Revolutionary Teen-Led NGO | Founded by 16-year-old Jagrit Sachdev | Digital Skills Education</title>
     <meta name="description" content="Join Zuup, a groundbreaking teen-led NGO founded by 16-year-old Jagrit Sachdev. We're revolutionizing digital education by empowering underprivileged youth with essential tech skills. Experience the future of youth-driven social impact." />
     <meta name="keywords" content="teen NGO, Zuup, Jagrit Sachdev, youth empowerment, digital skills education, teen entrepreneur, teen-led organization, youth leadership, social impact, digital literacy, teen founder, Gen Z social impact, youth development, teen philanthropy, digital inclusion" />
@@ -72,6 +75,19 @@
 
   <body>
     <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('SW registered:', registration);
+            })
+            .catch(error => {
+              console.log('SW registration failed:', error);
+            });
+        });
+      }
+    </script>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
     <script type="module" src="/src/main.tsx"></script>
