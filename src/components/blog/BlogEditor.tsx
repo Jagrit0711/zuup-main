@@ -52,18 +52,34 @@ const BlogEditor = ({ onClose }: BlogEditorProps) => {
     }
 
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to create a post",
+        variant: "destructive",
+      });
+      return;
+    }
 
     const { data: authorData, error: authorError } = await supabase
       .from('blog_authors')
       .select('name')
       .eq('user_id', user.id)
-      .single();
+      .maybeSingle();
 
-    if (authorError || !authorData) {
+    if (authorError) {
       toast({
         title: "Error",
         description: "Could not verify author",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!authorData) {
+      toast({
+        title: "Error",
+        description: "Author profile not found. Please try logging out and back in.",
         variant: "destructive",
       });
       return;
