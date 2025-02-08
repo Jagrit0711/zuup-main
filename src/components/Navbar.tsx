@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -45,15 +46,6 @@ const Navbar = () => {
               </Link>
               <Link to="/team" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Our Team
-              </Link>
-              <Link to="/projects" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Projects
-              </Link>
-              <Link to="/careers" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Careers
-              </Link>
-              <Link to="/zuup-ai" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Zuup AI Beta
               </Link>
               <NavLink href="#contact">Contact</NavLink>
               {isAuthenticated ? (
@@ -108,15 +100,6 @@ const Navbar = () => {
             </Link>
             <Link to="/team" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
               Our Team
-            </Link>
-            <Link to="/projects" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-              Projects
-            </Link>
-            <Link to="/careers" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-              Careers
-            </Link>
-            <Link to="/zuup-ai" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-              Zuup AI Beta
             </Link>
             <MobileNavLink href="#contact">Contact</MobileNavLink>
             {isAuthenticated ? (
