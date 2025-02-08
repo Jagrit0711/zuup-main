@@ -113,6 +113,7 @@ export type Database = {
           author_id: string | null
           author_name: string
           content: string
+          content_html: string | null
           created_at: string | null
           id: string
           image_url: string | null
@@ -123,6 +124,7 @@ export type Database = {
           author_id?: string | null
           author_name: string
           content: string
+          content_html?: string | null
           created_at?: string | null
           id?: string
           image_url?: string | null
@@ -133,6 +135,7 @@ export type Database = {
           author_id?: string | null
           author_name?: string
           content?: string
+          content_html?: string | null
           created_at?: string | null
           id?: string
           image_url?: string | null
