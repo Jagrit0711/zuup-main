@@ -4,6 +4,10 @@ import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
+import BlogAuth from '@/components/blog/BlogAuth';
+import { LogIn, LogOut } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface BlogPost {
   id: string;
@@ -17,6 +21,9 @@ interface BlogPost {
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showAuth, setShowAuth] = useState(false);
+  const [session, setSession] = useState(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -35,14 +42,57 @@ const Blog = () => {
     };
 
     fetchPosts();
+
+    // Set up auth listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to log out",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Success",
+        description: "Logged out successfully",
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
       
       <main className="container mx-auto px-4 py-12">
-        <h1 className="text-4xl font-bold text-white mb-8">Blog</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-bold text-white">Blog</h1>
+          {session ? (
+            <Button
+              onClick={handleLogout}
+              variant="outline"
+              className="flex items-center gap-2"
+            >
+              <LogOut size={20} />
+              Logout
+            </Button>
+          ) : (
+            <Button
+              onClick={() => setShowAuth(true)}
+              className="bg-[#FF6D59] hover:bg-[#ff8574] flex items-center gap-2"
+            >
+              <LogIn size={20} />
+              Login
+            </Button>
+          )}
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading ? (
@@ -80,6 +130,7 @@ const Blog = () => {
         </div>
       </main>
 
+      {showAuth && <BlogAuth onClose={() => setShowAuth(false)} />}
       <Footer />
     </div>
   );
