@@ -1,6 +1,7 @@
 
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import Link from '@tiptap/extension-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
@@ -11,7 +12,7 @@ import {
   Italic, 
   List, 
   Heading2, 
-  Link,
+  Link as LinkIcon,
   X
 } from 'lucide-react';
 
@@ -24,7 +25,15 @@ const BlogEditor = ({ onClose }: BlogEditorProps) => {
   const { toast } = useToast();
   
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit,
+      Link.configure({
+        openOnClick: false,
+        HTMLAttributes: {
+          class: 'text-blue-500 hover:text-blue-600 underline',
+        },
+      })
+    ],
     editorProps: {
       attributes: {
         class: 'prose prose-invert min-h-[200px] w-full p-4 focus:outline-none',
@@ -145,12 +154,12 @@ const BlogEditor = ({ onClose }: BlogEditorProps) => {
               onClick={() => {
                 const url = window.prompt('Enter URL');
                 if (url) {
-                  editor?.chain().focus().setLink({ href: url }).run();
+                  editor?.chain().focus().toggleLink({ href: url }).run();
                 }
               }}
               className={editor?.isActive('link') ? 'bg-gray-700' : ''}
             >
-              <Link size={20} />
+              <LinkIcon size={20} />
             </Button>
           </div>
           
