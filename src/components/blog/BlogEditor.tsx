@@ -154,7 +154,7 @@ const BlogEditor = ({ onClose }: BlogEditorProps) => {
               onClick={() => {
                 const url = window.prompt('Enter URL');
                 if (url) {
-                  editor?.chain().focus().toggleLink({ href: url }).run();
+                  editor?.chain().focus().setLink({ href: url }).run();
                 }
               }}
               className={editor?.isActive('link') ? 'bg-gray-700' : ''}
