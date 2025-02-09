@@ -17,6 +17,7 @@ import Jobs from "./pages/Jobs";
 import Blog from "./pages/Blog";
 import OurStory from "./pages/OurStory";
 import JagritSachdev from "./pages/JagritSachdev";
+import Hackathon from "./pages/Hackathon";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +68,7 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/our-story" element={<OurStory />} />
               <Route path="/jagrit-sachdev" element={<JagritSachdev />} />
+              <Route path="/hackathon" element={<Hackathon />} />
             </Routes>
           </AdminEditorProvider>
         </BrowserRouter>

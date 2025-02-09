@@ -285,6 +285,51 @@ export type Database = {
         }
         Relationships: []
       }
+      hackathon_events: {
+        Row: {
+          collaboration_partners: Json | null
+          created_at: string | null
+          description: string | null
+          end_date: string | null
+          id: string
+          name: string
+          prizes: Json | null
+          registration_deadline: string | null
+          registration_fee: number | null
+          registration_link: string | null
+          start_date: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          collaboration_partners?: Json | null
+          created_at?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name: string
+          prizes?: Json | null
+          registration_deadline?: string | null
+          registration_fee?: number | null
+          registration_link?: string | null
+          start_date?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          collaboration_partners?: Json | null
+          created_at?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name?: string
+          prizes?: Json | null
+          registration_deadline?: string | null
+          registration_fee?: number | null
+          registration_link?: string | null
+          start_date?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       jobs: {
         Row: {
           company: string
