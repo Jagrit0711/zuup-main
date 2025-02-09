@@ -16,6 +16,7 @@ import FamilyLoveChecker from "./pages/FamilyLoveChecker";
 import Jobs from "./pages/Jobs";
 import Blog from "./pages/Blog";
 import OurStory from "./pages/OurStory";
+import JagritSachdev from "./pages/JagritSachdev";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,7 @@ const App = () => (
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/our-story" element={<OurStory />} />
+              <Route path="/jagrit-sachdev" element={<JagritSachdev />} />
             </Routes>
           </AdminEditorProvider>
         </BrowserRouter>
