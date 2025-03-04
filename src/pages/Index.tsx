@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Features from '../components/Features';
+import HowWeWork from '../components/HowWeWork';
 import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
 import CallToAction from '../components/CallToAction';
@@ -43,7 +44,11 @@ const Index = () => {
         <About />
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-gray-900 to-black" id="features">
+      <section className="py-20 bg-gradient-to-b from-gray-900 to-black" id="how-we-work">
+        <HowWeWork />
+      </section>
+
+      <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="features">
         <Features />
       </section>
 
