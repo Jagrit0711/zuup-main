@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Handshake, Users, Lightbulb, Video, Palette, Code, Briefcase, TrendingUp } from 'lucide-react';
 import { Typewriter } from '@/components/ui/typewriter';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 const HowWeWork = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -21,8 +23,7 @@ const HowWeWork = () => {
       title: "Partnership",
       description: "We tie up with NGOs and organizations working with underprivileged youth",
       icon: <Handshake className="w-14 h-14 text-primary" />,
-      animation: { x: [0, 10, 0], transition: { repeat: Infinity, duration:
-2 } }
+      animation: { x: [0, 10, 0], transition: { repeat: Infinity, duration: 2 } }
     },
     {
       title: "Outreach",
@@ -49,6 +50,10 @@ const HowWeWork = () => {
       animation: { opacity: [0.8, 1, 0.8], transition: { repeat: Infinity, duration: 2 } }
     }
   ];
+
+  const handleStepClick = (index) => {
+    setActiveStep(index);
+  };
 
   // Animation variants
   const containerVariants = {
@@ -85,55 +90,93 @@ const HowWeWork = () => {
         </p>
       </motion.div>
 
-      {/* Animated infographic */}
-      <div className="relative mb-16">
-        {/* Process flow line */}
-        <div className="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-700 transform -translate-y-1/2 z-0">
+      {/* Timeline component */}
+      <div className="relative mb-20">
+        {/* Timeline line */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-700 z-0">
           <div 
-            className="h-full bg-gradient-to-r from-primary to-secondary rounded-full"
-            style={{ width: `${(activeStep / (totalSteps - 1)) * 100}%`, transition: 'width 1s ease-in-out' }}
+            className="h-full bg-gradient-to-b from-primary to-secondary rounded-full"
+            style={{ height: `${(activeStep / (totalSteps - 1)) * 100}%`, transition: 'height 1s ease-in-out' }}
           />
         </div>
 
-        {/* Steps */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-5 gap-8 relative z-10"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
+        {/* Timeline steps */}
+        <div className="relative z-10">
           {steps.map((step, index) => (
             <motion.div 
               key={index}
-              className={`flex flex-col items-center ${index === activeStep ? 'scale-110' : 'scale-100'} transition-transform duration-500`}
-              variants={itemVariants}
+              className={`flex items-center mb-16 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              <motion.div 
-                className={`w-24 h-24 rounded-full flex items-center justify-center mb-4 
-                  ${index === activeStep ? 'bg-gradient-to-r from-[#FF6D59] to-[#ea384c]' : 'bg-gray-800'} 
-                  ${index <= activeStep ? 'border-4 border-primary' : 'border-4 border-gray-700'}`}
-                animate={index === activeStep ? step.animation : {}}
-              >
-                {step.icon}
-              </motion.div>
-              <h3 className={`text-xl font-semibold mb-2 ${index === activeStep ? 'text-primary' : 'text-white'}`}>
-                {step.title}
-              </h3>
-              <p className="text-gray-400 text-center text-sm">
-                {index === activeStep ? (
-                  <Typewriter 
-                    text={step.description} 
-                    delay={20} 
-                    className="min-h-[48px]"
-                  />
-                ) : (
-                  step.description
-                )}
-              </p>
+              {/* Content side */}
+              <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className={`bg-gray-900/60 border-gray-800 hover:border-primary transition-all duration-300 
+                    ${index === activeStep ? 'border-primary shadow-lg shadow-primary/20' : ''}`}
+                  >
+                    <CardContent className="p-6">
+                      <h3 className={`text-2xl font-bold mb-2 ${index === activeStep ? 'text-primary' : 'text-white'}`}>
+                        {step.title}
+                      </h3>
+                      <p className="text-gray-400">
+                        {index === activeStep ? (
+                          <Typewriter 
+                            text={step.description} 
+                            delay={30} 
+                            className="min-h-[48px]"
+                          />
+                        ) : (
+                          step.description
+                        )}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </div>
+
+              {/* Center dot/icon */}
+              <div className="w-2/12 flex justify-center">
+                <motion.div 
+                  className={`w-16 h-16 rounded-full flex items-center justify-center
+                    ${index === activeStep 
+                      ? 'bg-gradient-to-r from-[#FF6D59] to-[#ea384c] shadow-lg shadow-primary/30' 
+                      : 'bg-gray-800'} 
+                    ${index <= activeStep ? 'border-4 border-primary' : 'border-4 border-gray-700'}
+                    cursor-pointer`}
+                  animate={index === activeStep ? step.animation : {}}
+                  whileHover={{ scale: 1.1 }}
+                  onClick={() => handleStepClick(index)}
+                >
+                  {step.icon}
+                </motion.div>
+              </div>
+
+              {/* Empty side */}
+              <div className="w-5/12" />
             </motion.div>
           ))}
-        </motion.div>
+        </div>
+      </div>
+
+      {/* Navigation buttons */}
+      <div className="flex justify-center gap-3 mb-12">
+        {steps.map((_, index) => (
+          <Button
+            key={index}
+            variant={index === activeStep ? "default" : "outline"}
+            size="sm"
+            onClick={() => handleStepClick(index)}
+            className={index === activeStep ? "scale-110" : ""}
+          >
+            {index + 1}
+          </Button>
+        ))}
       </div>
 
       {/* Skills we teach */}
