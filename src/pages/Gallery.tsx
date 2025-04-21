@@ -6,9 +6,17 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Upload, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import type { Tables } from "@/integrations/supabase/types";
 
-type GalleryItem = Tables<"gallery_items">;
+// Define a custom type for gallery items
+interface GalleryItem {
+  id: string;
+  created_at: string | null;
+  user_id: string;
+  file_url: string;
+  file_type: string;
+  title: string | null;
+  description: string | null;
+}
 
 const GALLERY_BUCKET = "gallery";
 
