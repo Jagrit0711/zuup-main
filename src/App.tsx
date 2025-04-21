@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +17,7 @@ import Blog from "./pages/Blog";
 import OurStory from "./pages/OurStory";
 import JagritSachdev from "./pages/JagritSachdev";
 import Hackathon from "./pages/Hackathon";
+import Gallery from "./pages/Gallery";
 
 const queryClient = new QueryClient();
 
@@ -69,6 +69,7 @@ const App = () => (
               <Route path="/our-story" element={<OurStory />} />
               <Route path="/jagrit-sachdev" element={<JagritSachdev />} />
               <Route path="/hackathon" element={<Hackathon />} />
+              <Route path="/gallery" element={<Gallery />} />
             </Routes>
           </AdminEditorProvider>
         </BrowserRouter>

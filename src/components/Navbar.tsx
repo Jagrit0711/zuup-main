@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -36,7 +35,6 @@ const Navbar = () => {
             </motion.a>
           </div>
           
-          {/* Desktop Menu */}
           <div className="hidden md:block">
             <div className="ml-4 flex items-baseline space-x-1 lg:space-x-2">
               <NavLink href="/">Home</NavLink>
@@ -68,10 +66,12 @@ const Navbar = () => {
                   Admin
                 </Link>
               )}
+              <Link to="/gallery" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Gallery
+              </Link>
             </div>
           </div>
           
-          {/* Mobile menu button */}
           <motion.div 
             className="md:hidden"
             whileTap={{ scale: 0.9 }}
@@ -86,7 +86,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <motion.div 
           className="md:hidden bg-black/95 max-h-[80vh] overflow-y-auto"
@@ -125,6 +124,9 @@ const Navbar = () => {
                 Admin
               </Link>
             )}
+            <Link to="/gallery" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
+              Gallery
+            </Link>
           </div>
         </motion.div>
       )}
