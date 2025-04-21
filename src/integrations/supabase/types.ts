@@ -285,6 +285,36 @@ export type Database = {
         }
         Relationships: []
       }
+      gallery_items: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          file_type: string
+          file_url: string
+          id: string
+          title: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          file_type: string
+          file_url: string
+          id?: string
+          title?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          file_type?: string
+          file_url?: string
+          id?: string
+          title?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       hackathon_events: {
         Row: {
           collaboration_partners: Json | null
