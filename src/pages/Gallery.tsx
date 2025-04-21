@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Upload, Trash2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/lib/supabase";
 
 // Define a custom type for gallery items
 interface GalleryItem {
@@ -33,16 +33,17 @@ const Gallery = () => {
   // Fetch items from DB
   const fetchItems = async () => {
     setLoading(true);
-    // Using generic query without type checks
-    const { data, error } = await supabase
+    
+    // Use a generic approach that doesn't rely on specific Supabase types
+    const { data, error } = await (supabase as any)
       .from("gallery_items")
       .select("*")
-      .order("created_at", { ascending: false }) as { data: GalleryItem[] | null, error: any };
+      .order("created_at", { ascending: false });
     
     if (error) {
       toast({ title: "Failed to load gallery", description: error.message, variant: "destructive" });
     } else {
-      setItems(data || []);
+      setItems(data as GalleryItem[] || []);
     }
     setLoading(false);
   };
@@ -87,8 +88,8 @@ const Gallery = () => {
     const { data: publicUrlData } = supabase.storage.from(GALLERY_BUCKET).getPublicUrl(path);
     const publicUrl = publicUrlData?.publicUrl;
 
-    // Insert metadata using generic query
-    const { error: insertError } = await supabase
+    // Insert metadata using a generic approach
+    const { error: insertError } = await (supabase as any)
       .from("gallery_items")
       .insert([
         {
@@ -98,7 +99,7 @@ const Gallery = () => {
           title: title || null,
           description: description || null,
         },
-      ]) as { error: any };
+      ]);
       
     if (insertError) {
       toast({ title: "Save failed", description: insertError.message, variant: "destructive" });
@@ -125,8 +126,8 @@ const Gallery = () => {
     const filePath = arr.slice(idx + 1).join("/");
     await supabase.storage.from(GALLERY_BUCKET).remove([filePath]);
     
-    // Using generic query for delete
-    await supabase
+    // Using generic approach for delete
+    await (supabase as any)
       .from("gallery_items")
       .delete()
       .eq("id", item.id);
