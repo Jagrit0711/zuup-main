@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -31,12 +32,10 @@ const Gallery = () => {
 
   const fetchItems = async () => {
     setLoading(true);
-    
     const { data, error } = await (supabase as any)
       .from("gallery_items")
       .select("*")
       .order("created_at", { ascending: false });
-    
     if (error) {
       toast({ title: "Failed to load gallery", description: error.message, variant: "destructive" });
     } else {
@@ -45,13 +44,28 @@ const Gallery = () => {
     setLoading(false);
   };
 
+  // Listen to authentication state changes to update 'user' live
   useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
+    // Subscribe to auth state changes
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        setUser(session.user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    // Check initial user
+    supabase.auth.getUser().then(({ data }) => {
       setUser(data?.user || null);
-    };
-    getUser();
+    });
+
     fetchItems();
+
+    // Cleanup
+    return () => {
+      authListener?.subscription?.unsubscribe?.();
+    };
   }, []);
 
   useEffect(() => {
@@ -115,12 +129,10 @@ const Gallery = () => {
     const idx = arr.findIndex((x) => x === GALLERY_BUCKET);
     const filePath = arr.slice(idx + 1).join("/");
     await supabase.storage.from(GALLERY_BUCKET).remove([filePath]);
-    
     await (supabase as any)
       .from("gallery_items")
       .delete()
       .eq("id", item.id);
-      
     toast({ title: "Deleted!" });
     fetchItems();
     setLoading(false);
@@ -230,3 +242,4 @@ const Gallery = () => {
 };
 
 export default Gallery;
+
