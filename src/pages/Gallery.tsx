@@ -33,10 +33,12 @@ const Gallery = () => {
   // Fetch items from DB
   const fetchItems = async () => {
     setLoading(true);
+    // Using generic query without type checks
     const { data, error } = await supabase
       .from("gallery_items")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false }) as { data: GalleryItem[] | null, error: any };
+    
     if (error) {
       toast({ title: "Failed to load gallery", description: error.message, variant: "destructive" });
     } else {
@@ -85,16 +87,19 @@ const Gallery = () => {
     const { data: publicUrlData } = supabase.storage.from(GALLERY_BUCKET).getPublicUrl(path);
     const publicUrl = publicUrlData?.publicUrl;
 
-    // Insert metadata
-    const { error: insertError } = await supabase.from("gallery_items").insert([
-      {
-        user_id: user.id,
-        file_url: publicUrl,
-        file_type: file.type || "",
-        title: title || null,
-        description: description || null,
-      },
-    ]);
+    // Insert metadata using generic query
+    const { error: insertError } = await supabase
+      .from("gallery_items")
+      .insert([
+        {
+          user_id: user.id,
+          file_url: publicUrl,
+          file_type: file.type || "",
+          title: title || null,
+          description: description || null,
+        },
+      ]) as { error: any };
+      
     if (insertError) {
       toast({ title: "Save failed", description: insertError.message, variant: "destructive" });
     } else {
@@ -119,7 +124,13 @@ const Gallery = () => {
     const idx = arr.findIndex((x) => x === GALLERY_BUCKET);
     const filePath = arr.slice(idx + 1).join("/");
     await supabase.storage.from(GALLERY_BUCKET).remove([filePath]);
-    await supabase.from("gallery_items").delete().eq("id", item.id);
+    
+    // Using generic query for delete
+    await supabase
+      .from("gallery_items")
+      .delete()
+      .eq("id", item.id);
+      
     toast({ title: "Deleted!" });
     fetchItems();
     setLoading(false);
