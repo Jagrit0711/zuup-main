@@ -6,16 +6,9 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Upload, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import type { Tables } from "@/integrations/supabase/types";
 
-type GalleryItem = {
-  id: string;
-  file_url: string;
-  file_type: string;
-  title: string | null;
-  description: string | null;
-  created_at: string;
-  user_id: string;
-};
+type GalleryItem = Tables<"gallery_items">;
 
 const GALLERY_BUCKET = "gallery";
 
@@ -39,7 +32,7 @@ const Gallery = () => {
     if (error) {
       toast({ title: "Failed to load gallery", description: error.message, variant: "destructive" });
     } else {
-      setItems(data);
+      setItems(data || []);
     }
     setLoading(false);
   };
@@ -71,10 +64,9 @@ const Gallery = () => {
       return;
     }
     setLoading(true);
-    const fileExt = file.name.split('.').pop();
     const path = `${user.id}/${Date.now()}-${file.name}`;
     // Upload to Storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from(GALLERY_BUCKET)
       .upload(path, file);
     if (uploadError) {
@@ -82,7 +74,8 @@ const Gallery = () => {
       setLoading(false);
       return;
     }
-    const publicUrl = supabase.storage.from(GALLERY_BUCKET).getPublicUrl(path).data.publicUrl;
+    const { data: publicUrlData } = supabase.storage.from(GALLERY_BUCKET).getPublicUrl(path);
+    const publicUrl = publicUrlData?.publicUrl;
 
     // Insert metadata
     const { error: insertError } = await supabase.from("gallery_items").insert([
@@ -90,9 +83,8 @@ const Gallery = () => {
         user_id: user.id,
         file_url: publicUrl,
         file_type: file.type || "",
-        title,
-        description,
-        metadata: {},
+        title: title || null,
+        description: description || null,
       },
     ]);
     if (insertError) {
@@ -194,7 +186,7 @@ const Gallery = () => {
             <div className="p-4">
               {item.title && <div className="font-bold">{item.title}</div>}
               {item.description && <div className="text-sm text-gray-400">{item.description}</div>}
-              <div className="mt-2 text-xs text-gray-400">{new Date(item.created_at).toLocaleString()}</div>
+              <div className="mt-2 text-xs text-gray-400">{item.created_at ? new Date(item.created_at).toLocaleString() : ""}</div>
             </div>
             {user && item.user_id === user.id && (
               <button
