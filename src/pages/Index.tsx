@@ -11,13 +11,12 @@ import DonationSection from '../components/DonationSection';
 import FamilyCheckerPopup from '../components/FamilyCheckerPopup';
 import InstallPrompt from '../components/InstallPrompt';
 import { useToast } from '../components/ui/use-toast';
-
 const Index = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   console.log('Rendering Index page');
-
-  return (
-    <div className="min-h-screen bg-black">
+  return <div className="min-h-screen bg-black">
       <Navbar />
       <FamilyCheckerPopup />
       <InstallPrompt />
@@ -31,9 +30,7 @@ const Index = () => {
           <h2 className="text-2xl font-bold text-white mb-4 text-center">Notices</h2>
           <div className="relative">
             <div className="animate-[slide_20s_linear_infinite] whitespace-nowrap">
-              <span className="text-xl text-red-500 inline-block px-4">
-                ⚠️ All operations are delayed until March 2025 ⚠️
-              </span>
+              <span className="inline-block px-4 text-xl text-gray-50">Hiring State Heads visit https://zuup.fillout.com/CITY to apply </span>
             </div>
           </div>
         </div>
@@ -68,10 +65,7 @@ const Index = () => {
       </section>
 
       {/* Gallery Section */}
-      <section
-        className="py-20 bg-gradient-to-b from-black to-gray-900 flex justify-center items-center"
-        id="gallery"
-      >
+      <section className="py-20 bg-gradient-to-b from-black to-gray-900 flex justify-center items-center" id="gallery">
         <div className="max-w-2xl mx-auto bg-gray-900/80 rounded-xl shadow-md p-10 text-center flex flex-col gap-6 items-center">
           <h2 className="text-3xl font-extrabold text-white mb-3 flex items-center gap-2 justify-center">
             <span>Zuup Gallery</span>
@@ -79,12 +73,7 @@ const Index = () => {
           <p className="text-gray-300 mb-4">
             View community-uploaded images and videos from Zuup events, students, and partners.
           </p>
-          <a
-            href="https://zuupgallery.lovable.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-transform hover:scale-105"
-          >
+          <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-transform hover:scale-105">
             Visit the Gallery
           </a>
         </div>
@@ -95,8 +84,6 @@ const Index = () => {
       </div>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
