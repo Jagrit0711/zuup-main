@@ -3,7 +3,6 @@ import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useAdminAuth } from '@/contexts/AdminAuthContext';
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {
@@ -45,16 +44,9 @@ const Navbar = () => {
               <Link to="/team" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Our Team
               </Link>
-              <Link to="/blog" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Blog
-              </Link>
+              
               <NavLink href="#contact">Contact</NavLink>
-              <a
-                href="https://zuupgallery.lovable.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
+              <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Gallery
               </a>
               {isAuthenticated ? <>
@@ -106,12 +98,7 @@ const Navbar = () => {
               Blog
             </Link>
             <MobileNavLink href="#contact">Contact</MobileNavLink>
-            <a
-              href="https://zuupgallery.lovable.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium"
-            >
+            <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
               Gallery
             </a>
             {isAuthenticated ? <>
@@ -128,7 +115,6 @@ const Navbar = () => {
         </motion.div>}
     </motion.nav>;
 };
-
 const NavLink = ({
   href,
   children
@@ -142,7 +128,6 @@ const NavLink = ({
 }}>
     {children}
   </motion.a>;
-
 const MobileNavLink = ({
   href,
   children
@@ -156,5 +141,4 @@ const MobileNavLink = ({
 }}>
     {children}
   </motion.a>;
-
 export default Navbar;
