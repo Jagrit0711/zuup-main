@@ -1,4 +1,3 @@
-
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import About from '../components/About';
@@ -60,12 +59,35 @@ const Index = () => {
         <DonationSection />
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-gray-900 to-black" id="contact">
+      <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="contact">
         <Contact />
       </section>
 
       <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="cta">
         <CallToAction />
+      </section>
+
+      {/* Gallery Section */}
+      <section
+        className="py-20 bg-gradient-to-b from-black to-gray-900 flex justify-center items-center"
+        id="gallery"
+      >
+        <div className="max-w-2xl mx-auto bg-gray-900/80 rounded-xl shadow-md p-10 text-center flex flex-col gap-6 items-center">
+          <h2 className="text-3xl font-extrabold text-white mb-3 flex items-center gap-2 justify-center">
+            <span>Zuup Gallery</span>
+          </h2>
+          <p className="text-gray-300 mb-4">
+            View community-uploaded images and videos from Zuup events, students, and partners.
+          </p>
+          <a
+            href="https://zuupgallery.lovable.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-transform hover:scale-105"
+          >
+            Visit the Gallery
+          </a>
+        </div>
       </section>
 
       <div className="fixed bottom-4 right-4 z-50">

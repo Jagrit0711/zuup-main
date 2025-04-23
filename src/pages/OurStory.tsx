@@ -7,7 +7,7 @@ import DonationSection from "../components/DonationSection";
 
 const OurStory = () => {
   const impactMetrics = [
-    { label: "Youth Trained", value: "0", icon: Users },
+    { label: "Youth Trained", value: "27", icon: Users },
     { label: "Digital Skills", value: "3", icon: Award },
     { label: "Launch Date", value: "March 2025", icon: Calendar },
   ];
