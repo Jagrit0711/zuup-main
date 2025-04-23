@@ -11,6 +11,7 @@ import DonationSection from '../components/DonationSection';
 import FamilyCheckerPopup from '../components/FamilyCheckerPopup';
 import InstallPrompt from '../components/InstallPrompt';
 import { useToast } from '../components/ui/use-toast';
+
 const Index = () => {
   const {
     toast
@@ -44,8 +45,24 @@ const Index = () => {
         <HowWeWork />
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="features">
-        <Features />
+      {/* NEW: Zuup Gallery Section */}
+      <section className="py-20 bg-gradient-to-b from-black to-gray-900 flex justify-center items-center" id="gallery">
+        <div className="max-w-2xl mx-auto bg-gray-900/80 rounded-xl shadow-md p-10 text-center flex flex-col gap-6 items-center">
+          <h2 className="text-3xl font-extrabold text-white mb-3 flex items-center gap-2 justify-center">
+            <span>Zuup Gallery</span>
+          </h2>
+          <p className="text-gray-300 mb-4">
+            View community-uploaded images and videos from Zuup events, students, and partners.
+          </p>
+          <a 
+            href="https://zuupgallery.lovable.app/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="inline-flex items-center bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-transform hover:scale-105"
+          >
+            Visit the Gallery
+          </a>
+        </div>
       </section>
 
       <section className="py-20 bg-black" id="testimonials">
@@ -65,19 +82,7 @@ const Index = () => {
       </section>
 
       {/* Gallery Section */}
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900 flex justify-center items-center" id="gallery">
-        <div className="max-w-2xl mx-auto bg-gray-900/80 rounded-xl shadow-md p-10 text-center flex flex-col gap-6 items-center">
-          <h2 className="text-3xl font-extrabold text-white mb-3 flex items-center gap-2 justify-center">
-            <span>Zuup Gallery</span>
-          </h2>
-          <p className="text-gray-300 mb-4">
-            View community-uploaded images and videos from Zuup events, students, and partners.
-          </p>
-          <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-transform hover:scale-105">
-            Visit the Gallery
-          </a>
-        </div>
-      </section>
+      
 
       <div className="fixed bottom-4 right-4 z-50">
         <elevenlabs-convai agent-id="T2IOvA5G9yIgmNJO5WZm"></elevenlabs-convai>
