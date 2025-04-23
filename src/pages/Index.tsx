@@ -11,7 +11,6 @@ import DonationSection from '../components/DonationSection';
 import FamilyCheckerPopup from '../components/FamilyCheckerPopup';
 import InstallPrompt from '../components/InstallPrompt';
 import { useToast } from '../components/ui/use-toast';
-
 const Index = () => {
   const {
     toast
@@ -51,15 +50,8 @@ const Index = () => {
           <h2 className="text-3xl font-extrabold text-white mb-3 flex items-center gap-2 justify-center">
             <span>Zuup Gallery</span>
           </h2>
-          <p className="text-gray-300 mb-4">
-            View community-uploaded images and videos from Zuup events, students, and partners.
-          </p>
-          <a 
-            href="https://zuupgallery.lovable.app/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="inline-flex items-center bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-transform hover:scale-105"
-          >
+          <p className="text-gray-300 mb-4">View images and videos from Zuup events</p>
+          <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-transform hover:scale-105">
             Visit the Gallery
           </a>
         </div>
