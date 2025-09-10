@@ -10,6 +10,7 @@ import Footer from '../components/Footer';
 import DonationSection from '../components/DonationSection';
 import FamilyCheckerPopup from '../components/FamilyCheckerPopup';
 import InstallPrompt from '../components/InstallPrompt';
+import Achievements from '../components/Achievements';
 import { useToast } from '../components/ui/use-toast';
 const Index = () => {
   const {
@@ -24,6 +25,9 @@ const Index = () => {
       <section className="relative">
         <Hero />
       </section>
+
+      {/* Major Highlight: Recent Achievements */}
+      <Achievements />
 
       <section className="bg-gradient-to-r from-gray-900 to-black py-4 overflow-hidden">
         <div className="container mx-auto">
