@@ -10,6 +10,8 @@ const JagritSachdev = () => {
   const navigate = useNavigate();
   
   const achievements = [
+    "Zuup - SME Business of the Year Award Winner 2025",
+    "Published research: AI for Social Good - Identifying and Bridging Freelance Skill Gaps in Underprivileged Communities",
     "Founded Zylon Labs, a multi-industry startup ecosystem",
     "Led hackathon teams for innovative software solutions",
     "Developed a Python-based web browser in record time",
