@@ -26,9 +26,6 @@ const Index = () => {
         <Hero />
       </section>
 
-      {/* Major Highlight: Recent Achievements */}
-      <Achievements />
-
       <section className="bg-gradient-to-r from-gray-900 to-black py-4 overflow-hidden">
         <div className="container mx-auto">
           <h2 className="text-2xl font-bold text-white mb-4 text-center">Notices</h2>
@@ -64,6 +61,9 @@ const Index = () => {
       <section className="py-20 bg-black" id="testimonials">
         <Testimonials />
       </section>
+
+      {/* Recent Achievements */}
+      <Achievements />
 
       <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="donate">
         <DonationSection />
