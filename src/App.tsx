@@ -13,6 +13,7 @@ import AdminUpdate from "./pages/AdminUpdate";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import FamilyLoveChecker from "./pages/FamilyLoveChecker";
 import Jobs from "./pages/Jobs";
+import JobRecommendations from "./pages/JobRecommendations";
 import Blog from "./pages/Blog";
 import OurStory from "./pages/OurStory";
 import JagritSachdev from "./pages/JagritSachdev";
@@ -65,6 +66,7 @@ const App = () => (
               <Route path="/terms" element={<TermsAndConditions />} />
               <Route path="/family-check" element={<FamilyLoveChecker />} />
               <Route path="/jobs" element={<Jobs />} />
+              <Route path="/job-recommendations" element={<JobRecommendations />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/our-story" element={<OurStory />} />
               <Route path="/jagrit-sachdev" element={<JagritSachdev />} />

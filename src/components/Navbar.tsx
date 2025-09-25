@@ -44,6 +44,9 @@ const Navbar = () => {
               <Link to="/team" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Our Team
               </Link>
+              <Link to="/job-recommendations" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                AI Jobs
+              </Link>
               
               <NavLink href="#contact">Contact</NavLink>
               <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
@@ -93,6 +96,9 @@ const Navbar = () => {
             </Link>
             <Link to="/team" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
               Our Team
+            </Link>
+            <Link to="/job-recommendations" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
+              AI Jobs
             </Link>
             <Link to="/blog" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
               Blog
