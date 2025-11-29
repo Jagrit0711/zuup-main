@@ -1,10 +1,7 @@
 import { Phone, Mail, Linkedin } from 'lucide-react';
-
 const Contact = () => {
   console.log('Rendering Contact section');
-
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+  return <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-bold text-white mb-4">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ea384c] to-[#4299e1]">
@@ -35,7 +32,7 @@ const Contact = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-white mb-1">Email</h3>
-              <p className="text-gray-400">jag@techygram.onmicrosoft.com</p>
+              <p className="text-gray-400">ag​</p>
               <p className="text-gray-400">jagrit0711@gmail.com</p>
             </div>
           </div>
@@ -46,12 +43,7 @@ const Contact = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-white mb-1">LinkedIn</h3>
-              <a 
-                href="https://www.linkedin.com/in/jagritsachdev" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-[#4299e1] hover:text-[#ea384c] transition-colors"
-              >
+              <a href="https://www.linkedin.com/in/jagritsachdev" target="_blank" rel="noopener noreferrer" className="text-[#4299e1] hover:text-[#ea384c] transition-colors">
                 Connect with Jagrit
               </a>
             </div>
@@ -62,37 +54,20 @@ const Contact = () => {
           <h3 className="text-2xl font-bold mb-6 text-[#4299e1]">Send us a Message</h3>
           <form className="space-y-6">
             <div>
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="w-full bg-black/50 border border-[#4299e1]/20 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#4299e1]"
-              />
+              <input type="text" placeholder="Your Name" className="w-full bg-black/50 border border-[#4299e1]/20 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#4299e1]" />
             </div>
             <div>
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="w-full bg-black/50 border border-[#4299e1]/20 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#4299e1]"
-              />
+              <input type="email" placeholder="Your Email" className="w-full bg-black/50 border border-[#4299e1]/20 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#4299e1]" />
             </div>
             <div>
-              <textarea
-                placeholder="Your Message"
-                rows={4}
-                className="w-full bg-black/50 border border-[#4299e1]/20 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#4299e1]"
-              ></textarea>
+              <textarea placeholder="Your Message" rows={4} className="w-full bg-black/50 border border-[#4299e1]/20 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#4299e1]"></textarea>
             </div>
-            <button
-              type="submit"
-              className="w-full bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity"
-            >
+            <button type="submit" className="w-full bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity">
               Send Message
             </button>
           </form>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Contact;
