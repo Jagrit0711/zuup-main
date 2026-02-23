@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, ExternalLink, Brain, Users, Target, Sparkles, Zap, Award } from 'lucide-react';
+import { Loader2, ExternalLink, Brain, Users, Target, Sparkles, Zap, Award, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 
 interface JobRecommendation {
@@ -17,6 +18,11 @@ interface JobRecommendation {
   earning_potential: string;
   learning_resources: string[];
 }
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } }),
+};
 
 const JobRecommendations = () => {
   const [formData, setFormData] = useState({
@@ -67,298 +73,220 @@ Focus on opportunities that can help bridge the digital divide and provide econo
 
       const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyD5XqZvDx9QI7tWG2IP51KDIozptNX6j0w', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: prompt
-            }]
-          }],
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 2048,
-          }
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.7, topK: 40, topP: 0.95, maxOutputTokens: 2048 }
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to get recommendations');
-      }
+      if (!response.ok) throw new Error('Failed to get recommendations');
 
       const data = await response.json();
       const content = data.candidates[0].content.parts[0].text;
       
-      // Extract JSON from the response
       const jsonMatch = content.match(/\[[\s\S]*\]/);
       if (jsonMatch) {
-        const recommendations = JSON.parse(jsonMatch[0]);
-        setRecommendations(recommendations);
-        toast({
-          title: "Recommendations Generated",
-          description: "Your personalized job recommendations are ready!",
-        });
+        setRecommendations(JSON.parse(jsonMatch[0]));
+        toast({ title: "Recommendations Generated", description: "Your personalized job recommendations are ready!" });
       } else {
         throw new Error('Invalid response format');
       }
     } catch (error) {
       console.error('Error generating recommendations:', error);
-      toast({
-        title: "Error",
-        description: "Failed to generate recommendations. Please check your API key and try again.",
-        variant: "destructive",
-      });
+      toast({ title: "Error", description: "Failed to generate recommendations. Please try again.", variant: "destructive" });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-black text-white">
       <Helmet>
         <title>AI-Powered Freelance Job Recommendations | Zuup - Bridge Skill Gaps</title>
-        <meta name="description" content="Get personalized freelance job recommendations powered by AI research. Bridge skill gaps in underprivileged communities with our machine learning system based on published research." />
-        <meta name="keywords" content="freelance jobs, AI recommendations, skill gaps, machine learning, social good, underprivileged communities, job matching" />
+        <meta name="description" content="Get personalized freelance job recommendations powered by AI research. Bridge skill gaps in underprivileged communities with our machine learning system." />
+        <meta name="keywords" content="freelance jobs, AI recommendations, skill gaps, machine learning, social good, underprivileged communities" />
         <meta property="og:title" content="AI-Powered Freelance Job Recommendations | Zuup" />
-        <meta property="og:description" content="Get personalized freelance job recommendations powered by AI research. Bridge skill gaps with our machine learning system." />
+        <meta property="og:description" content="Get personalized freelance job recommendations powered by AI research." />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="/job-recommendations" />
       </Helmet>
       <Navbar />
-      <main className="container mx-auto px-4 py-12">
-        {/* Header Section */}
-        <section className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">AI-Powered Research</span>
-          </div>
-          <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-            AI-Powered Job Recommendations
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Bridging freelance skill gaps in underprivileged communities using machine learning based on published research
-          </p>
-          
-          {/* Research Paper Reference */}
-          <Card className="max-w-5xl mx-auto mb-12 border-primary/20 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5">
-            <CardHeader className="pb-6">
-              <div className="flex items-center gap-3 justify-center">
-                <div className="p-3 bg-primary/10 rounded-full">
-                  <Brain className="w-8 h-8 text-primary" />
-                </div>
-                <div>
-                  <CardTitle className="text-2xl">Based on Published Research</CardTitle>
-                  <p className="text-muted-foreground">Peer-reviewed and scientifically validated</p>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="text-center">
-              <div className="bg-card border border-primary/10 p-6 rounded-lg mb-6">
-                <h3 className="font-bold text-lg mb-3 text-foreground">
-                  "AI for Social Good: Identifying and Bridging Freelance Skill Gaps in Underprivileged Communities Using Machine Learning"
-                </h3>
-                <p className="text-muted-foreground mb-2">
-                  by <span className="font-semibold text-primary">Jagrit Sachdev</span>, Founder & CEO, Zylon Labs & Zuup
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Published in <span className="font-medium">International Journal for Research in Applied Science & Engineering Technology (IJRASET)</span><br />
-                  Volume 13 Issue VII, July 2025
-                </p>
-              </div>
-              <Button asChild className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90">
-                <a 
-                  href="https://www.ijraset.com/best-journal/ai-for-social-good-identifying-and-bridging-freelance-skill-gaps-in-underprivileged-communities-using-machine-learning"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2"
-                >
-                  <Award className="w-4 h-4" />
-                  Read Full Research Paper
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
 
-          {/* Impact Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
-            <Card className="border-secondary/20 hover:border-secondary/40 transition-colors">
-              <CardContent className="pt-8 text-center">
-                <div className="p-4 bg-secondary/10 rounded-full w-fit mx-auto mb-4">
-                  <Users className="w-10 h-10 text-secondary" />
-                </div>
-                <p className="text-3xl font-bold text-foreground mb-2">30+</p>
-                <p className="text-muted-foreground">Learners Trained</p>
-              </CardContent>
-            </Card>
-            <Card className="border-accent/20 hover:border-accent/40 transition-colors">
-              <CardContent className="pt-8 text-center">
-                <div className="p-4 bg-accent/20 rounded-full w-fit mx-auto mb-4">
-                  <Target className="w-10 h-10 text-accent-foreground" />
-                </div>
-                <p className="text-3xl font-bold text-foreground mb-2">5+</p>
-                <p className="text-muted-foreground">Digital Skills</p>
-              </CardContent>
-            </Card>
-            <Card className="border-primary/20 hover:border-primary/40 transition-colors">
-              <CardContent className="pt-8 text-center">
-                <div className="p-4 bg-primary/10 rounded-full w-fit mx-auto mb-4">
-                  <Zap className="w-10 h-10 text-primary" />
-                </div>
-                <p className="text-3xl font-bold text-foreground mb-2">AI</p>
-                <p className="text-muted-foreground">Powered System</p>
-              </CardContent>
-            </Card>
+      <main className="pt-24">
+        {/* Hero */}
+        <section className="relative py-20 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--primary))]/10 via-transparent to-transparent" />
+          <div className="container mx-auto px-4 relative z-10 text-center">
+            <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}
+              className="inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-6">
+              <Sparkles className="w-4 h-4 text-[hsl(var(--primary))]" />
+              <span className="text-sm font-medium text-gray-300">AI-Powered Research</span>
+            </motion.div>
+            <motion.h1 variants={fadeUp} initial="hidden" animate="visible" custom={1}
+              className="text-4xl md:text-6xl font-bold mb-6 text-gradient leading-tight">
+              AI-Powered Job Recommendations
+            </motion.h1>
+            <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={2}
+              className="text-lg md:text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
+              Bridging freelance skill gaps in underprivileged communities using machine learning based on published research
+            </motion.p>
           </div>
         </section>
 
-        {/* Input Form */}
-        <section className="max-w-3xl mx-auto mb-16">
-          <Card className="border-primary/10 shadow-lg">
-            <CardHeader className="text-center pb-6">
-              <div className="p-3 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full w-fit mx-auto mb-4">
-                <Brain className="w-8 h-8 text-primary" />
+        {/* Research Paper */}
+        <section className="container mx-auto px-4 mb-20">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+            className="max-w-4xl mx-auto glass-card rounded-2xl p-8 md:p-10 glow-primary">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 bg-[hsl(var(--primary))]/10 rounded-xl">
+                <Brain className="w-8 h-8 text-[hsl(var(--primary))]" />
               </div>
-              <CardTitle className="text-2xl">Get Personalized Recommendations</CardTitle>
-              <CardDescription className="text-lg">
-                Tell us about your skills and interests to receive AI-powered job recommendations
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid gap-6">
-                <div>
-                  <Label htmlFor="skills" className="text-base font-medium">Current Skills *</Label>
-                  <Textarea
-                    id="skills"
-                    name="skills"
-                    placeholder="Describe your current skills (e.g., basic computer skills, social media, design, writing, etc.)"
-                    value={formData.skills}
-                    onChange={handleInputChange}
-                    className="mt-2 min-h-[100px] resize-none"
-                  />
+              <div>
+                <h2 className="text-2xl font-bold">Based on Published Research</h2>
+                <p className="text-gray-400 text-sm">Peer-reviewed and scientifically validated</p>
+              </div>
+            </div>
+            <div className="bg-white/5 border border-white/10 p-6 rounded-xl mb-6">
+              <h3 className="font-bold text-lg mb-2">
+                "AI for Social Good: Identifying and Bridging Freelance Skill Gaps in Underprivileged Communities Using Machine Learning"
+              </h3>
+              <p className="text-gray-400 text-sm mb-1">
+                by <span className="font-semibold text-[hsl(var(--primary))]">Jagrit Sachdev</span>, Founder & CEO, Zylon Labs & Zuup
+              </p>
+              <p className="text-gray-500 text-xs">
+                International Journal for Research in Applied Science & Engineering Technology (IJRASET) — Volume 13 Issue VII, July 2025
+              </p>
+            </div>
+            <a href="https://www.ijraset.com/best-journal/ai-for-social-good-identifying-and-bridging-freelance-skill-gaps-in-underprivileged-communities-using-machine-learning"
+               target="_blank" rel="noopener noreferrer"
+               className="inline-flex items-center gap-2 bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--secondary))] text-white font-semibold px-6 py-2.5 rounded-lg hover:opacity-90 transition-opacity text-sm">
+              <Award className="w-4 h-4" /> Read Full Research Paper <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </motion.div>
+        </section>
+
+        {/* Stats */}
+        <section className="container mx-auto px-4 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {[
+              { icon: Users, value: "30+", label: "Learners Trained", color: "secondary" },
+              { icon: Target, value: "5+", label: "Digital Skills", color: "accent" },
+              { icon: Zap, value: "AI", label: "Powered System", color: "primary" },
+            ].map((stat, i) => (
+              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i}
+                className="glass-card rounded-xl p-8 text-center group hover:border-white/20 transition-colors">
+                <div className="p-3 bg-white/5 rounded-xl w-fit mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <stat.icon className="w-8 h-8 text-[hsl(var(--primary))]" />
                 </div>
+                <p className="text-3xl font-bold mb-1">{stat.value}</p>
+                <p className="text-gray-400 text-sm">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="experience" className="text-base font-medium">Experience Level</Label>
-                    <Input
-                      id="experience"
-                      name="experience"
-                      placeholder="Beginner, Some experience, Experienced"
-                      value={formData.experience}
-                      onChange={handleInputChange}
-                      className="mt-2"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="location" className="text-base font-medium">Location Preference</Label>
-                    <Input
-                      id="location"
-                      name="location"
-                      placeholder="Remote, Local, or specific city"
-                      value={formData.location}
-                      onChange={handleInputChange}
-                      className="mt-2"
-                    />
-                  </div>
-                </div>
-
+        {/* Form */}
+        <section className="container mx-auto px-4 mb-20">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+            className="max-w-3xl mx-auto glass-card rounded-2xl p-8 md:p-10">
+            <div className="text-center mb-8">
+              <div className="p-3 bg-gradient-to-r from-[hsl(var(--primary))]/10 to-[hsl(var(--secondary))]/10 rounded-xl w-fit mx-auto mb-4">
+                <Brain className="w-8 h-8 text-[hsl(var(--primary))]" />
+              </div>
+              <h2 className="text-2xl font-bold mb-2">Get Personalized Recommendations</h2>
+              <p className="text-gray-400">Tell us about your skills and interests</p>
+            </div>
+            <div className="space-y-6">
+              <div>
+                <Label htmlFor="skills" className="text-sm font-medium text-gray-300">Current Skills *</Label>
+                <Textarea id="skills" name="skills" placeholder="e.g., basic computer skills, social media, design, writing..."
+                  value={formData.skills} onChange={handleInputChange}
+                  className="mt-2 min-h-[100px] resize-none bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="interests" className="text-base font-medium">Interests</Label>
-                  <Textarea
-                    id="interests"
-                    name="interests"
-                    placeholder="What type of work interests you? (e.g., creative work, technical tasks, customer service, etc.)"
-                    value={formData.interests}
-                    onChange={handleInputChange}
-                    className="mt-2 min-h-[80px] resize-none"
-                  />
+                  <Label htmlFor="experience" className="text-sm font-medium text-gray-300">Experience Level</Label>
+                  <Input id="experience" name="experience" placeholder="Beginner, Experienced..."
+                    value={formData.experience} onChange={handleInputChange}
+                    className="mt-2 bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+                </div>
+                <div>
+                  <Label htmlFor="location" className="text-sm font-medium text-gray-300">Location</Label>
+                  <Input id="location" name="location" placeholder="Remote, Local, or city"
+                    value={formData.location} onChange={handleInputChange}
+                    className="mt-2 bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                 </div>
               </div>
-            </CardContent>
-            <CardFooter className="pt-6">
-              <Button 
-                onClick={generateRecommendations} 
-                disabled={loading}
-                size="lg"
-                className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white font-semibold py-3"
-              >
+              <div>
+                <Label htmlFor="interests" className="text-sm font-medium text-gray-300">Interests</Label>
+                <Textarea id="interests" name="interests" placeholder="Creative work, technical tasks, customer service..."
+                  value={formData.interests} onChange={handleInputChange}
+                  className="mt-2 min-h-[80px] resize-none bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+              </div>
+              <Button onClick={generateRecommendations} disabled={loading} size="lg"
+                className="w-full bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--secondary))] hover:opacity-90 text-white font-semibold py-3">
                 {loading ? (
-                  <>
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                    Generating AI Recommendations...
-                  </>
+                  <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Generating...</>
                 ) : (
-                  <>
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    Get AI Recommendations
-                  </>
+                  <><Sparkles className="w-5 h-5 mr-2" /> Get AI Recommendations</>
                 )}
               </Button>
-            </CardFooter>
-          </Card>
+            </div>
+          </motion.div>
         </section>
 
-        {/* Recommendations */}
+        {/* Results */}
         {recommendations.length > 0 && (
-          <section className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Your Personalized Job Recommendations</h2>
-              <p className="text-muted-foreground text-lg">AI-powered matches based on your skills and interests</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          <section className="container mx-auto px-4 pb-24">
+            <motion.div variants={fadeUp} initial="hidden" animate="visible" className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-3">Your Personalized Recommendations</h2>
+              <p className="text-gray-400">AI-powered matches based on your profile</p>
+            </motion.div>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-w-7xl mx-auto">
               {recommendations.map((job, index) => (
-                <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow border-muted/50">
-                  <CardHeader className="pb-4">
-                    <div className="flex items-start justify-between gap-2">
-                      <CardTitle className="text-xl leading-tight">{job.title}</CardTitle>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
-                        job.difficulty_level === 'Beginner' 
-                          ? 'bg-secondary/20 text-secondary-foreground border border-secondary/30' :
-                        job.difficulty_level === 'Intermediate' 
-                          ? 'bg-accent/30 text-accent-foreground border border-accent/40' :
-                          'bg-primary/20 text-primary border border-primary/30'
-                      }`}>
-                        {job.difficulty_level}
-                      </span>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="flex-grow space-y-4">
-                    <p className="text-muted-foreground leading-relaxed">{job.description}</p>
-                    
-                    <div>
-                      <h4 className="font-semibold mb-2 text-foreground">Skills Needed:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {job.skills_needed.map((skill, skillIndex) => (
-                          <span key={skillIndex} className="px-2 py-1 bg-muted rounded-md text-xs font-medium">
-                            {skill}
-                          </span>
-                        ))}
+                <motion.div key={index} variants={fadeUp} initial="hidden" animate="visible" custom={index}>
+                  <Card className="flex flex-col h-full glass-card border-white/10 hover:border-white/20 transition-all group">
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <CardTitle className="text-lg text-white leading-tight">{job.title}</CardTitle>
+                        <span className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
+                          job.difficulty_level === 'Beginner' ? 'bg-green-500/20 text-green-300 border border-green-500/30' :
+                          job.difficulty_level === 'Intermediate' ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30' :
+                          'bg-red-500/20 text-red-300 border border-red-500/30'
+                        }`}>
+                          {job.difficulty_level}
+                        </span>
                       </div>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold mb-1 text-foreground">Earning Potential:</h4>
-                      <p className="text-primary font-medium">{job.earning_potential}</p>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold mb-2 text-foreground">Learning Resources:</h4>
-                      <ul className="text-sm text-muted-foreground space-y-1.5">
-                        {job.learning_resources.map((resource, resourceIndex) => (
-                          <li key={resourceIndex} className="flex items-start gap-2">
-                            <span className="text-primary mt-1">•</span>
-                            <span>{resource}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardHeader>
+                    <CardContent className="flex-grow space-y-4">
+                      <p className="text-gray-400 text-sm leading-relaxed">{job.description}</p>
+                      <div>
+                        <h4 className="font-medium text-sm mb-2 text-gray-300">Skills Needed</h4>
+                        <div className="flex flex-wrap gap-1.5">
+                          {job.skills_needed.map((skill, i) => (
+                            <span key={i} className="px-2 py-0.5 bg-white/5 border border-white/10 rounded text-xs text-gray-300">{skill}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-sm text-gray-300">Earning Potential</h4>
+                        <p className="text-[hsl(var(--primary))] font-semibold text-sm">{job.earning_potential}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-sm mb-1.5 text-gray-300">Learning Resources</h4>
+                        <ul className="text-xs text-gray-400 space-y-1">
+                          {job.learning_resources.map((resource, i) => (
+                            <li key={i} className="flex items-start gap-1.5">
+                              <ArrowRight size={10} className="text-[hsl(var(--primary))] mt-0.5 shrink-0" />
+                              <span>{resource}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </section>
