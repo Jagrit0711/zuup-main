@@ -11,13 +11,16 @@ import DonationSection from '../components/DonationSection';
 import FamilyCheckerPopup from '../components/FamilyCheckerPopup';
 import InstallPrompt from '../components/InstallPrompt';
 import Achievements from '../components/Achievements';
-import { useToast } from '../components/ui/use-toast';
+import { motion } from 'framer-motion';
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
 const Index = () => {
-  const {
-    toast
-  } = useToast();
-  console.log('Rendering Index page');
-  return <div className="min-h-screen bg-black">
+  return (
+    <div className="min-h-screen bg-black">
       <Navbar />
       <FamilyCheckerPopup />
       <InstallPrompt />
@@ -26,65 +29,71 @@ const Index = () => {
         <Hero />
       </section>
 
-      <section className="bg-gradient-to-r from-gray-900 to-black py-4 overflow-hidden">
+      {/* Marquee Notice */}
+      <section className="relative bg-gradient-to-r from-gray-900 via-black to-gray-900 py-4 overflow-hidden border-y border-white/5">
         <div className="container mx-auto">
-          <h2 className="text-2xl font-bold text-white mb-4 text-center">Notices</h2>
           <div className="relative">
             <div className="animate-[slide_20s_linear_infinite] whitespace-nowrap">
-              <span className="inline-block px-4 text-xl text-gray-50">Hiring State Heads visit https://zuup.fillout.com/CITY to apply </span>
+              <span className="inline-block px-4 text-lg text-gray-300 font-medium">
+                🚀 Hiring State Heads — visit <a href="/apply" className="text-[hsl(var(--primary))] underline underline-offset-4 hover:opacity-80">zuup.fillout.com/CITY</a> to apply
+              </span>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="about">
+      <motion.section className="py-24 bg-gradient-to-b from-black to-gray-900" id="about"
+        variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         <About />
-      </section>
+      </motion.section>
 
-      <section className="py-20 bg-gradient-to-b from-gray-900 to-black" id="how-we-work">
+      <motion.section className="py-24 bg-gradient-to-b from-gray-900 to-black" id="how-we-work"
+        variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         <HowWeWork />
-      </section>
+      </motion.section>
 
-      {/* NEW: Zuup Gallery Section */}
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900 flex justify-center items-center" id="gallery">
-        <div className="max-w-2xl mx-auto bg-gray-900/80 rounded-xl shadow-md p-10 text-center flex flex-col gap-6 items-center">
-          <h2 className="text-3xl font-extrabold text-white mb-3 flex items-center gap-2 justify-center">
-            <span>Zuup Gallery</span>
-          </h2>
-          <p className="text-gray-300 mb-4">View images and videos from Zuup events</p>
-          <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-transform hover:scale-105">
+      {/* Gallery CTA */}
+      <motion.section className="py-24 bg-gradient-to-b from-black to-gray-900" id="gallery"
+        variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+        <div className="max-w-2xl mx-auto glass-card rounded-2xl p-12 text-center">
+          <h2 className="text-3xl font-bold text-white mb-3">Zuup Gallery</h2>
+          <p className="text-gray-400 mb-6">View images and videos from Zuup events</p>
+          <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer"
+             className="inline-flex items-center bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--secondary))] text-white font-semibold px-8 py-3 rounded-lg transition-all hover:opacity-90 hover:scale-105">
             Visit the Gallery
           </a>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="py-20 bg-black" id="testimonials">
+      <motion.section className="py-24 bg-black" id="testimonials"
+        variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         <Testimonials />
-      </section>
+      </motion.section>
 
-      {/* Recent Achievements */}
       <Achievements />
 
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="donate">
+      <motion.section className="py-24 bg-gradient-to-b from-black to-gray-900" id="donate"
+        variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         <DonationSection />
-      </section>
+      </motion.section>
 
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="contact">
+      <motion.section className="py-24 bg-gradient-to-b from-black to-gray-900" id="contact"
+        variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         <Contact />
-      </section>
+      </motion.section>
 
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900" id="cta">
+      <motion.section className="py-24 bg-gradient-to-b from-black to-gray-900" id="cta"
+        variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         <CallToAction />
-      </section>
-
-      {/* Gallery Section */}
-      
+      </motion.section>
 
       <div className="fixed bottom-4 right-4 z-50">
-        <elevenlabs-convai agent-id="T2IOvA5G9yIgmNJO5WZm"></elevenlabs-convai>
+        <elevenlabs-convai agent-id="T2IOvA9yIgmNJO5WZm"></elevenlabs-convai>
       </div>
 
       <Footer />
-    </div>;
+    </div>
+  );
 };
+
 export default Index;

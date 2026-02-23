@@ -1,150 +1,138 @@
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Menu, X, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useLocation } from 'react-router-dom';
 import { useAdminAuth } from '@/contexts/AdminAuthContext';
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const {
-    isAuthenticated,
-    logout
-  } = useAdminAuth();
-  return <motion.nav className="fixed w-full z-50 bg-black/80 backdrop-blur-sm border-b border-white/10" initial={{
-    y: -100
-  }} animate={{
-    y: 0
-  }} transition={{
-    duration: 0.6
-  }}>
+  const [scrolled, setScrolled] = useState(false);
+  const { isAuthenticated, logout } = useAdminAuth();
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isActive = (path: string) => location.pathname === path;
+
+  return (
+    <motion.nav
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        scrolled ? 'bg-black/90 backdrop-blur-lg border-b border-white/5 shadow-lg shadow-black/20' : 'bg-transparent'
+      }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <div className="flex items-center">
-            <motion.a href="/" className="flex items-center space-x-1 group" whileHover={{
-            scale: 1.05
-          }} whileTap={{
-            scale: 0.95
-          }}>
-              <motion.img src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png" alt="Zuup Logo" className="h-12 w-auto md:h-16" initial={{
-              opacity: 0
-            }} animate={{
-              opacity: 1
-            }} transition={{
-              duration: 0.5
-            }} />
-            </motion.a>
+          <Link to="/" className="flex items-center group">
+            <motion.img
+              src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png"
+              alt="Zuup Logo"
+              className="h-10 w-auto md:h-14"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            />
+          </Link>
+          
+          <div className="hidden md:flex items-center gap-1">
+            <NavLink href="/" active={isActive('/')}>Home</NavLink>
+            <NavLink href="#about">About</NavLink>
+            <NavLink href="/our-story" isRoute active={isActive('/our-story')}>Our Story</NavLink>
+            <NavLink href="/team" isRoute active={isActive('/team')}>Team</NavLink>
+            <NavLink href="/job-recommendations" isRoute active={isActive('/job-recommendations')}>AI Jobs</NavLink>
+            <NavLink href="#contact">Contact</NavLink>
+            <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer" 
+               className="text-gray-400 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-white/5">
+              Gallery
+            </a>
+            {isAuthenticated ? (
+              <>
+                <NavLink href="/admin" isRoute active={isActive('/admin')}>Dashboard</NavLink>
+                <button onClick={logout} className="text-gray-400 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-white/5">
+                  Logout
+                </button>
+              </>
+            ) : (
+              <NavLink href="/admin" isRoute active={isActive('/admin')}>Admin</NavLink>
+            )}
+            <Link to="/apply" className="ml-2 px-4 py-2 bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--secondary))] text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity">
+              Apply Now
+            </Link>
           </div>
           
-          <div className="hidden md:block">
-            <div className="ml-4 flex items-baseline space-x-1 lg:space-x-2">
-              <NavLink href="/">Home</NavLink>
-              <NavLink href="#about">About Us</NavLink>
-              <Link to="/our-story" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Our Story
-              </Link>
-              <Link to="/team" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Our Team
-              </Link>
-              <Link to="/job-recommendations" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                AI Jobs
-              </Link>
-              
-              <NavLink href="#contact">Contact</NavLink>
-              <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Gallery
-              </a>
-              {isAuthenticated ? <>
-                  <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                    Dashboard
-                  </Link>
-                  <button onClick={logout} className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                    Logout
-                  </button>
-                </> : <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                  Admin
-                </Link>}
-              
-            </div>
-          </div>
-          
-          <motion.div className="md:hidden" whileTap={{
-          scale: 0.9
-        }}>
-            <button onClick={() => setIsOpen(!isOpen)} className="text-gray-300 hover:text-white p-2">
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </motion.div>
+          <motion.button
+            className="md:hidden text-gray-300 hover:text-white p-2"
+            onClick={() => setIsOpen(!isOpen)}
+            whileTap={{ scale: 0.9 }}
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </motion.button>
         </div>
       </div>
 
-      {isOpen && <motion.div className="md:hidden bg-black/95 max-h-[80vh] overflow-y-auto" initial={{
-      opacity: 0,
-      height: 0
-    }} animate={{
-      opacity: 1,
-      height: "auto"
-    }} exit={{
-      opacity: 0,
-      height: 0
-    }} transition={{
-      duration: 0.3
-    }}>
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <MobileNavLink href="/">Home</MobileNavLink>
-            <MobileNavLink href="#about">About Us</MobileNavLink>
-            <Link to="/our-story" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-              Our Story
-            </Link>
-            <Link to="/team" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-              Our Team
-            </Link>
-            <Link to="/job-recommendations" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-              AI Jobs
-            </Link>
-            <Link to="/blog" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-              Blog
-            </Link>
-            <MobileNavLink href="#contact">Contact</MobileNavLink>
-            <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-              Gallery
-            </a>
-            {isAuthenticated ? <>
-                <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-                  Dashboard
-                </Link>
-                <button onClick={logout} className="text-gray-300 hover:text-[#ea384c] block w-full text-left px-3 py-2 rounded-md text-base font-medium">
-                  Logout
-                </button>
-              </> : <Link to="/admin" className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium">
-                Admin
-              </Link>}
-          </div>
-        </motion.div>}
-    </motion.nav>;
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="md:hidden bg-black/95 backdrop-blur-xl border-t border-white/5"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="px-4 pt-2 pb-4 space-y-1">
+              <MobileNavLink href="/" onClick={() => setIsOpen(false)}>Home</MobileNavLink>
+              <MobileNavLink href="#about" onClick={() => setIsOpen(false)}>About Us</MobileNavLink>
+              <MobileNavLink href="/our-story" isRoute onClick={() => setIsOpen(false)}>Our Story</MobileNavLink>
+              <MobileNavLink href="/team" isRoute onClick={() => setIsOpen(false)}>Our Team</MobileNavLink>
+              <MobileNavLink href="/job-recommendations" isRoute onClick={() => setIsOpen(false)}>AI Jobs</MobileNavLink>
+              <MobileNavLink href="/blog" isRoute onClick={() => setIsOpen(false)}>Blog</MobileNavLink>
+              <MobileNavLink href="#contact" onClick={() => setIsOpen(false)}>Contact</MobileNavLink>
+              <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer"
+                 className="block text-gray-400 hover:text-white px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:bg-white/5">
+                Gallery
+              </a>
+              {isAuthenticated ? (
+                <>
+                  <MobileNavLink href="/admin" isRoute onClick={() => setIsOpen(false)}>Dashboard</MobileNavLink>
+                  <button onClick={() => { logout(); setIsOpen(false); }}
+                    className="block w-full text-left text-gray-400 hover:text-white px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:bg-white/5">
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <MobileNavLink href="/admin" isRoute onClick={() => setIsOpen(false)}>Admin</MobileNavLink>
+              )}
+              <Link to="/apply" onClick={() => setIsOpen(false)}
+                className="block text-center mt-3 px-4 py-2.5 bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--secondary))] text-white font-semibold rounded-lg">
+                Apply Now
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
+  );
 };
-const NavLink = ({
-  href,
-  children
-}: {
-  href: string;
-  children: React.ReactNode;
-}) => <motion.a href={href} className="text-gray-300 hover:text-[#ea384c] px-3 py-2 rounded-md text-sm font-medium transition-colors" whileHover={{
-  scale: 1.1
-}} whileTap={{
-  scale: 0.95
-}}>
-    {children}
-  </motion.a>;
-const MobileNavLink = ({
-  href,
-  children
-}: {
-  href: string;
-  children: React.ReactNode;
-}) => <motion.a href={href} className="text-gray-300 hover:text-[#ea384c] block px-3 py-2 rounded-md text-base font-medium" whileHover={{
-  scale: 1.05
-}} whileTap={{
-  scale: 0.95
-}}>
-    {children}
-  </motion.a>;
+
+const NavLink = ({ href, children, isRoute, active }: { href: string; children: React.ReactNode; isRoute?: boolean; active?: boolean }) => {
+  const className = `px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+    active ? 'text-white bg-white/10' : 'text-gray-400 hover:text-white hover:bg-white/5'
+  }`;
+  
+  if (isRoute) return <Link to={href} className={className}>{children}</Link>;
+  return <a href={href} className={className}>{children}</a>;
+};
+
+const MobileNavLink = ({ href, children, isRoute, onClick }: { href: string; children: React.ReactNode; isRoute?: boolean; onClick?: () => void }) => {
+  const className = "block text-gray-400 hover:text-white px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:bg-white/5";
+  
+  if (isRoute) return <Link to={href} className={className} onClick={onClick}>{children}</Link>;
+  return <a href={href} className={className} onClick={onClick}>{children}</a>;
+};
+
 export default Navbar;
