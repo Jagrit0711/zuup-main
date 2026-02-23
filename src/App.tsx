@@ -20,6 +20,12 @@ import JagritSachdev from "./pages/JagritSachdev";
 import Hackathon from "./pages/Hackathon";
 import Gallery from "./pages/Gallery";
 
+
+const ExternalRedirect = ({ url }: { url: string }) => {
+  useEffect(() => { window.location.href = url; }, [url]);
+  return null;
+};
+
 const queryClient = new QueryClient();
 
 // View tracker component
@@ -72,6 +78,7 @@ const App = () => (
               <Route path="/jagrit-sachdev" element={<JagritSachdev />} />
               <Route path="/hackathon" element={<Hackathon />} />
               <Route path="/gallery" element={<Gallery />} />
+              <Route path="/apply" element={<ExternalRedirect url="https://zuup.fillout.com/CITY" />} />
             </Routes>
           </AdminEditorProvider>
         </BrowserRouter>
