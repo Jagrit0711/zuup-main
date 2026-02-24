@@ -1,49 +1,58 @@
-import { Heart } from "lucide-react";
-import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { Flame, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const DonationSection = () => {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/payment-button.js";
-    script.setAttribute("data-payment_button_id", "pl_PbURC7JG32Etib");
-    script.async = true;
-
-    const form = document.getElementById("razorpay-form");
-    if (form) form.appendChild(script);
-
-    return () => {
-      if (form && script.parentNode === form) form.removeChild(script);
-    };
-  }, []);
-
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <motion.div
-        className="glass-card rounded-2xl p-10 md:p-14 text-center"
+        className="glass-card-strong rounded-3xl p-10 md:p-16 text-center relative overflow-hidden"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
+        {/* Decorative glow */}
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" />
+
         <motion.div
-          className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[hsl(var(--primary))]/10 mb-6"
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-8 relative"
+          animate={{ rotate: [0, 5, -5, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
-          <Heart className="h-7 w-7 text-[hsl(var(--primary))]" />
+          <Flame className="h-8 w-8 text-primary" />
         </motion.div>
 
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
-          Support Our Mission
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 relative">
+          We Don't Believe in{" "}
+          <span className="text-gradient">Donations</span>
         </h2>
 
-        <p className="text-gray-400 max-w-xl mx-auto mb-8 leading-relaxed">
-          Your contribution helps us empower underprivileged kids through freelancing
-          opportunities. Every donation makes a difference in shaping their future.
+        <p className="text-muted-foreground max-w-2xl mx-auto mb-4 text-lg leading-relaxed relative">
+          Charity creates dependency. We create{" "}
+          <span className="font-semibold text-foreground">capability</span>.
         </p>
 
-        <form id="razorpay-form" className="inline-block" />
+        <p className="text-muted-foreground/80 max-w-xl mx-auto mb-10 leading-relaxed relative">
+          Instead of asking for money, we invest in people — giving them skills to
+          earn, compete, and thrive in the digital economy on their own terms.
+          Every person we train becomes self-sufficient, not dependent.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center relative">
+          <Link
+            to="/our-story"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-primary text-primary-foreground font-semibold rounded-xl hover:opacity-90 transition-opacity shadow-lg shadow-primary/20"
+          >
+            Read Our Story <ArrowRight size={18} />
+          </Link>
+          <a
+            href="#how-we-work"
+            className="px-8 py-3.5 glass-card text-foreground font-semibold rounded-xl hover:shadow-md transition-all"
+          >
+            See How We Work
+          </a>
+        </div>
       </motion.div>
     </div>
   );

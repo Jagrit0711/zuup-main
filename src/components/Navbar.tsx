@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { useAdminAuth } from '@/contexts/AdminAuthContext';
@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     <motion.nav
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-black/90 backdrop-blur-lg border-b border-white/5 shadow-lg shadow-black/20' : 'bg-transparent'
+        scrolled ? 'glass-card-strong shadow-sm' : 'bg-transparent'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -33,12 +33,12 @@ const Navbar = () => {
             <motion.img
               src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png"
               alt="Zuup Logo"
-              className="h-10 w-auto md:h-14"
+              className="h-10 w-auto md:h-12"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             />
           </Link>
-          
+
           <div className="hidden md:flex items-center gap-1">
             <NavLink href="/" active={isActive('/')}>Home</NavLink>
             <NavLink href="#about">About</NavLink>
@@ -46,27 +46,27 @@ const Navbar = () => {
             <NavLink href="/team" isRoute active={isActive('/team')}>Team</NavLink>
             <NavLink href="/job-recommendations" isRoute active={isActive('/job-recommendations')}>AI Jobs</NavLink>
             <NavLink href="#contact">Contact</NavLink>
-            <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer" 
-               className="text-gray-400 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-white/5">
+            <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer"
+               className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-accent">
               Gallery
             </a>
             {isAuthenticated ? (
               <>
                 <NavLink href="/admin" isRoute active={isActive('/admin')}>Dashboard</NavLink>
-                <button onClick={logout} className="text-gray-400 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-white/5">
+                <button onClick={logout} className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-accent">
                   Logout
                 </button>
               </>
             ) : (
               <NavLink href="/admin" isRoute active={isActive('/admin')}>Admin</NavLink>
             )}
-            <Link to="/apply" className="ml-2 px-4 py-2 bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--secondary))] text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity">
+            <Link to="/apply" className="ml-2 px-5 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-xl hover:opacity-90 transition-opacity shadow-md shadow-primary/15">
               Apply Now
             </Link>
           </div>
-          
+
           <motion.button
-            className="md:hidden text-gray-300 hover:text-white p-2"
+            className="md:hidden text-muted-foreground hover:text-foreground p-2"
             onClick={() => setIsOpen(!isOpen)}
             whileTap={{ scale: 0.9 }}
           >
@@ -78,7 +78,7 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="md:hidden bg-black/95 backdrop-blur-xl border-t border-white/5"
+            className="md:hidden glass-card-strong border-t border-border"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -93,14 +93,14 @@ const Navbar = () => {
               <MobileNavLink href="/blog" isRoute onClick={() => setIsOpen(false)}>Blog</MobileNavLink>
               <MobileNavLink href="#contact" onClick={() => setIsOpen(false)}>Contact</MobileNavLink>
               <a href="https://zuupgallery.lovable.app/" target="_blank" rel="noopener noreferrer"
-                 className="block text-gray-400 hover:text-white px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:bg-white/5">
+                 className="block text-muted-foreground hover:text-foreground px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:bg-accent">
                 Gallery
               </a>
               {isAuthenticated ? (
                 <>
                   <MobileNavLink href="/admin" isRoute onClick={() => setIsOpen(false)}>Dashboard</MobileNavLink>
                   <button onClick={() => { logout(); setIsOpen(false); }}
-                    className="block w-full text-left text-gray-400 hover:text-white px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:bg-white/5">
+                    className="block w-full text-left text-muted-foreground hover:text-foreground px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:bg-accent">
                     Logout
                   </button>
                 </>
@@ -108,7 +108,7 @@ const Navbar = () => {
                 <MobileNavLink href="/admin" isRoute onClick={() => setIsOpen(false)}>Admin</MobileNavLink>
               )}
               <Link to="/apply" onClick={() => setIsOpen(false)}
-                className="block text-center mt-3 px-4 py-2.5 bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--secondary))] text-white font-semibold rounded-lg">
+                className="block text-center mt-3 px-4 py-2.5 bg-primary text-primary-foreground font-semibold rounded-xl">
                 Apply Now
               </Link>
             </div>
@@ -121,16 +121,16 @@ const Navbar = () => {
 
 const NavLink = ({ href, children, isRoute, active }: { href: string; children: React.ReactNode; isRoute?: boolean; active?: boolean }) => {
   const className = `px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-    active ? 'text-white bg-white/10' : 'text-gray-400 hover:text-white hover:bg-white/5'
+    active ? 'text-foreground bg-accent' : 'text-muted-foreground hover:text-foreground hover:bg-accent'
   }`;
-  
+
   if (isRoute) return <Link to={href} className={className}>{children}</Link>;
   return <a href={href} className={className}>{children}</a>;
 };
 
 const MobileNavLink = ({ href, children, isRoute, onClick }: { href: string; children: React.ReactNode; isRoute?: boolean; onClick?: () => void }) => {
-  const className = "block text-gray-400 hover:text-white px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:bg-white/5";
-  
+  const className = "block text-muted-foreground hover:text-foreground px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:bg-accent";
+
   if (isRoute) return <Link to={href} className={className} onClick={onClick}>{children}</Link>;
   return <a href={href} className={className} onClick={onClick}>{children}</a>;
 };

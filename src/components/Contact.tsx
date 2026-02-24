@@ -1,73 +1,108 @@
 import { Phone, Mail, Linkedin } from 'lucide-react';
+import { motion } from 'framer-motion';
+
 const Contact = () => {
-  console.log('Rendering Contact section');
-  return <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-white mb-4">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ea384c] to-[#4299e1]">
-            Get in Touch
-          </span>
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <motion.div
+        className="text-center mb-14"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <span className="text-sm font-semibold uppercase tracking-widest text-primary mb-3 block">
+          Reach Out
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+          Get in <span className="text-gradient">Touch</span>
         </h2>
-        <p className="text-gray-400 max-w-2xl mx-auto">
+        <p className="text-muted-foreground max-w-2xl mx-auto">
           Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
         </p>
-      </div>
+      </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-12">
-        <div className="space-y-8">
+      <div className="grid md:grid-cols-2 gap-10">
+        <motion.div
+          className="space-y-6"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <ContactItem
+            icon={<Phone className="h-5 w-5 text-primary" />}
+            title="Phone"
+            lines={["+91 113-550-4576", "+91 885-184-4602"]}
+          />
+          <ContactItem
+            icon={<Mail className="h-5 w-5 text-secondary" />}
+            title="Email"
+            lines={["jagrit@zuup.dev", "jagrit0711@gmail.com"]}
+          />
           <div className="flex items-center space-x-4">
-            <div className="bg-[#ea384c]/10 p-4 rounded-lg">
-              <Phone className="h-6 w-6 text-[#ea384c]" />
+            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <Linkedin className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-white mb-1">Phone</h3>
-              <p className="text-gray-400">+91 113-550-4576</p>
-              <p className="text-gray-400">+91 885-184-4602</p>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <div className="bg-[#4299e1]/10 p-4 rounded-lg">
-              <Mail className="h-6 w-6 text-[#4299e1]" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-1">Email</h3>
-              <p className="text-gray-400">jagrit@zuup​.dev</p>
-              <p className="text-gray-400">jagrit0711@gmail.com</p>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <div className="bg-[#ea384c]/10 p-4 rounded-lg">
-              <Linkedin className="h-6 w-6 text-[#ea384c]" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-1">LinkedIn</h3>
-              <a href="https://www.linkedin.com/in/jagritsachdev" target="_blank" rel="noopener noreferrer" className="text-[#4299e1] hover:text-[#ea384c] transition-colors">
+              <h3 className="text-base font-semibold text-foreground mb-0.5">LinkedIn</h3>
+              <a href="https://www.linkedin.com/in/jagritsachdev" target="_blank" rel="noopener noreferrer"
+                className="text-primary hover:underline underline-offset-4 text-sm">
                 Connect with Jagrit
               </a>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="bg-gradient-to-br from-[#ea384c]/10 to-[#4299e1]/5 p-8 rounded-lg border border-[#4299e1]/20">
-          <h3 className="text-2xl font-bold mb-6 text-[#4299e1]">Send us a Message</h3>
-          <form className="space-y-6">
-            <div>
-              <input type="text" placeholder="Your Name" className="w-full bg-black/50 border border-[#4299e1]/20 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#4299e1]" />
-            </div>
-            <div>
-              <input type="email" placeholder="Your Email" className="w-full bg-black/50 border border-[#4299e1]/20 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#4299e1]" />
-            </div>
-            <div>
-              <textarea placeholder="Your Message" rows={4} className="w-full bg-black/50 border border-[#4299e1]/20 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#4299e1]"></textarea>
-            </div>
-            <button type="submit" className="w-full bg-gradient-to-r from-[#ea384c] to-[#4299e1] text-white font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity">
+        <motion.div
+          className="glass-card rounded-2xl p-8"
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h3 className="text-xl font-bold text-foreground mb-6">Send us a Message</h3>
+          <form className="space-y-4">
+            <input
+              type="text"
+              placeholder="Your Name"
+              className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+            />
+            <input
+              type="email"
+              placeholder="Your Email"
+              className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+            />
+            <textarea
+              placeholder="Your Message"
+              rows={4}
+              className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none"
+            />
+            <button
+              type="submit"
+              className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-xl hover:opacity-90 transition-opacity shadow-md shadow-primary/15"
+            >
               Send Message
             </button>
           </form>
-        </div>
+        </motion.div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
+const ContactItem = ({ icon, title, lines }: { icon: React.ReactNode; title: string; lines: string[] }) => (
+  <div className="flex items-center space-x-4">
+    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+      {icon}
+    </div>
+    <div>
+      <h3 className="text-base font-semibold text-foreground mb-0.5">{title}</h3>
+      {lines.map((line) => (
+        <p key={line} className="text-muted-foreground text-sm">{line}</p>
+      ))}
+    </div>
+  </div>
+);
+
 export default Contact;
