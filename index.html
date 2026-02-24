@@ -78,6 +78,12 @@
 </head>
 
   <body>
+    <script>
+      // Redirect zuup.lovable.app to zuup.dev immediately
+      if (window.location.hostname === 'zuup.lovable.app') {
+        window.location.replace('https://zuup.dev' + window.location.pathname + window.location.search + window.location.hash);
+      }
+    </script>
     <div id="root"></div>
     <script>
       if ('serviceWorker' in navigator) {
