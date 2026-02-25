@@ -3,7 +3,7 @@ import { ArrowDown, Sparkles } from "lucide-react";
 
 const Hero = () => {
   return (
-    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-background via-accent to-background">
+    <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-background">
       {/* Liquid glass orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div

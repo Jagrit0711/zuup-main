@@ -7,7 +7,7 @@ import Contact from '../components/Contact';
 import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
 import DonationSection from '../components/DonationSection';
-import FamilyCheckerPopup from '../components/FamilyCheckerPopup';
+
 import InstallPrompt from '../components/InstallPrompt';
 import Achievements from '../components/Achievements';
 import { motion } from 'framer-motion';
@@ -21,7 +21,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <FamilyCheckerPopup />
+      
       <InstallPrompt />
 
       <section className="relative">
