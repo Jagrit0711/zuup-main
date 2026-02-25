@@ -30,7 +30,7 @@ const Testimonials = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <span className="text-sm font-semibold uppercase tracking-widest text-secondary mb-3 block">
+        <span className="text-sm font-semibold uppercase tracking-widest text-primary mb-3 block">
           Get Involved
         </span>
         <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">

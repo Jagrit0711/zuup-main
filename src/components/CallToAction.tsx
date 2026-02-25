@@ -6,16 +6,16 @@ const CallToAction = () => {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <motion.div
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/10 via-background to-secondary/10 glass-card-strong p-10 md:p-16 text-center"
+        className="relative overflow-hidden rounded-3xl glass-card-strong p-10 md:p-16 text-center"
         initial={{ opacity: 0, scale: 0.97 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-primary/8 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
         <h2 className="relative text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
-          Ready to Start <span className="text-gradient">Your Journey?</span>
+          Ready to Start <span className="text-primary">Your Journey?</span>
         </h2>
         <p className="relative text-muted-foreground max-w-xl mx-auto mb-8 text-lg">
           Join Zuup and take the first step towards a thriving digital career.

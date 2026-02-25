@@ -12,7 +12,6 @@ const DonationSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        {/* Decorative glow */}
         <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" />
 
         <motion.div
@@ -25,7 +24,7 @@ const DonationSection = () => {
 
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 relative">
           We Don't Believe in{" "}
-          <span className="text-gradient">Donations</span>
+          <span className="text-primary">Donations</span>
         </h2>
 
         <p className="text-muted-foreground max-w-2xl mx-auto mb-4 text-lg leading-relaxed relative">

@@ -4,22 +4,17 @@ import { ArrowDown, Sparkles } from "lucide-react";
 const Hero = () => {
   return (
     <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-background">
-      {/* Liquid glass orbs */}
+      {/* Subtle orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-20 -left-32 w-[420px] h-[420px] rounded-full bg-primary/8 blur-[100px]"
+          className="absolute top-20 -left-32 w-[420px] h-[420px] rounded-full bg-primary/6 blur-[120px]"
           animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-20 -right-32 w-[380px] h-[380px] rounded-full bg-secondary/8 blur-[100px]"
+          className="absolute bottom-20 -right-32 w-[380px] h-[380px] rounded-full bg-secondary/6 blur-[120px]"
           animate={{ x: [0, -50, 0], y: [0, -30, 0] }}
           transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/4 blur-[120px]"
-          animate={{ scale: [1, 1.15, 1] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
@@ -32,14 +27,14 @@ const Hero = () => {
         >
           {/* Logo */}
           <motion.div
-            className="mb-8 relative"
+            className="mb-8"
             whileHover={{ scale: 1.03 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             <img
               src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png"
               alt="Zuup Logo"
-              className="h-28 md:h-36 w-auto relative drop-shadow-lg"
+              className="h-28 md:h-36 w-auto drop-shadow-lg"
             />
           </motion.div>
 
@@ -63,7 +58,7 @@ const Hero = () => {
           >
             Empowering Youth
             <br />
-            <span className="text-gradient">Through Digital Skills</span>
+            <span className="text-primary">Through Digital Skills</span>
           </motion.h1>
 
           {/* Sub */}
