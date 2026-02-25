@@ -1,7 +1,17 @@
+import { useState } from 'react';
 import { Phone, Mail, Linkedin } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Contact = () => {
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`Message from ${form.name}`);
+    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`);
+    window.location.href = `mailto:jagrit@zuup.dev?subject=${subject}&body=${body}`;
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <motion.div
@@ -15,7 +25,7 @@ const Contact = () => {
           Reach Out
         </span>
         <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-          Get in <span className="text-gradient">Touch</span>
+          Get in Touch
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
           Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
@@ -36,7 +46,7 @@ const Contact = () => {
             lines={["+91 113-550-4576", "+91 885-184-4602"]}
           />
           <ContactItem
-            icon={<Mail className="h-5 w-5 text-secondary" />}
+            icon={<Mail className="h-5 w-5 text-primary" />}
             title="Email"
             lines={["jagrit@zuup.dev", "jagrit0711@gmail.com"]}
           />
@@ -62,21 +72,30 @@ const Contact = () => {
           transition={{ duration: 0.6 }}
         >
           <h3 className="text-xl font-bold text-foreground mb-6">Send us a Message</h3>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="Your Name"
-              className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              required
+              value={form.name}
+              onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
+              className="w-full bg-accent border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             />
             <input
               type="email"
               placeholder="Your Email"
-              className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              required
+              value={form.email}
+              onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))}
+              className="w-full bg-accent border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             />
             <textarea
               placeholder="Your Message"
               rows={4}
-              className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none"
+              required
+              value={form.message}
+              onChange={(e) => setForm(f => ({ ...f, message: e.target.value }))}
+              className="w-full bg-accent border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none"
             />
             <button
               type="submit"

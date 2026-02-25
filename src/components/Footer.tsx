@@ -5,11 +5,11 @@ import { motion } from 'framer-motion';
 const Footer = () => {
   return (
     <footer className="relative bg-accent/50 text-foreground overflow-hidden">
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      <div className="h-px w-full bg-border" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="md:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div>
             <motion.img
               src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png"
               alt="Zuup Logo"
@@ -30,7 +30,6 @@ const Footer = () => {
             <ul className="space-y-3">
               <FooterLink href="#about">About Us</FooterLink>
               <FooterLink href="/our-story" isRoute>Our Story</FooterLink>
-              <FooterLink href="/team" isRoute>Our Team</FooterLink>
               <FooterLink href="#contact">Contact</FooterLink>
               <FooterLink href="/terms" isRoute>Terms & Conditions</FooterLink>
             </ul>
@@ -41,7 +40,6 @@ const Footer = () => {
             <ul className="space-y-3">
               <FooterLink href="/job-recommendations" isRoute>AI Job Finder</FooterLink>
               <FooterLink href="/blog" isRoute>Blog</FooterLink>
-              <FooterLink href="https://zuupgallery.lovable.app/" isExternal>Gallery</FooterLink>
               <FooterLink href="/hackathon" isRoute>Hackathon</FooterLink>
             </ul>
           </div>
@@ -60,11 +58,10 @@ const Footer = () => {
   );
 };
 
-const FooterLink = ({ href, children, isRoute, isExternal }: { href: string; children: React.ReactNode; isRoute?: boolean; isExternal?: boolean }) => {
+const FooterLink = ({ href, children, isRoute }: { href: string; children: React.ReactNode; isRoute?: boolean }) => {
   const className = "text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1 group";
 
   if (isRoute) return <li><Link to={href} className={className}>{children} <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" /></Link></li>;
-  if (isExternal) return <li><a href={href} target="_blank" rel="noopener noreferrer" className={className}>{children} <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>;
   return <li><a href={href} className={className}>{children}</a></li>;
 };
 

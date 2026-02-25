@@ -7,9 +7,9 @@ import Contact from '../components/Contact';
 import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
 import DonationSection from '../components/DonationSection';
-
 import InstallPrompt from '../components/InstallPrompt';
 import Achievements from '../components/Achievements';
+import PhotoScroller from '../components/PhotoScroller';
 import { motion } from 'framer-motion';
 
 const sectionVariants = {
@@ -21,7 +21,6 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
       <InstallPrompt />
 
       <section className="relative">
@@ -57,23 +56,12 @@ const Index = () => {
         <HowWeWork />
       </motion.section>
 
-      {/* Gallery CTA */}
+      {/* Photo Scroller */}
       <motion.section
-        className="py-24" id="gallery"
+        className="py-24" id="photos"
         variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}
       >
-        <div className="max-w-2xl mx-auto glass-card rounded-2xl p-12 text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-3">Zuup Gallery</h2>
-          <p className="text-muted-foreground mb-6">View images and videos from Zuup events</p>
-          <a
-            href="https://zuupgallery.lovable.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-xl transition-all hover:opacity-90 hover:scale-105 shadow-md shadow-primary/15"
-          >
-            Visit the Gallery
-          </a>
-        </div>
+        <PhotoScroller />
       </motion.section>
 
       <motion.section

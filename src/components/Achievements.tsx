@@ -18,7 +18,7 @@ const achievements = [
 
 const Achievements = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-background to-accent/30">
+    <section className="py-24 bg-accent/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -31,7 +31,7 @@ const Achievements = () => {
             Milestones
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Recent <span className="text-gradient">Achievements</span>
+            Recent Achievements
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Celebrating milestones that showcase our commitment to innovation and social impact.
