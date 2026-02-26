@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -15,6 +16,15 @@ const Navbar = () => {
   }, []);
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleHashLink = (hash: string) => {
+    if (location.pathname !== '/') {
+      navigate('/' + hash);
+    } else {
+      const el = document.querySelector(hash);
+      el?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <motion.nav
@@ -39,10 +49,10 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-1">
             <NavLink href="/" active={isActive('/')}>Home</NavLink>
-            <NavLink href="#about">About</NavLink>
+            <HashNavLink onClick={() => handleHashLink('#about')}>About</HashNavLink>
             <NavLink href="/our-story" isRoute active={isActive('/our-story')}>Our Story</NavLink>
             <NavLink href="/job-recommendations" isRoute active={isActive('/job-recommendations')}>AI Jobs</NavLink>
-            <NavLink href="#contact">Contact</NavLink>
+            <HashNavLink onClick={() => handleHashLink('#contact')}>Contact</HashNavLink>
             <Link to="/apply" className="ml-2 px-5 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-xl hover:opacity-90 transition-opacity shadow-md shadow-primary/15">
               Apply Now
             </Link>
@@ -69,11 +79,11 @@ const Navbar = () => {
           >
             <div className="px-4 pt-2 pb-4 space-y-1">
               <MobileNavLink href="/" onClick={() => setIsOpen(false)}>Home</MobileNavLink>
-              <MobileNavLink href="#about" onClick={() => setIsOpen(false)}>About Us</MobileNavLink>
+              <MobileHashNavLink onClick={() => { handleHashLink('#about'); setIsOpen(false); }}>About Us</MobileHashNavLink>
               <MobileNavLink href="/our-story" isRoute onClick={() => setIsOpen(false)}>Our Story</MobileNavLink>
               <MobileNavLink href="/job-recommendations" isRoute onClick={() => setIsOpen(false)}>AI Jobs</MobileNavLink>
               <MobileNavLink href="/blog" isRoute onClick={() => setIsOpen(false)}>Blog</MobileNavLink>
-              <MobileNavLink href="#contact" onClick={() => setIsOpen(false)}>Contact</MobileNavLink>
+              <MobileHashNavLink onClick={() => { handleHashLink('#contact'); setIsOpen(false); }}>Contact</MobileHashNavLink>
               <Link to="/apply" onClick={() => setIsOpen(false)}
                 className="block text-center mt-3 px-4 py-2.5 bg-primary text-primary-foreground font-semibold rounded-xl">
                 Apply Now
@@ -90,16 +100,26 @@ const NavLink = ({ href, children, isRoute, active }: { href: string; children: 
   const className = `px-3 py-2 rounded-lg text-sm font-medium transition-all ${
     active ? 'text-foreground bg-accent' : 'text-muted-foreground hover:text-foreground hover:bg-accent'
   }`;
-
   if (isRoute) return <Link to={href} className={className}>{children}</Link>;
   return <a href={href} className={className}>{children}</a>;
 };
 
+const HashNavLink = ({ children, onClick }: { children: React.ReactNode; onClick: () => void }) => (
+  <button onClick={onClick} className="px-3 py-2 rounded-lg text-sm font-medium transition-all text-muted-foreground hover:text-foreground hover:bg-accent">
+    {children}
+  </button>
+);
+
 const MobileNavLink = ({ href, children, isRoute, onClick }: { href: string; children: React.ReactNode; isRoute?: boolean; onClick?: () => void }) => {
   const className = "block text-muted-foreground hover:text-foreground px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:bg-accent";
-
   if (isRoute) return <Link to={href} className={className} onClick={onClick}>{children}</Link>;
   return <a href={href} className={className} onClick={onClick}>{children}</a>;
 };
+
+const MobileHashNavLink = ({ children, onClick }: { children: React.ReactNode; onClick: () => void }) => (
+  <button onClick={onClick} className="block w-full text-left text-muted-foreground hover:text-foreground px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:bg-accent">
+    {children}
+  </button>
+);
 
 export default Navbar;

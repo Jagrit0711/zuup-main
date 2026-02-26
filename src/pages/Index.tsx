@@ -10,6 +10,7 @@ import DonationSection from '../components/DonationSection';
 import InstallPrompt from '../components/InstallPrompt';
 import Achievements from '../components/Achievements';
 import PhotoScroller from '../components/PhotoScroller';
+import FloatingBackground from '../components/FloatingBackground';
 import { motion } from 'framer-motion';
 
 const sectionVariants = {
@@ -20,6 +21,7 @@ const sectionVariants = {
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <FloatingBackground />
       <Navbar />
       <InstallPrompt />
 
@@ -56,7 +58,6 @@ const Index = () => {
         <HowWeWork />
       </motion.section>
 
-      {/* Photo Scroller */}
       <motion.section
         className="py-24" id="photos"
         variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}
