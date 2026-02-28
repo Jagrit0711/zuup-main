@@ -19,6 +19,7 @@ import OurStory from "./pages/OurStory";
 import JagritSachdev from "./pages/JagritSachdev";
 import Hackathon from "./pages/Hackathon";
 import Gallery from "./pages/Gallery";
+import Schools from "./pages/Schools";
 
 
 const ExternalRedirect = ({ url }: { url: string }) => {
@@ -78,6 +79,7 @@ const App = () => (
               <Route path="/jagrit-sachdev" element={<JagritSachdev />} />
               <Route path="/hackathon" element={<Hackathon />} />
               <Route path="/gallery" element={<Gallery />} />
+              <Route path="/schools" element={<Schools />} />
               <Route path="/apply" element={<ExternalRedirect url="https://zuup.fillout.com/CITY" />} />
             </Routes>
           </AdminEditorProvider>
