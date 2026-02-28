@@ -20,6 +20,7 @@ import JagritSachdev from "./pages/JagritSachdev";
 import Hackathon from "./pages/Hackathon";
 import Gallery from "./pages/Gallery";
 import Schools from "./pages/Schools";
+import FloatingBackground from "./components/FloatingBackground";
 
 
 const ExternalRedirect = ({ url }: { url: string }) => {
@@ -64,7 +65,8 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <AdminEditorProvider>
-            <ViewTracker />
+             <FloatingBackground />
+             <ViewTracker />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/team" element={<Team />} />
