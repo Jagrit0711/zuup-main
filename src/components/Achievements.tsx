@@ -63,7 +63,7 @@ const Achievements = () => {
                     whileTap={{ scale: 0.98 }}
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-md shadow-primary/15 hover:opacity-90 transition-opacity"
                   >
-                    Learn More <ExternalLink size={14} />
+                    Read about {item.title} <ExternalLink size={14} />
                   </motion.a>
                 </div>
               </motion.div>
