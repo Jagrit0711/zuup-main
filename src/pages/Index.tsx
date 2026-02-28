@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
+import GizaBanner from '../components/GizaBanner';
 import About from '../components/About';
 import HowWeWork from '../components/HowWeWork';
 import Testimonials from '../components/Testimonials';
@@ -23,6 +24,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <FloatingBackground />
       <Navbar />
+      <GizaBanner />
       <InstallPrompt />
 
       <section className="relative">

@@ -52,6 +52,7 @@ const Navbar = () => {
             <HashNavLink onClick={() => handleHashLink('#about')}>About</HashNavLink>
             <NavLink href="/our-story" isRoute active={isActive('/our-story')}>Our Story</NavLink>
             <NavLink href="/job-recommendations" isRoute active={isActive('/job-recommendations')}>AI Jobs</NavLink>
+            <NavLink href="/schools" isRoute active={isActive('/schools')}>Schools</NavLink>
             <HashNavLink onClick={() => handleHashLink('#contact')}>Contact</HashNavLink>
             <Link to="/apply" className="ml-2 px-5 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-xl hover:opacity-90 transition-opacity shadow-md shadow-primary/15">
               Apply Now
@@ -82,6 +83,7 @@ const Navbar = () => {
               <MobileHashNavLink onClick={() => { handleHashLink('#about'); setIsOpen(false); }}>About Us</MobileHashNavLink>
               <MobileNavLink href="/our-story" isRoute onClick={() => setIsOpen(false)}>Our Story</MobileNavLink>
               <MobileNavLink href="/job-recommendations" isRoute onClick={() => setIsOpen(false)}>AI Jobs</MobileNavLink>
+              <MobileNavLink href="/schools" isRoute onClick={() => setIsOpen(false)}>Schools</MobileNavLink>
               <MobileNavLink href="/blog" isRoute onClick={() => setIsOpen(false)}>Blog</MobileNavLink>
               <MobileHashNavLink onClick={() => { handleHashLink('#contact'); setIsOpen(false); }}>Contact</MobileHashNavLink>
               <Link to="/apply" onClick={() => setIsOpen(false)}
