@@ -346,6 +346,52 @@ const Schools = () => {
         </div>
       </section>
 
+      {/* Zuup Tools */}
+      <section className="py-24 px-4">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-14"
+          >
+            <span className="text-sm font-semibold uppercase tracking-widest text-primary mb-3 block">Zuup Ecosystem</span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Tools Built for Students</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">Every Zuup Chapter student gets free access to our developer tools — purpose-built for learning, building, and tracking progress.</p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+            <motion.a
+              href="https://code.zuup.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="glass-card rounded-3xl p-8 group hover:border-primary/30 transition-colors"
+            >
+              <Cpu size={28} className="text-primary mb-4" />
+              <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">ZuupCode</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-4">A free, browser-based IDE with real code execution. 30+ languages, instant results, zero setup. Built on Monaco Editor with cloud save and instant sharing.</p>
+              <span className="inline-flex items-center gap-1 text-primary text-sm font-semibold">Open ZuupCode <ChevronRight size={14} /></span>
+            </motion.a>
+            <motion.a
+              href="https://time.zuup.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="glass-card rounded-3xl p-8 group hover:border-primary/30 transition-colors"
+            >
+              <Rocket size={28} className="text-primary mb-4" />
+              <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">ZuupTime</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-4">Track your coding time for free. Open-source alternative to WakaTime with language stats, file-level insights, leaderboards, and full data ownership.</p>
+              <span className="inline-flex items-center gap-1 text-primary text-sm font-semibold">Open ZuupTime <ChevronRight size={14} /></span>
+            </motion.a>
+          </div>
+        </div>
+      </section>
+
       {/* How to Start */}
       <section className="py-24 px-4">
         <div className="max-w-4xl mx-auto">
