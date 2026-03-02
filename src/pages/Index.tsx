@@ -11,6 +11,7 @@ import DonationSection from '../components/DonationSection';
 import InstallPrompt from '../components/InstallPrompt';
 import Achievements from '../components/Achievements';
 import PhotoScroller from '../components/PhotoScroller';
+import ZuupTools from '../components/ZuupTools';
 import { motion } from 'framer-motion';
 
 const sectionVariants = {
@@ -73,6 +74,8 @@ const Index = () => {
       </motion.section>
 
       <Achievements />
+
+      <ZuupTools />
 
       <motion.section
         className="py-24" id="philosophy"
