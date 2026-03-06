@@ -148,7 +148,7 @@ Focus on opportunities that can help bridge the digital divide and provide econo
                 "AI for Social Good: Identifying and Bridging Freelance Skill Gaps in Underprivileged Communities Using Machine Learning"
               </h3>
               <p className="text-muted-foreground text-sm mb-1">
-                by <span className="font-semibold text-primary">Jagrit Sachdev</span>, Founder & CEO, Zylon Labs & Zuup
+                by <span className="font-semibold text-primary">Zuup Research Team</span>, Zylon Labs & Zuup
               </p>
               <p className="text-muted-foreground/70 text-xs">
                 International Journal for Research in Applied Science & Engineering Technology (IJRASET) — Volume 13 Issue VII, July 2025

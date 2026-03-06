@@ -47,7 +47,7 @@ const Footer = () => {
 
         <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} Zuup — Teen-Led NPO | zuup.dev | Founded by Jagrit Sachdev
+            &copy; {new Date().getFullYear()} Zuup — Teen-Led NPO | zuup.dev
           </p>
           <p className="text-muted-foreground text-sm flex items-center gap-1">
             Made with <Heart size={14} className="text-primary fill-primary" /> by Zylon Labs
@@ -58,7 +58,7 @@ const Footer = () => {
             <a href="https://time.zuup.dev">ZuupTime</a>
             <a href="https://zuup.dev/our-story">Our Story</a>
             <a href="https://zuup.dev/schools">Schools</a>
-            <a href="https://zuup.dev/jagrit-sachdev">Jagrit Sachdev</a>
+            
           </nav>
         </div>
       </div>

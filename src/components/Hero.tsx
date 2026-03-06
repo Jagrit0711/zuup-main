@@ -60,7 +60,7 @@ const Hero = () => {
             <br />
             <span className="text-primary">Through Digital Skills</span>
           </motion.h1>
-          <p className="sr-only">Zuup (zuup.dev) is a teen-led NPO/NGO founded by Jagrit Sachdev. We provide free training in graphic design, video editing, web development, and coding. Our tools include ZuupCode (code.zuup.dev) and ZuupTime (time.zuup.dev). SME Business of the Year Award Winner 2025. Empowerment over charity.</p>
+          <p className="sr-only">Zuup (zuup.dev) is a teen-led NPO/NGO. We provide free training in graphic design, video editing, web development, and coding. Our tools include ZuupCode (code.zuup.dev) and ZuupTime (time.zuup.dev). SME Business of the Year Award Winner 2025. Empowerment over charity.</p>
 
           {/* Sub */}
           <motion.p

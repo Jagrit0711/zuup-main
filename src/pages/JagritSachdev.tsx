@@ -50,13 +50,13 @@ const JagritSachdev = () => {
   return (
     <div className="min-h-screen bg-black">
       <Helmet>
-        <title>Jagrit Sachdev - Young Entrepreneur & Tech Visionary | Founder of Zylon Labs</title>
-        <meta name="description" content="Meet Jagrit Sachdev, a 16-year-old entrepreneur and tech innovator. Founder & CEO of Zylon Labs, pioneering in edtech, AI security, and quick commerce." />
-        <meta name="keywords" content="Jagrit Sachdev, Zylon Labs, young entrepreneur, tech visionary, AI innovation, edtech startup, Indian entrepreneur" />
+        <title>Founder - Young Entrepreneur & Tech Visionary | Zylon Labs</title>
+        <meta name="description" content="Meet the teen entrepreneur and tech innovator behind Zylon Labs, pioneering in edtech, AI security, and quick commerce." />
+        <meta name="keywords" content="Zylon Labs, young entrepreneur, tech visionary, AI innovation, edtech startup, Indian entrepreneur" />
         <link rel="canonical" href="https://zuup.org/jagrit-sachdev" />
         
-        <meta property="og:title" content="Jagrit Sachdev - Young Entrepreneur & Tech Visionary" />
-        <meta property="og:description" content="16-year-old tech innovator and founder of Zylon Labs, revolutionizing multiple industries through technology." />
+        <meta property="og:title" content="Founder - Young Entrepreneur & Tech Visionary" />
+        <meta property="og:description" content="Teen tech innovator and founder of Zylon Labs, revolutionizing multiple industries through technology." />
         <meta property="og:url" content="https://zuup.org/jagrit-sachdev" />
         <meta property="og:type" content="profile" />
         
@@ -64,7 +64,7 @@ const JagritSachdev = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Person",
-            "name": "Jagrit Sachdev",
+            "name": "Zuup Founder",
             "birthDate": "2008-11-07",
             "nationality": "Indian",
             "alumniOf": "Bal Bharati Public School, Rohini",
@@ -74,6 +74,7 @@ const JagritSachdev = () => {
               "name": "Zylon Labs"
             },
             "description": "Young entrepreneur and tech visionary, founder of Zylon Labs and multiple tech startups.",
+
             "knowsAbout": ["Artificial Intelligence", "Software Development", "Entrepreneurship", "EdTech"],
             "url": "https://zuup.org/jagrit-sachdev"
           })}
@@ -100,13 +101,13 @@ const JagritSachdev = () => {
           <div className="w-48 h-48 mx-auto relative overflow-hidden rounded-full border-4 border-[#ea384c]">
             <img
               src="/placeholder.svg"
-              alt="Jagrit Sachdev"
+              alt="Founder"
               className="w-full h-full object-cover"
             />
           </div>
           <h1 className="text-5xl font-bold">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ea384c] to-[#4299e1]">
-              Jagrit Sachdev
+              Founder & CEO
             </span>
           </h1>
           <p className="text-xl text-gray-400">
