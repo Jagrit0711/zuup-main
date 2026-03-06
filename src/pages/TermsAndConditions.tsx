@@ -105,7 +105,7 @@ const TermsAndConditions = () => {
                 <h3 className="text-xl font-semibold mb-2">5.2 Transparency:</h3>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Donors will receive updates about how their contributions are used.</li>
-                  <li>Funds are initially deposited in the banking account under the name <strong>Jagrit Sachdev</strong> for organizational convenience and then transferred to the NGO or initiative.</li>
+                  <li>Funds are initially deposited in the founder's banking account for organizational convenience and then transferred to the NGO or initiative.</li>
                 </ul>
               </div>
 
@@ -122,7 +122,7 @@ const TermsAndConditions = () => {
           <motion.div variants={sectionVariants} className="bg-[#8E9196]/10 p-6 rounded-lg">
             <h2 className="text-2xl font-semibold text-[#9b87f5] mb-4">6. Ownership</h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Zuup is a collaborative project under the umbrella of Zylon Labs but belongs to its founder Jagrit Sachdev and its team members.</li>
+              <li>Zuup is a collaborative project under the umbrella of Zylon Labs but belongs to its founder and team members.</li>
               <li>For any legal disputes, Zylon Labs is not liable, as Zuup operates independently.</li>
             </ul>
           </motion.div>

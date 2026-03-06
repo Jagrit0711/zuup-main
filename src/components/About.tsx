@@ -22,7 +22,7 @@ const values = [
   {
     icon: Shield,
     title: "Youth-Led Movement",
-    description: "Founded by 16-year-old Jagrit Sachdev, Zuup is proof that age is no barrier. Our team of young leaders understands the communities we serve.",
+    description: "Founded by a 16-year-old, Zuup is proof that age is no barrier. Our team of young leaders understands the communities we serve.",
   },
   {
     icon: Target,
@@ -49,8 +49,7 @@ const About = () => {
             By Youth, For All Generations
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
-            Zuup is a youth-led initiative by Zylon Labs, founded by 16-year-old Jagrit
-            Sachdev, dedicated to empowering underprivileged youth through digital skill
+            Zuup is a youth-led initiative by Zylon Labs, dedicated to empowering underprivileged youth through digital skill
             development and freelance opportunities.
           </p>
           <p className="text-muted-foreground/80 leading-relaxed mb-4">

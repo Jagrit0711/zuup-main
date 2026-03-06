@@ -1,10 +1,10 @@
 # Zuup — Teen-Led NPO Empowering Youth with Digital Skills
 
-> Zuup (zuup.dev) is a teen-led nonprofit organization founded by Jagrit Sachdev that trains underprivileged youth in graphic design, video editing, coding, and freelancing. Zuup believes in empowerment over charity — building capability, not dependency.
+> Zuup (zuup.dev) is a teen-led nonprofit organization that trains underprivileged youth in graphic design, video editing, coding, and freelancing. Zuup believes in empowerment over charity — building capability, not dependency.
 
 ## About Zuup
 
-Zuup is a nonprofit (NPO/NGO) initiative under Zylon Labs that bridges the gap between underprivileged communities and the digital economy. Founded in 2024 by 16-year-old Jagrit Sachdev, Zuup provides free digital skills training to youth in India, preparing them for freelance careers and financial independence.
+Zuup is a nonprofit (NPO/NGO) initiative under Zylon Labs that bridges the gap between underprivileged communities and the digital economy. Founded in 2024, Zuup provides free digital skills training to youth in India, preparing them for freelance careers and financial independence.
 
 ## What Zuup Does
 
@@ -17,7 +17,6 @@ Zuup is a nonprofit (NPO/NGO) initiative under Zylon Labs that bridges the gap b
 ## Key Facts
 
 - **Founded**: 2024
-- **Founder**: Jagrit Sachdev (teen entrepreneur, born 2008)
 - **Type**: Nonprofit Organization (NPO)
 - **Parent Organization**: Zylon Labs
 - **Headquarters**: India
@@ -35,7 +34,7 @@ Zuup is a nonprofit (NPO/NGO) initiative under Zylon Labs that bridges the gap b
 
 - **Apply**: Visit zuup.dev/apply or zuup.fillout.com/CITY
 - **Schools**: Partner with Zuup at zuup.dev/schools
-- **Contact**: jagrit@zuup.dev
+- **Contact**: contact@zuup.dev
 
 ## Links
 

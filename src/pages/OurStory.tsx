@@ -17,7 +17,7 @@ const OurStory = () => {
   {
     year: "2024",
     title: "The Spark",
-    description: "At just 16, Jagrit Sachdev saw the digital divide first-hand. Kids with talent but no access. The idea for Zuup was born — not as charity, but as a launchpad.",
+    description: "At just 16, our founder saw the digital divide first-hand. Kids with talent but no access. The idea for Zuup was born — not as charity, but as a launchpad.",
     icon: Lightbulb
   },
   {
@@ -55,9 +55,9 @@ const OurStory = () => {
   return (
     <>
       <Helmet>
-        <title>Our Story — How Zuup Empowers Youth Through Digital Skills | Founded by Jagrit Sachdev</title>
-        <meta name="description" content="Zuup is a teen-led NPO founded by Jagrit Sachdev that trains underprivileged youth in graphic design, video editing, and coding. Learn our story of empowerment over charity." />
-        <meta name="keywords" content="Zuup, Zuup NPO, Zuup NGO, Jagrit Sachdev, teen-led nonprofit, digital skills training, youth empowerment India, freelance training, zuup.dev" />
+        <title>Our Story — How Zuup Empowers Youth Through Digital Skills</title>
+        <meta name="description" content="Zuup is a teen-led NPO that trains underprivileged youth in graphic design, video editing, and coding. Learn our story of empowerment over charity." />
+        <meta name="keywords" content="Zuup, Zuup NPO, Zuup NGO, teen-led nonprofit, digital skills training, youth empowerment India, freelance training, zuup.dev" />
         <link rel="canonical" href="https://zuup.dev/our-story" />
         
         <meta property="og:title" content="Our Story — How Zuup Empowers Youth Through Digital Skills" />
@@ -68,7 +68,7 @@ const OurStory = () => {
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Our Story — Zuup: Empowerment Over Charity" />
-        <meta name="twitter:description" content="A teen-led NPO training underprivileged youth in digital skills. Founded by 16-year-old Jagrit Sachdev." />
+        <meta name="twitter:description" content="A teen-led NPO training underprivileged youth in digital skills. Empowerment over charity." />
         <meta name="twitter:image" content="https://zuup.dev/og-image.png" />
 
         <script type="application/ld+json">
@@ -77,10 +77,9 @@ const OurStory = () => {
             "@type": "Article",
             "headline": "Our Story — How Zuup Empowers Youth Through Digital Skills",
             "author": {
-              "@type": "Person",
-              "name": "Jagrit Sachdev",
-              "url": "https://zuup.dev/jagrit-sachdev",
-              "sameAs": "https://www.linkedin.com/in/jagritsachdev"
+              "@type": "Organization",
+              "name": "Zuup",
+              "url": "https://zuup.dev"
             },
             "datePublished": "2024-01-01",
             "dateModified": new Date().toISOString(),
@@ -90,7 +89,7 @@ const OurStory = () => {
               "url": "https://zuup.dev",
               "logo": { "@type": "ImageObject", "url": "https://zuup.dev/og-image.png" }
             },
-            "description": "How a 16-year-old founded Zuup, a teen-led NPO that trains underprivileged youth in graphic design, video editing, and coding for freelance careers.",
+            "description": "How Zuup, a teen-led NPO, trains underprivileged youth in graphic design, video editing, and coding for freelance careers.",
             "mainEntityOfPage": { "@type": "WebPage", "@id": "https://zuup.dev/our-story" }
           })}
         </script>
@@ -158,9 +157,9 @@ const OurStory = () => {
                 pocket is a professional design studio, a video editing suite, and a coding environment.
               </p>
               <p>
-                Jagrit Sachdev saw this gap at 16 and refused to accept it. Not as a billionaire philanthropist 
-                writing cheques, but as a teenager who understood the digital world these kids lived in. He didn't 
-                want to build another NGO that hands out laptops and walks away. He wanted to build something that 
+                Our founder saw this gap at 16 and refused to accept it. Not as a billionaire philanthropist 
+                writing cheques, but as a teenager who understood the digital world these kids lived in. The goal wasn't 
+                to build another NGO that hands out laptops and walks away — it was to build something that 
                 actually works.
               </p>
               <p>
@@ -272,8 +271,8 @@ const OurStory = () => {
               "We don't want to be the organisation that gives people fish. We want to be the one that 
               makes them fishermen — and then helps them start a fishing business."
             </blockquote>
-            <div className="text-primary font-semibold">Jagrit Sachdev</div>
-            <div className="text-sm text-muted-foreground">Founder, Zuup · Age 17</div>
+            <div className="text-primary font-semibold">Zuup Founder</div>
+            <div className="text-sm text-muted-foreground">Zuup · Teen-Led NPO</div>
           </motion.div>
 
           {/* CTA */}
