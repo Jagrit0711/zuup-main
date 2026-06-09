@@ -50,9 +50,12 @@ const EventCard = ({ title, date, location, description, image, link, linkText, 
         </p>
         
         <div className="flex items-center justify-between mt-auto">
-          {link && (
-            <div className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-colors ${isPast ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20'}`}>
-              {linkText} {link.startsWith('http') ? <ExternalLink size={18} /> : <ArrowRight size={18} />}
+          {(link || linkText) && (
+            <div className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-colors ${
+              !link ? 'bg-white/5 text-white/40 cursor-not-allowed' : 
+              isPast ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20'
+            }`}>
+              {linkText} {link && link.startsWith('http') ? <ExternalLink size={18} /> : !link ? null : <ArrowRight size={18} />}
             </div>
           )}
         </div>
@@ -132,7 +135,7 @@ const Events = () => {
                 location="Online -> Delhi -> Tokyo"
                 description="India's biggest international youth hackathon. From your screen, across Delhi, all the way to Tokyo. Top 5 teams fly to Japan fully sponsored."
                 image={artFaraway}
-                link="/hackathon"
+                link="https://faraway.zuup.dev"
                 linkText="View Hackathon"
                 isPast={false}
               />
@@ -154,7 +157,7 @@ const Events = () => {
                 location="Delhi NCR"
                 description="A massive physical endurance event pushing limits and building community resilience across the region."
                 image={artCycleRally}
-                link="mailto:hello@zuup.dev?subject=Cycle Rally Info"
+                link="https://luma.com/8apa3ktu"
                 linkText="Join the Rally"
                 isPast={false}
               />
@@ -183,8 +186,8 @@ const Events = () => {
                 location="Tokyo, Japan"
                 description="Funding and equipping young builders with the hardware they need to bring massive ideas to life. From soldering irons to single-board computers."
                 image={artHardware}
-                link="mailto:hello@zuup.dev?subject=Hardware Grant"
-                linkText="View Gallery"
+                link={undefined}
+                linkText="Site Archived"
                 isPast={true}
               />
             </div>

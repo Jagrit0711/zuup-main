@@ -14,6 +14,7 @@ import Saas from "./pages/Saas";
 import Events from "./pages/Events";
 import Moza from "./pages/Moza";
 import Privacy from "./pages/Privacy";
+import NotFound from "./pages/NotFound";
 import FloatingBackground from "./components/FloatingBackground";
 
 
@@ -71,6 +72,7 @@ const App = () => (
           <Route path="/moza" element={<Moza />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/apply" element={<ExternalRedirect url="https://zuup.fillout.com/CITY" />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
