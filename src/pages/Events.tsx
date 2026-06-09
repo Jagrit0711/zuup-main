@@ -6,15 +6,15 @@ import Footer from "../components/Footer";
 import TransparentMoza from "../components/TransparentMoza";
 import { Link } from "react-router-dom";
 
-import mozaEventsHero from "/home/zylon/.gemini/antigravity/brain/34bc4f4f-81e0-4609-b265-ad302ae81b90/moza_events_hero_1780978768456.png";
-import mozaRocket from "/home/zylon/.gemini/antigravity/brain/34bc4f4f-81e0-4609-b265-ad302ae81b90/moza_rocket_skateboard_inverted_1780938078817.png";
-import mozaSide from "/home/zylon/.gemini/antigravity/brain/34bc4f4f-81e0-4609-b265-ad302ae81b90/moza_cool_jumping_inverted_1780937501871.png";
+const mozaEventsHero = "/moza_events_hero_1780978768456.png";
+const mozaRocket = "/moza_rocket_skateboard_inverted_1780938078817.png";
+const mozaSide = "/moza_cool_jumping_inverted_1780937501871.png";
 
-import artFaraway from "/home/zylon/.gemini/antigravity/brain/34bc4f4f-81e0-4609-b265-ad302ae81b90/art_faraway_1780979214793.png";
-import artCohort from "/home/zylon/.gemini/antigravity/brain/34bc4f4f-81e0-4609-b265-ad302ae81b90/art_cohort_1780979228987.png";
-import artCycleRally from "/home/zylon/.gemini/antigravity/brain/34bc4f4f-81e0-4609-b265-ad302ae81b90/art_cyclerally_1780979240851.png";
-import artStargazing from "/home/zylon/.gemini/antigravity/brain/34bc4f4f-81e0-4609-b265-ad302ae81b90/art_stargazing_1780979253321.png";
-import artHardware from "/home/zylon/.gemini/antigravity/brain/34bc4f4f-81e0-4609-b265-ad302ae81b90/art_hardware_1780979266323.png";
+const artFaraway = "/art_faraway_1780979214793.png";
+const artCohort = "/art_cohort_1780979228987.png";
+const artCycleRally = "/art_cyclerally_1780979240851.png";
+const artStargazing = "/art_stargazing_1780979253321.png";
+const artHardware = "/art_hardware_1780979266323.png";
 
 const EventCard = ({ title, date, location, description, image, link, linkText, isPast }: any) => {
   const content = (

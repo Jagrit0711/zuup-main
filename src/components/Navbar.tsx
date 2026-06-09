@@ -48,6 +48,8 @@ const Navbar = () => {
           <NavLink href="/schools" isRoute active={isActive('/schools')}>Schools</NavLink>
           <NavLink href="/events" isRoute active={isActive('/events')}>Events</NavLink>
           <NavLink href="/saas" isRoute active={isActive('/saas')}>SaaS</NavLink>
+          <NavLink href="/empower" isRoute active={isActive('/empower')}>Empower</NavLink>
+          <NavLink href="/moza" isRoute active={isActive('/moza')}>Moza</NavLink>
         </div>
 
         <div className="flex items-center gap-2 pl-2 ml-2 border-l border-white/10">
@@ -115,6 +117,8 @@ const Navbar = () => {
                 <MobileNavLink href="/schools" isRoute onClick={() => setIsOpen(false)} active={isActive('/schools')}>Schools</MobileNavLink>
                 <MobileNavLink href="/events" isRoute onClick={() => setIsOpen(false)} active={isActive('/events')}>Events</MobileNavLink>
                 <MobileNavLink href="/saas" isRoute onClick={() => setIsOpen(false)} active={isActive('/saas')}>SaaS</MobileNavLink>
+                <MobileNavLink href="/empower" isRoute onClick={() => setIsOpen(false)} active={isActive('/empower')}>Empower</MobileNavLink>
+                <MobileNavLink href="/moza" isRoute onClick={() => setIsOpen(false)} active={isActive('/moza')}>Moza</MobileNavLink>
                 
               </div>
             </motion.div>

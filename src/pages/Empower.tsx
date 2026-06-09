@@ -5,8 +5,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import TransparentMoza from "../components/TransparentMoza";
 import { useState, useEffect } from "react";
-import mozaEgypt from "/home/zylon/.gemini/antigravity/brain/34bc4f4f-81e0-4609-b265-ad302ae81b90/moza_egypt_1780977933756.png";
-import mozaDubai from "/home/zylon/.gemini/antigravity/brain/34bc4f4f-81e0-4609-b265-ad302ae81b90/moza_dubai_1780977945427.png";
+const mozaEgypt = "/moza_egypt_1780977933756.png";
+const mozaDubai = "/moza_dubai_1780977945427.png";
 
 const ImageSlider = () => {
   const images = [
