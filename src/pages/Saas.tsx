@@ -189,7 +189,7 @@ const Saas = () => {
           <h2 className="text-5xl md:text-7xl font-bold text-foreground mb-8" style={{ fontFamily: "'Caveat', cursive" }}>Wanna gain access to all this?</h2>
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">Join the community. Hop into the Slack and start building with hundreds of other young creators.</p>
           <a
-            href="https://faraway.zuup.dev/slack"
+            href="https://zuup.dev/join"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex justify-center items-center gap-4 px-12 py-6 bg-primary text-primary-foreground font-bold text-2xl rounded-2xl hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(255,61,127,0.3)] transition-all"

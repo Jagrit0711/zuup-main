@@ -54,7 +54,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-2 pl-2 ml-2 border-l border-white/10">
           <a 
-            href="https://join.slack.com/t/zuup-hq/shared_invite/zt-2g7z7g8n7-7q7~7q7~7q7~7q7~7q7~7q7" 
+            href="https://zuup.dev/join" 
             target="_blank" 
             rel="noreferrer"
             className="flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-full hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,61,127,0.3)] hover:shadow-[0_0_30px_rgba(255,61,127,0.5)]"
@@ -83,7 +83,7 @@ const Navbar = () => {
           
           <div className="flex items-center gap-2">
             <a 
-              href="https://join.slack.com/t/zuup-hq/shared_invite/zt-2g7z7g8n7-7q7~7q7~7q7~7q7~7q7~7q7" 
+              href="https://zuup.dev/join" 
               target="_blank" 
               rel="noreferrer"
               className="flex items-center gap-1.5 px-4 py-1.5 bg-primary text-primary-foreground text-sm font-bold rounded-full"
