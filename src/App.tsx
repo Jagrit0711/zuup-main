@@ -15,6 +15,8 @@ import Events from "./pages/Events";
 import Moza from "./pages/Moza";
 import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
+import Careers from "./pages/Careers";
+import JobDetail from "./pages/JobDetail";
 import FloatingBackground from "./components/FloatingBackground";
 
 
@@ -71,6 +73,8 @@ const App = () => (
           <Route path="/events" element={<Events />} />
           <Route path="/moza" element={<Moza />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/careers/:slug" element={<JobDetail />} />
           <Route path="/apply" element={<ExternalRedirect url="https://zuup.fillout.com/CITY" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
