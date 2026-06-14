@@ -32,7 +32,7 @@ const JobAdmin = () => {
       try {
         // We use the custom auth domain
         const res = await fetch('https://auth.zuup.dev/api/me', {
-          credentials: 'omit', // In production, change this to 'include' for cross-domain cookies
+          credentials: 'include', // MUST BE INCLUDE to send the SSO cookie!
         });
         
         if (res.ok) {
