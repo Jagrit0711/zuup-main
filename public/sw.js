@@ -22,12 +22,16 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        if (response.ok && event.request.method === 'GET') {
+        if (response.ok && event.request.method === 'GET' && !event.request.url.includes('supabase.co')) {
           const clone = response.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         }
         return response;
       })
-      .catch(() => caches.match(event.request))
+      .catch(async () => {
+        const cachedResponse = await caches.match(event.request);
+        if (cachedResponse) return cachedResponse;
+        return new Response('Network error', { status: 408, headers: { 'Content-Type': 'text/plain' } });
+      })
   );
 });
