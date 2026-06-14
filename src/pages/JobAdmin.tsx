@@ -55,11 +55,10 @@ const JobAdmin = () => {
         if (res.ok) {
           // 3. Inject the SSO token into the local Supabase client so admin database operations work!
           if (storedToken) {
-            // Provide the token for subsequent database operations
-            await supabase.auth.setSession({
-              access_token: storedToken,
-              refresh_token: '' // We don't have a refresh token from the Auth Worker yet, but this is enough to authorize current requests
-            });
+            // We use an internal hack to force the Authorization header for all future requests
+            // because setSession with an empty refresh_token causes it to log out immediately!
+            (supabase as any).rest.headers['Authorization'] = `Bearer ${storedToken}`;
+            supabase.realtime.setAuth(storedToken);
           }
           
           setIsAuthenticated(true);
@@ -104,6 +103,7 @@ const JobAdmin = () => {
       .order('created_at', { ascending: false });
 
     if (error) {
+      console.error("SUPABASE FETCH ERROR:", error);
       toast({ title: 'Error fetching jobs', description: error.message, variant: 'destructive' });
     } else if (data) {
       setJobs(data as Job[]);
