@@ -45,9 +45,11 @@ const JobDetail = () => {
             .select("*");
 
           if (!allError && allJobs) {
-            const foundJob = allJobs.find(
-              (j: any) => j.slug?.toLowerCase() === slug.toLowerCase()
-            );
+            const foundJob = allJobs.find((j: any) => {
+              const jobSlug = j.slug?.toLowerCase();
+              const fallbackSlug = j.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+              return jobSlug === slug.toLowerCase() || fallbackSlug === slug.toLowerCase();
+            });
             if (foundJob) {
               setJob(foundJob as Job);
             } else {

@@ -126,7 +126,7 @@ const Careers = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {jobs.map((job) => (
                   <Link 
-                    to={`/careers/${job.slug}`} 
+                    to={`/careers/${encodeURIComponent(job.slug || job.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || '')}`} 
                     key={job.id}
                     className="block p-8 bg-[#0B0E14] border-[3px] border-primary rounded-3xl hover:-translate-y-2 hover:shadow-[0_8px_0_0_#ff3d7f] transition-all duration-300"
                   >
