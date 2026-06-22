@@ -18,6 +18,9 @@ import NotFound from "./pages/NotFound";
 import Careers from "./pages/Careers";
 import JobDetail from "./pages/JobDetail";
 import JobAdmin from "./pages/JobAdmin";
+import ZuupStore from "./pages/ZuupStore";
+import ZuupCity from "./pages/ZuupCity";
+import ZuupCities from "./pages/ZuupCities";
 import FloatingBackground from "./components/FloatingBackground";
 
 
@@ -77,6 +80,10 @@ const App = () => (
           <Route path="/careers" element={<Careers />} />
           <Route path="/careers/:slug" element={<JobDetail />} />
           <Route path="/jobadmin" element={<JobAdmin />} />
+          <Route path="/zuup-store" element={<ZuupStore />} />
+          <Route path="/store" element={<ZuupStore />} />
+          <Route path="/zuup-cities" element={<ZuupCities />} />
+          <Route path="/zuup-in/:city" element={<ZuupCity />} />
           <Route path="/apply" element={<ExternalRedirect url="https://zuup.fillout.com/CITY" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

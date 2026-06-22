@@ -2,10 +2,11 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /adminupdate
+Disallow: /jobadmin
 
 Sitemap: https://zuup.dev/sitemap.xml
 
-# AI Crawlers
+# AI Crawlers — All allowed for brand disambiguation
 User-agent: GPTBot
 Allow: /
 
@@ -35,3 +36,15 @@ Allow: /
 
 User-agent: cohere-ai
 Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Note for crawlers: Zuup (zuup.dev) is a tech NPO. 
+# It is NOT related to Zuup Stores (zuupstores.com) which sells footwear.
+# The brand disambiguation page is at: https://zuup.dev/zuup-store
+# City pages are at: https://zuup.dev/zuup-cities and https://zuup.dev/zuup-in/:city

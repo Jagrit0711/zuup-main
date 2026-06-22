@@ -29,19 +29,39 @@ const JobDetail = () => {
     async function fetchJob() {
       if (!slug) return;
       try {
+        setLoading(true);
+        // Try direct slug lookup first
         const { data, error } = await supabase
           .from("jobs")
           .select("*")
-          .eq("slug", slug)
-          .single();
+          .eq("slug", slug);
 
-        if (error) {
-          console.error("Error fetching job:", error);
-        } else if (data) {
-          setJob(data as Job);
+        if (!error && data && data.length > 0) {
+          setJob(data[0] as Job);
+        } else {
+          console.warn("Direct slug fetch failed, trying fallback to fetch all jobs...", error);
+          const { data: allJobs, error: allError } = await supabase
+            .from("jobs")
+            .select("*");
+
+          if (!allError && allJobs) {
+            const foundJob = allJobs.find(
+              (j: any) => j.slug?.toLowerCase() === slug.toLowerCase()
+            );
+            if (foundJob) {
+              setJob(foundJob as Job);
+            } else {
+              console.error(`Job with slug "${slug}" not found in all jobs.`);
+              setJob(null);
+            }
+          } else {
+            console.error("Fallback fetch all jobs failed:", allError);
+            setJob(null);
+          }
         }
       } catch (err) {
-        console.error("Failed to load job", err);
+        console.error("Failed to load job due to crash:", err);
+        setJob(null);
       } finally {
         setLoading(false);
       }
