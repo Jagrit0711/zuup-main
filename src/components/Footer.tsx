@@ -1,6 +1,7 @@
 import { Instagram, Heart, Github, Youtube, Mail, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { routes } from '@/routes';
 import TransparentMoza from './TransparentMoza';
 
 const Footer = () => {
@@ -75,10 +76,10 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold mb-6 text-lg tracking-wide">Zuup</h4>
             <ul className="space-y-4 font-medium">
-              <FooterLink href="/our-story" isRoute>Our Story</FooterLink>
-              <FooterLink href="/schools" isRoute>Schools</FooterLink>
+              <FooterLink href={routes.ourStory} isRoute>Our Story</FooterLink>
+              <FooterLink href={routes.schools} isRoute>Schools</FooterLink>
               <FooterLink href="https://dashboard.zuup.dev">Dashboard</FooterLink>
-              <FooterLink href="/privacy" isRoute>Privacy Policy</FooterLink>
+              <FooterLink href={routes.privacy} isRoute>Privacy Policy</FooterLink>
             </ul>
           </div>
 
@@ -86,11 +87,11 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold mb-6 text-lg tracking-wide">Ecosystem</h4>
             <ul className="space-y-4 font-medium">
-              <FooterLink href="/empower" isRoute>Empower</FooterLink>
-              <FooterLink href="/events" isRoute>Events</FooterLink>
-              <FooterLink href="/saas" isRoute>SaaS</FooterLink>
-              <FooterLink href="/moza" isRoute>Theming Centre</FooterLink>
-              <FooterLink href="/join" isRoute>Surprise Me! 🎲</FooterLink>
+              <FooterLink href={routes.empower} isRoute>Empower</FooterLink>
+              <FooterLink href={routes.events} isRoute>Events</FooterLink>
+              <FooterLink href={routes.saas} isRoute>SaaS</FooterLink>
+              <FooterLink href={routes.moza} isRoute>Theming Centre</FooterLink>
+              <FooterLink href={routes.join} isRoute>Surprise Me! 🎲</FooterLink>
             </ul>
           </div>
         </div>

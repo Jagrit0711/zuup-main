@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { routes } from "@/routes";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import TransparentMoza from "../components/TransparentMoza";
@@ -147,7 +148,7 @@ const ZuupStore = () => {
             className="inline-flex flex-col sm:flex-row items-center gap-4"
           >
             <Link
-              to="/"
+              to={routes.home}
               className="px-10 py-4 bg-primary text-white rounded-[3rem] text-2xl font-bold shadow-[0_6px_0_0_#96163e] hover:-translate-y-1 hover:shadow-[0_10px_0_0_#96163e] active:translate-y-2 active:shadow-none transition-all"
               style={{ fontFamily: "'Caveat', cursive", letterSpacing: "2px" }}
             >
@@ -268,7 +269,7 @@ const ZuupStore = () => {
               Zuup.dev is free. No credit card. No shoe size required. Just curiosity and a dream of building stuff.
             </p>
             <Link
-              to="/empower"
+              to={routes.empower}
               className="inline-block px-12 py-5 bg-primary text-white rounded-[3rem] text-3xl font-bold shadow-[0_6px_0_0_#96163e] hover:-translate-y-1 hover:shadow-[0_10px_0_0_#96163e] transition-all"
               style={{ fontFamily: "'Caveat', cursive", letterSpacing: "2px" }}
             >
@@ -324,14 +325,14 @@ const ZuupStore = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
-              to="/"
+              to={routes.home}
               className="px-12 py-5 bg-primary text-white rounded-[3rem] text-3xl font-bold shadow-[0_6px_0_0_#96163e] hover:-translate-y-1 hover:shadow-[0_10px_0_0_#96163e] transition-all"
               style={{ fontFamily: "'Caveat', cursive" }}
             >
               go to zuup.dev →
             </Link>
             <Link
-              to="/careers"
+              to={routes.careers}
               className="px-12 py-5 border-2 border-white/20 text-white rounded-[3rem] text-3xl font-bold hover:border-primary transition-all"
               style={{ fontFamily: "'Caveat', cursive" }}
             >

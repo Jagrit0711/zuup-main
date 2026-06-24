@@ -9,7 +9,17 @@ import { Link } from "react-router-dom";
 // Note: Ensure the user drops these 4 files into the public directory:
 // saas-code.jpeg, saas-time.jpeg, saas-giza.jpeg, saas-validate.jpeg
 
-const SaasCard = ({ title, tag, description, image, link, linkText, fallbackGradient }: any) => {
+interface SaasCardProps {
+  title: string;
+  tag: string;
+  description: string;
+  image: string;
+  link?: string;
+  linkText?: string;
+  fallbackGradient?: string;
+}
+
+const SaasCard = ({ title, tag, description, image, link, linkText, fallbackGradient }: SaasCardProps) => {
   const content = (
     <div className="relative h-full flex flex-col justify-end p-6 md:p-8 rounded-[2rem] overflow-hidden group border border-white/10 hover:border-white/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 bg-black">
       {/* Background Image / Fallback Gradient */}

@@ -4,13 +4,18 @@ import { X } from 'lucide-react';
 import { Button } from './ui/button';
 import { useToast } from './ui/use-toast';
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt(): Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
+
 const InstallPrompt = () => {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
-    const handler = (e: any) => {
+    const handler = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
       setDeferredPrompt(e);
       setShowPrompt(true);
@@ -34,8 +39,8 @@ const InstallPrompt = () => {
           description: "The app has been installed on your device.",
         });
       }
-    } catch (error) {
-      console.error('Installation failed:', error);
+    } catch {
+      // User dismissed the install prompt
     }
 
     setDeferredPrompt(null);

@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { routes, zuupCity } from "@/routes";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { ZUUP_LOCATIONS } from "./ZuupCity";
@@ -114,7 +115,7 @@ const ZuupCities = () => {
                   transition={{ delay: i * 0.05 }}
                   viewport={{ once: true }}
                 >
-                  <Link to={`/zuup-in/${loc.slug}`}
+                  <Link to={zuupCity(loc.slug)}
                     className="block p-5 bg-primary/10 border-[2px] border-primary rounded-2xl hover:bg-primary/20 hover:-translate-y-1 transition-all text-center"
                   >
                     <div className="text-white font-bold text-xl" style={{ fontFamily: "'Caveat', cursive" }}>{loc.name}</div>
@@ -147,7 +148,7 @@ const ZuupCities = () => {
                   transition={{ delay: Math.min(i * 0.015, 0.4) }}
                   viewport={{ once: true }}
                 >
-                  <Link to={`/zuup-in/${loc.slug}`}
+                  <Link to={zuupCity(loc.slug)}
                     className="block p-4 bg-[#0B0E14] border-2 border-white/10 rounded-2xl hover:border-primary hover:-translate-y-1 transition-all text-center"
                   >
                     <div className="text-white font-bold text-lg" style={{ fontFamily: "'Caveat', cursive" }}>{loc.name}</div>
@@ -179,7 +180,7 @@ const ZuupCities = () => {
                   transition={{ delay: Math.min(i * 0.015, 0.4) }}
                   viewport={{ once: true }}
                 >
-                  <Link to={`/zuup-in/${loc.slug}`}
+                  <Link to={zuupCity(loc.slug)}
                     className="block p-4 bg-[#0B0E14] border-2 border-white/10 rounded-2xl hover:border-primary hover:-translate-y-1 transition-all text-center"
                   >
                     <div className="text-white font-bold text-lg" style={{ fontFamily: "'Caveat', cursive" }}>{loc.name}</div>

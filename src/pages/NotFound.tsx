@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { routes } from "@/routes";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import TransparentMoza from "../components/TransparentMoza";
@@ -67,7 +68,7 @@ const NotFound = () => {
             className="relative z-10"
           >
             <Link 
-              to="/" 
+              to={routes.home}
               className="inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-bold text-xl rounded-2xl hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(255,61,127,0.3)] transition-all"
             >
               Go Back Home

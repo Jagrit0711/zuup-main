@@ -5,6 +5,7 @@ import { MapPin, Clock, Share2, Linkedin, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import DOMPurify from "dompurify";
 import { supabase } from "../integrations/supabase/client";
+import { routes } from "@/routes";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Job } from "./Careers";
@@ -44,7 +45,7 @@ const JobDetail = () => {
             .select("*");
 
           if (!allError && allJobs) {
-            const foundJob = allJobs.find((j: any) => {
+            const foundJob = allJobs.find((j: Job) => {
               const jobSlug = j.slug?.toLowerCase();
               const fallbackSlug = j.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-');
               return jobSlug === slug.toLowerCase() || fallbackSlug === slug.toLowerCase();
@@ -54,7 +55,7 @@ const JobDetail = () => {
             setJob(null);
           }
         }
-      } catch (err) {
+      } catch {
         setJob(null);
       } finally {
         setLoading(false);
@@ -85,7 +86,7 @@ const JobDetail = () => {
     return (
       <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center font-sans">
         <p className="text-3xl mb-4 text-foreground" style={{ fontFamily: "'Caveat', cursive" }}>Job not found!</p>
-        <Link to="/careers" className="text-xl underline decoration-wavy underline-offset-4 font-bold text-primary">
+        <Link to={routes.careers} className="text-xl underline decoration-wavy underline-offset-4 font-bold text-primary">
           Go back to Careers
         </Link>
       </div>
@@ -111,7 +112,7 @@ const JobDetail = () => {
         <main className="w-full max-w-5xl px-4 py-16 flex-grow flex flex-col items-center relative z-10">
           
           <div className="w-full mb-8">
-            <Link to="/careers" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-medium">
+            <Link to={routes.careers} className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-medium">
               <ArrowLeft size={20} /> Back to all jobs
             </Link>
           </div>
