@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { routes, zuupCity } from "@/routes";
+import { routes } from "@/routes";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import TransparentMoza from "../components/TransparentMoza";
