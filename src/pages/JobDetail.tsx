@@ -1,8 +1,9 @@
 import { Helmet } from "react-helmet";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { MapPin, Clock, DollarSign, Share2, Linkedin, ArrowLeft } from "lucide-react";
+import { MapPin, Clock, Share2, Linkedin, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
+import DOMPurify from "dompurify";
 import { supabase } from "../integrations/supabase/client";
 import { routes } from "@/routes";
 import Navbar from "../components/Navbar";
@@ -31,7 +32,6 @@ const JobDetail = () => {
       if (!slug) return;
       try {
         setLoading(true);
-        // Try direct slug lookup first
         const { data, error } = await supabase
           .from("jobs")
           .select("*")
@@ -50,9 +50,9 @@ const JobDetail = () => {
               const fallbackSlug = j.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-');
               return jobSlug === slug.toLowerCase() || fallbackSlug === slug.toLowerCase();
             });
-            if (foundJob) {
-              setJob(foundJob as Job);
-            }
+            setJob(foundJob ? (foundJob as Job) : null);
+          } else {
+            setJob(null);
           }
         }
       } catch {
@@ -93,6 +93,10 @@ const JobDetail = () => {
     );
   }
 
+  // Sanitise the HTML before rendering — strips scripts and event handlers
+  // while keeping safe formatting tags like <b>, <ul>, <p> intact.
+  const safeDescription = DOMPurify.sanitize(job.description || '');
+
   return (
     <>
       <Helmet>
@@ -117,7 +121,6 @@ const JobDetail = () => {
             
             <div className="flex flex-col gap-8 mb-12 border-b-[1px] border-white/10 pb-10">
               
-              {/* Job Title */}
               <div className="flex flex-col items-start">
                 <h1 
                   className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-none"
@@ -130,7 +133,6 @@ const JobDetail = () => {
                 </div>
               </div>
 
-              {/* Info Tags & Share Buttons */}
               <div className="flex flex-wrap items-center gap-4">
                 {job.job_type && (
                   <div className="flex items-center gap-3 px-5 py-3 bg-[#171A21] border border-white/5 rounded-2xl text-sm font-bold text-white">
@@ -154,14 +156,13 @@ const JobDetail = () => {
               </div>
             </div>
 
-            {/* Description Area */}
+            {/* safeDescription has had all scripts and event handlers stripped by DOMPurify */}
             <div 
               className="prose prose-invert prose-lg max-w-none text-white font-medium mb-16"
               style={{ fontFamily: "'Caveat', cursive", fontSize: "1.75rem", lineHeight: "1.6", letterSpacing: "1px" }}
-              dangerouslySetInnerHTML={{ __html: job.description }}
+              dangerouslySetInnerHTML={{ __html: safeDescription }}
             />
 
-            {/* Apply Button */}
             <div className="flex justify-center border-t-[1px] border-white/10 pt-16">
               <a 
                 href={job.apply_link}
