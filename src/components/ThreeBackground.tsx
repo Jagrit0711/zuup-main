@@ -3,11 +3,8 @@ import * as THREE from 'three';
 
 const ThreeBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  console.log('ThreeBackground component mounted');
-
   useEffect(() => {
     if (!containerRef.current) return;
-    console.log('Setting up Three.js scene');
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -163,7 +160,6 @@ const ThreeBackground = () => {
 
     // Cleanup
     return () => {
-      console.log('Cleaning up Three.js scene');
       if (containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
       }

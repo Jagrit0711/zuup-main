@@ -44,13 +44,12 @@ export function SignInButton({ className = "" }: { className?: string }) {
         
         if (error) throw error;
         toast({ title: "Signed in successfully!" });
-        console.log("User ID:", data.user?.id);
         setIsDialogOpen(false);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error",
-        description: error.message,
+        description: error instanceof Error ? error.message : "An unexpected error occurred",
         variant: "destructive",
       });
     } finally {

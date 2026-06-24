@@ -1,7 +1,6 @@
 import { Palette, Video, Code2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 const Features = () => {
-  console.log('Rendering Features section');
   const containerVariants = {
     hidden: {
       opacity: 0

@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { routes } from "@/routes";
 import Index from "./pages/Index";
 import OurStory from "./pages/OurStory";
 import About from "./pages/About";
@@ -23,7 +24,6 @@ import ZuupCity from "./pages/ZuupCity";
 import ZuupCities from "./pages/ZuupCities";
 import FloatingBackground from "./components/FloatingBackground";
 
-
 const ExternalRedirect = ({ url }: { url: string }) => {
   useEffect(() => { window.location.href = url; }, [url]);
   return null;
@@ -31,7 +31,6 @@ const ExternalRedirect = ({ url }: { url: string }) => {
 
 const queryClient = new QueryClient();
 
-// View tracker component
 const ViewTracker = () => {
   const location = useLocation();
 
@@ -39,10 +38,9 @@ const ViewTracker = () => {
     const trackPageView = () => {
       const currentDate = new Date();
       const currentMonth = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}`;
-      
       const savedViews = JSON.parse(localStorage.getItem('siteViews') || '[]');
       const currentMonthData = savedViews.find(item => item.date === currentMonth);
-      
+
       if (currentMonthData) {
         currentMonthData.views += 1;
         localStorage.setItem('siteViews', JSON.stringify(savedViews));
@@ -67,24 +65,24 @@ const App = () => (
          <FloatingBackground />
          <ViewTracker />
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/our-story" element={<OurStory />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/empower" element={<Empower />} />
-          <Route path="/schools" element={<Schools />} />
-          <Route path="/join" element={<Join />} />
-          <Route path="/saas" element={<Saas />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/moza" element={<Moza />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/careers" element={<Careers />} />
+          <Route path={routes.home} element={<Index />} />
+          <Route path={routes.ourStory} element={<OurStory />} />
+          <Route path={routes.about} element={<About />} />
+          <Route path={routes.empower} element={<Empower />} />
+          <Route path={routes.schools} element={<Schools />} />
+          <Route path={routes.join} element={<Join />} />
+          <Route path={routes.saas} element={<Saas />} />
+          <Route path={routes.events} element={<Events />} />
+          <Route path={routes.moza} element={<Moza />} />
+          <Route path={routes.privacy} element={<Privacy />} />
+          <Route path={routes.careers} element={<Careers />} />
           <Route path="/careers/:slug" element={<JobDetail />} />
-          <Route path="/jobadmin" element={<JobAdmin />} />
-          <Route path="/zuup-store" element={<ZuupStore />} />
-          <Route path="/store" element={<ZuupStore />} />
-          <Route path="/zuup-cities" element={<ZuupCities />} />
+          <Route path={routes.jobAdmin} element={<JobAdmin />} />
+          <Route path={routes.zuupStore} element={<ZuupStore />} />
+          <Route path={routes.store} element={<ZuupStore />} />
+          <Route path={routes.zuupCities} element={<ZuupCities />} />
           <Route path="/zuup-in/:city" element={<ZuupCity />} />
-          <Route path="/apply" element={<ExternalRedirect url="https://zuup.fillout.com/CITY" />} />
+          <Route path={routes.apply} element={<ExternalRedirect url="https://zuup.fillout.com/CITY" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

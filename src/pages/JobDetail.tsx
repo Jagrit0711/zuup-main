@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { MapPin, Clock, DollarSign, Share2, Linkedin, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "../integrations/supabase/client";
+import { routes } from "@/routes";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Job } from "./Careers";
@@ -39,30 +40,22 @@ const JobDetail = () => {
         if (!error && data && data.length > 0) {
           setJob(data[0] as Job);
         } else {
-          console.warn("Direct slug fetch failed, trying fallback to fetch all jobs...", error);
           const { data: allJobs, error: allError } = await supabase
             .from("jobs")
             .select("*");
 
           if (!allError && allJobs) {
-            const foundJob = allJobs.find((j: any) => {
+            const foundJob = allJobs.find((j: Job) => {
               const jobSlug = j.slug?.toLowerCase();
               const fallbackSlug = j.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-');
               return jobSlug === slug.toLowerCase() || fallbackSlug === slug.toLowerCase();
             });
             if (foundJob) {
               setJob(foundJob as Job);
-            } else {
-              console.error(`Job with slug "${slug}" not found in all jobs.`);
-              setJob(null);
             }
-          } else {
-            console.error("Fallback fetch all jobs failed:", allError);
-            setJob(null);
           }
         }
-      } catch (err) {
-        console.error("Failed to load job due to crash:", err);
+      } catch {
         setJob(null);
       } finally {
         setLoading(false);
@@ -93,7 +86,7 @@ const JobDetail = () => {
     return (
       <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center font-sans">
         <p className="text-3xl mb-4 text-foreground" style={{ fontFamily: "'Caveat', cursive" }}>Job not found!</p>
-        <Link to="/careers" className="text-xl underline decoration-wavy underline-offset-4 font-bold text-primary">
+        <Link to={routes.careers} className="text-xl underline decoration-wavy underline-offset-4 font-bold text-primary">
           Go back to Careers
         </Link>
       </div>
@@ -115,7 +108,7 @@ const JobDetail = () => {
         <main className="w-full max-w-5xl px-4 py-16 flex-grow flex flex-col items-center relative z-10">
           
           <div className="w-full mb-8">
-            <Link to="/careers" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-medium">
+            <Link to={routes.careers} className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-medium">
               <ArrowLeft size={20} /> Back to all jobs
             </Link>
           </div>

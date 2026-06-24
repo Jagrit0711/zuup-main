@@ -16,7 +16,18 @@ const artCycleRally = "/art_cyclerally_1780979240851.png";
 const artStargazing = "/art_stargazing_1780979253321.png";
 const artHardware = "/art_hardware_1780979266323.png";
 
-const EventCard = ({ title, date, location, description, image, link, linkText, isPast }: any) => {
+interface EventCardProps {
+  title: string;
+  date: string;
+  location: string;
+  description: string;
+  image: string;
+  link?: string;
+  linkText?: string;
+  isPast: boolean;
+}
+
+const EventCard = ({ title, date, location, description, image, link, linkText, isPast }: EventCardProps) => {
   const content = (
     <div className={`relative h-full flex flex-col justify-end p-6 md:p-8 rounded-[2rem] overflow-hidden group border border-white/10 hover:border-white/30 transition-all duration-300 ${isPast ? 'opacity-80 hover:opacity-100 grayscale-[0.3] hover:grayscale-0' : 'hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20'}`}>
       {/* Background Image */}

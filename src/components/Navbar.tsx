@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X, Hash } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
+import { routes } from '@/routes';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +32,7 @@ const Navbar = () => {
             : 'bg-black/40 backdrop-blur-md border-white/10'
         }`}
       >
-        <Link to="/" className="flex items-center pl-4 pr-2 group">
+        <Link to={routes.home} className="flex items-center pl-4 pr-2 group">
           <motion.img
             src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png"
             alt="Zuup Logo"
@@ -42,15 +43,15 @@ const Navbar = () => {
         </Link>
 
         <div className="flex items-center gap-1 pl-2 border-l border-white/10 ml-2">
-          <NavLink href="/" active={isActive('/')}>Home</NavLink>
-          <NavLink href="/about" isRoute active={isActive('/about')}>About</NavLink>
-          <NavLink href="/our-story" isRoute active={isActive('/our-story')}>Our Story</NavLink>
-          <NavLink href="/schools" isRoute active={isActive('/schools')}>Schools</NavLink>
-          <NavLink href="/events" isRoute active={isActive('/events')}>Events</NavLink>
-          <NavLink href="/saas" isRoute active={isActive('/saas')}>SaaS</NavLink>
-          <NavLink href="/empower" isRoute active={isActive('/empower')}>Empower</NavLink>
-          <NavLink href="/moza" isRoute active={isActive('/moza')}>Moza</NavLink>
-          <NavLink href="/careers" isRoute active={isActive('/careers')}>Careers</NavLink>
+          <NavLink href={routes.home} active={isActive(routes.home)}>Home</NavLink>
+          <NavLink href={routes.about} isRoute active={isActive(routes.about)}>About</NavLink>
+          <NavLink href={routes.ourStory} isRoute active={isActive(routes.ourStory)}>Our Story</NavLink>
+          <NavLink href={routes.schools} isRoute active={isActive(routes.schools)}>Schools</NavLink>
+          <NavLink href={routes.events} isRoute active={isActive(routes.events)}>Events</NavLink>
+          <NavLink href={routes.saas} isRoute active={isActive(routes.saas)}>SaaS</NavLink>
+          <NavLink href={routes.empower} isRoute active={isActive(routes.empower)}>Empower</NavLink>
+          <NavLink href={routes.moza} isRoute active={isActive(routes.moza)}>Moza</NavLink>
+          <NavLink href={routes.careers} isRoute active={isActive(routes.careers)}>Careers</NavLink>
         </div>
 
         <div className="flex items-center gap-2 pl-2 ml-2 border-l border-white/10">
@@ -74,7 +75,7 @@ const Navbar = () => {
               : 'bg-black/40 backdrop-blur-md border-white/10'
           }`}
         >
-          <Link to="/" className="flex items-center pl-2 group">
+          <Link to={routes.home} className="flex items-center pl-2 group">
             <motion.img
               src="/lovable-uploads/b44b8051-6117-4b37-999d-014c4c33dd13.png"
               alt="Zuup Logo"
@@ -112,15 +113,15 @@ const Navbar = () => {
               transition={{ duration: 0.3 }}
             >
               <div className="px-4 py-4 flex flex-col gap-1">
-                <MobileNavLink href="/" onClick={() => setIsOpen(false)} active={isActive('/')}>Home</MobileNavLink>
-                <MobileNavLink href="/about" isRoute onClick={() => setIsOpen(false)} active={isActive('/about')}>About</MobileNavLink>
-                <MobileNavLink href="/our-story" isRoute onClick={() => setIsOpen(false)} active={isActive('/our-story')}>Our Story</MobileNavLink>
-                <MobileNavLink href="/schools" isRoute onClick={() => setIsOpen(false)} active={isActive('/schools')}>Schools</MobileNavLink>
-                <MobileNavLink href="/events" isRoute onClick={() => setIsOpen(false)} active={isActive('/events')}>Events</MobileNavLink>
-                <MobileNavLink href="/saas" isRoute onClick={() => setIsOpen(false)} active={isActive('/saas')}>SaaS</MobileNavLink>
-                <MobileNavLink href="/empower" isRoute onClick={() => setIsOpen(false)} active={isActive('/empower')}>Empower</MobileNavLink>
-                <MobileNavLink href="/moza" isRoute onClick={() => setIsOpen(false)} active={isActive('/moza')}>Moza</MobileNavLink>
-                <MobileNavLink href="/careers" isRoute onClick={() => setIsOpen(false)} active={isActive('/careers')}>Careers</MobileNavLink>
+                <MobileNavLink href={routes.home} onClick={() => setIsOpen(false)} active={isActive(routes.home)}>Home</MobileNavLink>
+                <MobileNavLink href={routes.about} isRoute onClick={() => setIsOpen(false)} active={isActive(routes.about)}>About</MobileNavLink>
+                <MobileNavLink href={routes.ourStory} isRoute onClick={() => setIsOpen(false)} active={isActive(routes.ourStory)}>Our Story</MobileNavLink>
+                <MobileNavLink href={routes.schools} isRoute onClick={() => setIsOpen(false)} active={isActive(routes.schools)}>Schools</MobileNavLink>
+                <MobileNavLink href={routes.events} isRoute onClick={() => setIsOpen(false)} active={isActive(routes.events)}>Events</MobileNavLink>
+                <MobileNavLink href={routes.saas} isRoute onClick={() => setIsOpen(false)} active={isActive(routes.saas)}>SaaS</MobileNavLink>
+                <MobileNavLink href={routes.empower} isRoute onClick={() => setIsOpen(false)} active={isActive(routes.empower)}>Empower</MobileNavLink>
+                <MobileNavLink href={routes.moza} isRoute onClick={() => setIsOpen(false)} active={isActive(routes.moza)}>Moza</MobileNavLink>
+                <MobileNavLink href={routes.careers} isRoute onClick={() => setIsOpen(false)} active={isActive(routes.careers)}>Careers</MobileNavLink>
                 
               </div>
             </motion.div>

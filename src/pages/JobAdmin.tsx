@@ -57,7 +57,7 @@ const JobAdmin = () => {
           if (storedToken) {
             // We use an internal hack to force the Authorization header for all future requests
             // because setSession with an empty refresh_token causes it to log out immediately!
-            (supabase as any).rest.headers['Authorization'] = `Bearer ${storedToken}`;
+            (supabase as unknown as { rest: { headers: Record<string, string> }; realtime: { setAuth: (token: string) => void } }).rest.headers['Authorization'] = `Bearer ${storedToken}`;
             supabase.realtime.setAuth(storedToken);
           }
           
@@ -65,11 +65,9 @@ const JobAdmin = () => {
           fetchJobs();
         } else {
           // DO NOT redirect immediately to avoid infinite loops during debugging!
-          console.error("Auth check failed:", res.status, await res.text());
           setAuthError("You are not authenticated. Please log in.");
         }
-      } catch (err) {
-        console.error("Auth fetch crashed:", err);
+      } catch {
         setAuthError("Failed to reach auth server.");
       }
     };
@@ -103,7 +101,6 @@ const JobAdmin = () => {
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error("SUPABASE FETCH ERROR:", error);
       toast({ title: 'Error fetching jobs', description: error.message, variant: 'destructive' });
     } else if (data) {
       setJobs(data as Job[]);
@@ -176,8 +173,8 @@ const JobAdmin = () => {
       
       setIsEditing(false);
       fetchJobs();
-    } catch (error: any) {
-      toast({ title: 'Error saving job', description: error.message, variant: 'destructive' });
+    } catch (error: unknown) {
+      toast({ title: 'Error saving job', description: error instanceof Error ? error.message : 'An unexpected error occurred', variant: 'destructive' });
     }
   };
 

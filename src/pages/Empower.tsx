@@ -49,7 +49,7 @@ const ImageSlider = () => {
   );
 };
 
-const ProcessStep = ({ number, title, desc }: any) => (
+const ProcessStep = ({ number, title, desc }: { number: string; title: string; desc: string }) => (
   <motion.div 
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}

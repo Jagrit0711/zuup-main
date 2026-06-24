@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { routes } from "@/routes";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import TransparentMoza from "../components/TransparentMoza";
@@ -265,7 +266,7 @@ const ZuupCity = () => {
                 </a>
               )}
               {hasChapter && (
-                <Link to="/schools"
+                <Link to={routes.schools}
                   className="px-10 py-4 border-2 border-white/20 text-white rounded-[3rem] text-2xl font-bold hover:border-primary transition-all"
                   style={{ fontFamily: "'Caveat', cursive" }}
                 >
@@ -329,12 +330,12 @@ const ZuupCity = () => {
                         Zuup partners directly with schools in {region} to deliver hands-on coding, design, and digital skills workshops to students — completely free. If you run or know a school in {name}, let's work together.
                       </p>
                       <div className="flex flex-wrap gap-4">
-                        <Link to="/schools"
-                          className="px-8 py-3 bg-primary text-white rounded-[2rem] text-xl font-bold shadow-[0_4px_0_0_#96163e] hover:-translate-y-1 hover:shadow-[0_8px_0_0_#96163e] transition-all"
-                          style={{ fontFamily: "'Caveat', cursive" }}
-                        >
-                          partner your school →
-                        </Link>
+                <Link to={routes.schools}
+                  className="px-8 py-3 bg-primary text-white rounded-[2rem] text-xl font-bold shadow-[0_4px_0_0_#96163e] hover:-translate-y-1 hover:shadow-[0_8px_0_0_#96163e] transition-all"
+                  style={{ fontFamily: "'Caveat', cursive" }}
+                >
+                  partner your school →
+                </Link>
                         <a href="https://zuup.dev/join" target="_blank" rel="noopener noreferrer"
                           className="px-8 py-3 border-2 border-white/20 text-white rounded-[2rem] text-xl font-bold hover:border-primary transition-all"
                           style={{ fontFamily: "'Caveat', cursive" }}
@@ -490,7 +491,7 @@ const ZuupCity = () => {
             )}
           </div>
           <div className="mt-8">
-            <Link to="/zuup-cities" className="text-primary text-xl underline decoration-wavy underline-offset-4" style={{ fontFamily: "'Caveat', cursive" }}>
+            <Link to={routes.zuupCities} className="text-primary text-xl underline decoration-wavy underline-offset-4" style={{ fontFamily: "'Caveat', cursive" }}>
               ← all cities where zuup is present
             </Link>
           </div>
