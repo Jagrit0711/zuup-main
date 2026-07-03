@@ -47,7 +47,8 @@ const JobAdmin = () => {
         }
 
         // 2. Fetch /api/me. It will use the Bearer token first, and fallback to cookies if present.
-        const res = await fetch('https://auth.zuup.dev/api/me', {
+        const authUrl = import.meta.env.VITE_AUTH_URL || 'https://auth.zuup.dev';
+        const res = await fetch(`${authUrl}/api/me`, {
           credentials: 'include',
           headers
         });
@@ -82,7 +83,8 @@ const JobAdmin = () => {
           <p className="text-muted mb-6">{authError}</p>
           <button 
             onClick={() => {
-              window.location.href = `https://auth.zuup.dev/login?redirect_to=${encodeURIComponent(window.location.href)}`;
+              const authUrl = import.meta.env.VITE_AUTH_URL || 'https://auth.zuup.dev';
+              window.location.href = `${authUrl}/login?redirect_to=${encodeURIComponent(window.location.href)}`;
             }}
             className="w-full py-3 bg-primary hover:bg-primaryHover text-white rounded-xl font-bold transition-colors"
           >
