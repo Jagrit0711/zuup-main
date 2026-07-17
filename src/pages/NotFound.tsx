@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { routes } from "@/routes";
@@ -9,10 +9,7 @@ import TransparentMoza from "../components/TransparentMoza";
 const NotFound = () => {
   return (
     <>
-      <Helmet>
-        <title>404 — Not Found | Zuup</title>
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
+      <SEO title="404 — Not Found | Zuup" noindex={true} />
 
       <div className="min-h-screen bg-[#050505] relative overflow-hidden flex flex-col">
         <Navbar />

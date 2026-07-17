@@ -3,7 +3,7 @@ import Footer from "../components/Footer";
 import TransparentMoza from "../components/TransparentMoza";
 import { motion } from "framer-motion";
 import { Download } from "lucide-react";
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 
 const fade = {
   hidden: { opacity: 0, y: 30 },
@@ -54,10 +54,11 @@ const mozas = [
 const Moza = () => {
   return (
     <>
-      <Helmet>
-        <title>Theming Centre — Zuup Brand Kit</title>
-        <meta name="description" content="Download high-quality Zuup logos, official colors, and Moza mascot assets." />
-      </Helmet>
+      <SEO 
+        title="Theming Centre — Zuup Brand Kit" 
+        description="Download high-quality Zuup logos, official colors, and Moza mascot assets." 
+        path="/moza" 
+      />
 
       <div className="min-h-screen bg-[#050505] relative overflow-hidden">
         <Navbar />

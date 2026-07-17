@@ -1,8 +1,8 @@
-import Navbar from "../components/Navbar";
+import SEO from "../components/SEO";
 import Footer from "../components/Footer";
 import TransparentMoza from "../components/TransparentMoza";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet";
+import Navbar from "../components/Navbar";
 
 const fade = {
   hidden: { opacity: 0, y: 30 },
@@ -12,10 +12,11 @@ const fade = {
 const Privacy = () => {
   return (
     <>
-      <Helmet>
-        <title>Privacy Policy — Zuup</title>
-        <meta name="description" content="How we handle data, media, and privacy for our community." />
-      </Helmet>
+      <SEO 
+        title="Privacy Policy — Zuup" 
+        description="How we handle data, media, and privacy for our community." 
+        path="/privacy" 
+      />
 
       <div className="min-h-screen bg-[#050505] relative overflow-hidden">
         <Navbar />

@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import ThreePillars from '../components/ThreePillars';
@@ -10,7 +11,13 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background font-sans">
+    <>
+      <SEO 
+        title="Zuup — We build builders." 
+        description="Zuup is a nonprofit empowering youth through tech, counseling, and community building." 
+        path="/" 
+      />
+      <div className="min-h-screen bg-background font-sans">
       <Navbar />
       
       {/* 1. Hero */}
@@ -37,6 +44,7 @@ const Index = () => {
       {/* Footer */}
       <Footer />
     </div>
+    </>
   );
 };
 

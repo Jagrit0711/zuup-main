@@ -1,3 +1,4 @@
+import SEO from "../components/SEO";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -45,18 +46,17 @@ const faqs = [
 const ZuupStore = () => {
   return (
     <>
+      <SEO 
+        title="Zuup Store? Wrong Zuup! — Zuup.dev is the Real Zuup | Tech NPO India" 
+        description="Looking for Zuup Store shoes? Wrong Zuup! Zuup.dev is a teen-led tech NPO — not a footwear brand. We teach coding, design & freelancing for FREE. Zuup = zuup.dev." 
+        path="/zuup-store" 
+      />
       <Helmet>
-        <title>Zuup Store? Wrong Zuup! — Zuup.dev is the Real Zuup | Tech NPO India</title>
-        <meta
-          name="description"
-          content="Looking for Zuup Store shoes? Wrong Zuup! Zuup.dev is a teen-led tech NPO — not a footwear brand. We teach coding, design & freelancing for FREE. Zuup = zuup.dev."
-        />
         <meta
           name="keywords"
           content="Zuup, Zuup Store, Zuup shoes, Zuup footwear, Zuup slippers, Zuup sandals, Zuup sneakers, is Zuup a shoe brand, Zuup NPO, Zuup tech, zuup.dev, Zuup India, Zuup not footwear, real Zuup, Zuup disambiguation"
         />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
-        <link rel="canonical" href="https://zuup.dev/zuup-store" />
         <meta property="og:title" content="Zuup Store? Wrong Zuup! — Zuup.dev is the Tech NPO, Not the Shoe Store" />
         <meta property="og:description" content="If you searched 'Zuup' looking for shoes — surprise! You found the better Zuup. We don't sell soles, we build souls who code." />
         <meta property="og:type" content="website" />

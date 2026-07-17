@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Navbar from "../components/Navbar";
@@ -71,10 +71,11 @@ const StorySection = ({
 const OurStory = () => {
   return (
     <>
-      <Helmet>
-        <title>Our Story — The Honest Truth About Zuup</title>
-        <meta name="description" content="How Zuup started as a portfolio project and turned into a movement empowering youth." />
-      </Helmet>
+      <SEO 
+        title="Our Story — The Honest Truth About Zuup" 
+        description="How Zuup started as a portfolio project and turned into a movement empowering youth." 
+        path="/our-story" 
+      />
 
       {/* No Grid Background. Pure pitch black base. */}
       <div className="min-h-screen bg-[#050505] relative overflow-hidden">

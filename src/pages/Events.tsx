@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import Navbar from "../components/Navbar";
@@ -87,10 +87,11 @@ const EventCard = ({ title, date, location, description, image, link, linkText, 
 const Events = () => {
   return (
     <>
-      <Helmet>
-        <title>Events & Hackathons — Zuup</title>
-        <meta name="description" content="Join the chaos. Explore upcoming Zuup hackathons, bootcamps, and community events." />
-      </Helmet>
+      <SEO 
+        title="Events & Hackathons — Zuup" 
+        description="Join the chaos. Explore upcoming Zuup hackathons, bootcamps, and community events." 
+        path="/events" 
+      />
 
       <div className="min-h-screen bg-[#050505] relative overflow-hidden">
         <Navbar />

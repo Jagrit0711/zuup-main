@@ -1,3 +1,4 @@
+import SEO from "../components/SEO";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import TransparentMoza from "../components/TransparentMoza";
@@ -20,7 +21,13 @@ const curriculum = [
 
 const Schools = () => {
   return (
-    <div className="min-h-screen bg-[#050505] relative overflow-hidden">
+    <>
+      <SEO 
+        title="Schools Program — Zuup" 
+        description="A structured 10-month engineering club for schools." 
+        path="/schools" 
+      />
+      <div className="min-h-screen bg-[#050505] relative overflow-hidden">
       <Navbar />
 
       {/* Hero Section */}
@@ -219,6 +226,7 @@ const Schools = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 

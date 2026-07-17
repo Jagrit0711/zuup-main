@@ -1,3 +1,4 @@
+import SEO from "../components/SEO";
 import { Helmet } from "react-helmet";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -169,12 +170,10 @@ const ZuupCity = () => {
 
   return (
     <>
+      <SEO title={title} description={description} path={`/zuup-in/${city}`} />
       <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
         <meta name="keywords" content={`Zuup ${name}, Zuup ${country}, Zuup ${region}, tech NPO ${name}, free coding ${name}, youth empowerment ${name}, zuup.dev ${name}, digital skills ${name}, coding education ${name}, ${isIndia ? "NGO India" : "youth tech nonprofit"} ${name}`} />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
-        <link rel="canonical" href={`https://zuup.dev/zuup-in/${city}`} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={`https://zuup.dev/zuup-in/${city}`} />

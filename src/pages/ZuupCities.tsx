@@ -1,3 +1,4 @@
+import SEO from "../components/SEO";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -14,12 +15,14 @@ const ZuupCities = () => {
 
   return (
     <>
+      <SEO 
+        title="Zuup Worldwide — Active in India, UAE, Egypt & 100+ Cities | Tech NPO" 
+        description="Zuup (zuup.dev) is present in 100+ cities worldwide — Delhi, Dubai, Giza, Mumbai, Bangalore, London, New York, Singapore and more. Find Zuup in your city or start an Empower chapter." 
+        path="/zuup-cities" 
+      />
       <Helmet>
-        <title>Zuup Worldwide — Active in India, UAE, Egypt & 100+ Cities | Tech NPO</title>
-        <meta name="description" content="Zuup (zuup.dev) is present in 100+ cities worldwide — Delhi, Dubai, Giza, Mumbai, Bangalore, London, New York, Singapore and more. Find Zuup in your city or start an Empower chapter." />
         <meta name="keywords" content="Zuup worldwide, Zuup India, Zuup Dubai, Zuup Giza, Zuup cities, Zuup chapters, Zuup global, tech NPO worldwide, free coding worldwide, youth NPO all countries, zuup.dev global" />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
-        <link rel="canonical" href="https://zuup.dev/zuup-cities" />
         <meta property="og:title" content="Zuup Worldwide — 100+ Cities | Free Tech Education Globally" />
         <meta property="og:description" content="Find Zuup in your city. Free coding, design & freelancing for teens across India, UAE, Egypt, UK, US, Africa, Asia and more." />
         <meta property="og:url" content="https://zuup.dev/zuup-cities" />

@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import Navbar from "../components/Navbar";
@@ -70,10 +70,11 @@ const SaasCard = ({ title, tag, description, image, link, linkText, fallbackGrad
 const Saas = () => {
   return (
     <>
-      <Helmet>
-        <title>SaaS Ecosystem — Zuup</title>
-        <meta name="description" content="Explore the Zuup Ecosystem. Open-source tools, developer platforms, and web applications built for students and makers." />
-      </Helmet>
+      <SEO 
+        title="SaaS Ecosystem — Zuup" 
+        description="Explore the Zuup Ecosystem. Open-source tools, developer platforms, and web applications built for students and makers." 
+        path="/saas" 
+      />
 
       <div className="min-h-screen bg-[#050505] relative overflow-hidden">
         <Navbar />

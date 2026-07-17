@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { MapPin, Clock, Share2, Linkedin, ArrowLeft } from "lucide-react";
@@ -99,10 +99,11 @@ const JobDetail = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{job.title} — Zuup Careers</title>
-        <meta name="description" content={`Apply for the ${job.title} position at Zuup.`} />
-      </Helmet>
+      <SEO 
+        title={`${job.title} — Zuup Careers`} 
+        description={`Apply for the ${job.title} position at Zuup.`} 
+        path={`/careers/${job.slug}`} 
+      />
 
       <div className="min-h-screen bg-[#050505] text-foreground font-sans flex flex-col items-center relative overflow-hidden">
         <div className="w-full relative z-20">

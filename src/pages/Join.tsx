@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import SEO from "../components/SEO";
 
 const slackLinks = [
   "https://join.slack.com/t/zuupgroup/shared_invite/zt-3z84cihls-N08pzDeb9wfiheaHrpEtpQ",
@@ -26,7 +27,9 @@ const Join = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center relative overflow-hidden">
+    <>
+      <SEO title="Join Zuup Slack" noindex={true} path="/join" />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center relative overflow-hidden">
       {/* Cool background effect */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-background to-background" />
       
@@ -40,6 +43,7 @@ const Join = () => {
         <p className="text-muted-foreground text-xl">Strap in, we're taking off! 🚀</p>
       </div>
     </div>
+    </>
   );
 };
 

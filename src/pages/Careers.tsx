@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../integrations/supabase/client";
@@ -50,10 +50,11 @@ const Careers = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Careers — Join the Zuup Team</title>
-        <meta name="description" content="View our available job openings and join the Zuup team." />
-      </Helmet>
+      <SEO 
+        title="Careers — Join the Zuup Team" 
+        description="View our available job openings and join the Zuup team." 
+        path="/careers" 
+      />
 
       <div className="min-h-screen bg-[#050505] text-foreground font-sans relative overflow-hidden">
         <Navbar />

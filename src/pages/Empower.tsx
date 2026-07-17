@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import { motion } from "framer-motion";
 import { ArrowRight, Mail, ExternalLink, Code, Video, Palette, Briefcase, Globe, HeartHandshake, Zap, Target } from "lucide-react";
 import Navbar from "../components/Navbar";
@@ -74,10 +74,11 @@ const ProcessStep = ({ number, title, desc }: { number: string; title: string; d
 const Empower = () => {
   return (
     <>
-      <Helmet>
-        <title>Empowerment — Zuup</title>
-        <meta name="description" content="Zuup provides free training in digital skills for underprivileged youth. Empowerment over charity." />
-      </Helmet>
+      <SEO 
+        title="Empowerment — Zuup" 
+        description="Zuup provides free training in digital skills for underprivileged youth. Empowerment over charity." 
+        path="/empower" 
+      />
 
       <div className="min-h-screen bg-[#050505] relative overflow-hidden">
         <Navbar />

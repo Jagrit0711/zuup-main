@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import Navbar from "../components/Navbar";
@@ -69,10 +69,11 @@ const AboutSection = ({
 const About = () => {
   return (
     <>
-      <Helmet>
-        <title>About Us — The Team Behind Zuup</title>
-        <meta name="description" content="Learn about our mission, what we do, and the team driving Zuup forward." />
-      </Helmet>
+      <SEO 
+        title="About Us — The Team Behind Zuup" 
+        description="Learn about our mission, what we do, and the team driving Zuup forward." 
+        path="/about" 
+      />
 
       <div className="min-h-screen bg-[#050505] relative overflow-hidden">
         <Navbar />
